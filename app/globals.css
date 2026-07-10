@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --blue: #283890;
+  --green: #86be56;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Montserrat, system-ui, sans-serif;
+  color: #333333;
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-wrap px-5 md:px-8; }
+
+  .btn-blue {
+    @apply inline-flex items-center justify-center rounded-pill bg-brand-blue px-7 py-3.5 text-sm font-bold text-white
+    border border-brand-blue transition-all duration-300 hover:bg-white hover:text-brand-blue;
+  }
+  .btn-green {
+    @apply inline-flex items-center justify-center rounded-pill bg-brand-green px-7 py-3.5 text-sm font-bold text-white
+    border border-brand-green transition-all duration-300 hover:bg-white hover:text-brand-greenDark;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-pill bg-brand-blue/10 px-5 py-2.5 text-sm font-bold uppercase
+    text-brand-blue transition-all duration-300 hover:bg-brand-green hover:text-white;
+  }
+
+  .card {
+    @apply rounded-card border border-brand-blue/10 bg-white transition-all duration-300;
+  }
+  .card-hover:hover {
+    @apply border-brand-green/60 shadow-card -translate-y-1;
+  }
+
+  .eyebrow { @apply text-sm font-semibold uppercase tracking-wide text-brand-green; }
+}
+
+/* Заголовок секции с фирменной зелёной полоской слева */
+.section-title {
+  position: relative;
+  color: #283890;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -22px;
+  height: 12px;
+  width: 84px;
+  border-radius: 12px;
+  background: #86be56;
+}
+
+.link-underline {
+  color: rgba(51,51,51,0.6);
+  border-bottom: 1px solid rgba(51,51,51,0.2);
+  transition: color .25s, border-color .25s;
+}
+.link-underline:hover { color: #283890; border-color: #86be56; }
+
+/* Плавное появление при скролле */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+  will-change: opacity, transform;
+}
+.reveal-in { opacity: 1; transform: none; }
