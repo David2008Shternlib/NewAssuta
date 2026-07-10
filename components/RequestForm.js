@@ -74,7 +74,7 @@ export default function RequestForm({ compact = false }) {
               className="h-14 appearance-none bg-transparent pl-1.5 pr-6 text-sm font-semibold text-body outline-none"
             >
               {COUNTRIES.map((c) => (
-                <option key={c.code} value={c.code}>{c.dial}</option>
+                <option key={c.code} value={c.code} style={{ backgroundColor: "rgb(var(--surface))", color: "rgb(var(--text))" }}>{c.dial}</option>
               ))}
             </select>
             <span className="pointer-events-none absolute right-2 text-muted">▾</span>

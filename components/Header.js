@@ -18,15 +18,10 @@ export default function Header() {
   }, []);
 
   const LangSwitch = ({ className = "" }) => (
-    <div className={`flex items-center rounded-pill border border-line p-0.5 text-xs font-bold ${className}`}>
+    <div className={`flex flex-none items-center rounded-pill border border-line p-0.5 text-xs font-bold ${className}`}>
       {["ru", "en"].map((l) => (
-        <button
-          key={l}
-          onClick={() => setLang(l)}
-          className={`rounded-pill px-2.5 py-1 uppercase transition-colors ${
-            lang === l ? "bg-brand-blue text-white" : "text-muted hover:text-brand-blue"
-          }`}
-        >
+        <button key={l} onClick={() => setLang(l)}
+          className={`rounded-pill px-2.5 py-1 uppercase transition-colors ${lang === l ? "bg-brand-blue text-white" : "text-muted hover:text-brand-blue"}`}>
           {l}
         </button>
       ))}
@@ -36,11 +31,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 bg-page/95 backdrop-blur">
       {/* Верхняя полоса — сворачивается при скролле */}
-      <div
-        className={`overflow-hidden border-line bg-surface2 transition-all duration-300 hidden md:block ${
-          scrolled ? "max-h-0 border-b-0 opacity-0" : "max-h-16 border-b opacity-100"
-        }`}
-      >
+      <div className={`overflow-hidden border-line bg-surface2 transition-all duration-300 hidden md:block ${scrolled ? "max-h-0 border-b-0 opacity-0" : "max-h-16 border-b opacity-100"}`}>
         <div className="wrap flex items-center justify-between py-2 text-xs">
           <span className="text-muted">{t(lang, "headerTagline")}</span>
           <div className="flex items-center gap-5">
@@ -55,25 +46,22 @@ export default function Header() {
       </div>
 
       {/* Основная строка */}
-      <div className={`wrap flex items-center justify-between transition-all duration-300 ${scrolled ? "py-2.5" : "py-4"}`}>
-        <Link href="/" className="flex items-center gap-3">
-          <img src={site.logo} alt="Assuta" className={`w-auto transition-all dark:brightness-0 dark:invert ${scrolled ? "h-8" : "h-9"}`} />
-          <span className="hidden whitespace-pre text-xs font-semibold text-brand-dark dark:text-accent sm:block">
-            {t(lang, "clinicIn")}
-          </span>
+      <div className={`wrap flex items-center justify-between gap-4 transition-all duration-300 ${scrolled ? "py-2.5" : "py-4"}`}>
+        <Link href="/" className="flex-none">
+          <img src={site.logo} alt="Assuta" className={`w-auto transition-all dark:brightness-0 dark:invert ${scrolled ? "h-7" : "h-9"}`} />
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex">
+        <nav className="hidden items-center gap-4 xl:gap-5 lg:flex">
           {nav.map((n) => (
-            <Link key={n.href} href={n.href} className="text-sm font-semibold text-body transition-colors hover:text-brand-green">
+            <Link key={n.href} href={n.href} className="whitespace-nowrap text-sm font-semibold text-body transition-colors hover:text-brand-green">
               {pick(n.label, lang)}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
-          {scrolled && <LangSwitch />}
-          <a href="#request" className="btn-green">{t(lang, "freeConsult")}</a>
+        <div className="hidden flex-none items-center gap-3 lg:flex">
+          <LangSwitch />
+          <a href="#request" className="btn-green whitespace-nowrap !px-5">{t(lang, "freeConsult")}</a>
         </div>
 
         <button className="lg:hidden" aria-label="Menu" onClick={() => setOpen((v) => !v)}>
