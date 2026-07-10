@@ -34,8 +34,8 @@ export const ui = {
   expertise: { ru: "Области экспертизы", en: "Areas of expertise" },
   bookDoctor: { ru: "Записаться к врачу", en: "Book an appointment" },
   leaveRequestHint: { ru: "Оставьте заявку — координатор свяжется с вами.", en: "Leave a request — our coordinator will contact you." },
-  backToDoctors: { ru: "← Ко всем врачам", en: "← Back to all doctors" },
-  backToDiseases: { ru: "← Ко всем заболеваниям", en: "← Back to all conditions" },
+  backToDoctors: { ru: "Ко всем врачам", en: "Back to all doctors" },
+  backToDiseases: { ru: "Ко всем заболеваниям", en: "Back to all conditions" },
 
   disEyebrow: { ru: "Клиника Ассута", en: "Assuta clinic" },
   disTitle: { ru: "Что мы лечим", en: "What we treat" },
@@ -62,6 +62,7 @@ export const ui = {
   sentMsg: { ru: "Спасибо! Наш координатор свяжется с вами в ближайшее время.", en: "Thank you! Our coordinator will contact you shortly." },
   demoNote: { ru: "Демо-режим: на рабочем сайте заявка уходит на почту и в Telegram.", en: "Demo mode: on the live site the request is sent to email and Telegram." },
   phoneError: { ru: "Введите корректный номер телефона", en: "Please enter a valid phone number" },
+  nameError: { ru: "Введите имя", en: "Please enter your name" },
 
   // подписи страниц
   pgDoctorsSub: { ru: "Более 3000 узкопрофильных специалистов: профессора и врачи высшей категории с мировым именем.", en: "More than 3000 specialists: professors and top-tier doctors with a global reputation." },

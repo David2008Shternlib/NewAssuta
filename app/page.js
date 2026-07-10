@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
+import Arrow from "@/components/Arrow";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
@@ -75,7 +76,7 @@ export default function Home() {
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="mb-3 text-xl font-bold text-body">{pick(o.title, lang)}</h3>
                     <p className="mb-5 flex-1 text-sm leading-relaxed text-muted">{pick(o.desc, lang)}</p>
-                    <Link href={o.href} className="text-sm font-semibold uppercase text-brand-green group-hover:text-brand-blue dark:group-hover:text-accent">{t(lang, "learnMore")} →</Link>
+                    <Link href={o.href} className="inline-flex items-center gap-1.5 text-sm font-semibold uppercase text-brand-green group-hover:text-brand-blue dark:group-hover:text-accent">{t(lang, "learnMore")}<Arrow /></Link>
                   </div>
                 </div>
               </Reveal>
@@ -88,13 +89,16 @@ export default function Home() {
       <section className="bg-surface2 py-20">
         <div className="wrap">
           <SectionTitle eyebrow={t(lang, "deptEyebrow")} title={t(lang, "deptTitle")} subtitle={t(lang, "deptSub")} />
-          <div className="grid grid-cols-2 items-stretch gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {departments.map((d, i) => (
               <Reveal key={d.slug} delay={(i % 4) * 0.06} className="h-full">
-                <Link href="/departments" className="card card-hover group flex h-full flex-col p-6">
-                  <div className="mb-4 text-4xl">{d.icon}</div>
-                  <h3 className="mb-2 break-words text-lg font-bold text-body">{pick(d.title, lang)}</h3>
-                  <p className="text-sm text-muted">{pick(d.desc, lang)}</p>
+                <Link href="/departments" className="card card-hover group flex h-full items-center gap-4 p-5 sm:flex-col sm:items-start sm:gap-0 sm:p-6">
+                  <div className="flex-none text-4xl sm:mb-4">{d.icon}</div>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="mb-1 text-lg font-bold text-body sm:mb-2">{pick(d.title, lang)}</h3>
+                    <p className="text-sm text-muted">{pick(d.desc, lang)}</p>
+                  </div>
+                  <Arrow dir="chevron" className="flex-none text-muted sm:hidden" />
                 </Link>
               </Reveal>
             ))}

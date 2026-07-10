@@ -4,6 +4,7 @@ import { useParams, notFound } from "next/navigation";
 import PageHero from "@/components/PageHero";
 import RequestForm from "@/components/RequestForm";
 import Reveal from "@/components/Reveal";
+import Arrow from "@/components/Arrow";
 import { doctors, deptNames } from "@/data/site";
 import { doctorBio, expertiseList } from "@/data/diseases";
 import { pick, t } from "@/data/i18n";
@@ -50,7 +51,7 @@ export default function DoctorPage() {
               </div>
             </Reveal>
             <div className="mt-10">
-              <Link href="/doctors" className="btn-ghost">{t(lang, "backToDoctors")}</Link>
+              <Link href="/doctors" className="btn-ghost gap-1.5"><Arrow dir="left" />{t(lang, "backToDoctors")}</Link>
             </div>
           </div>
           <aside>

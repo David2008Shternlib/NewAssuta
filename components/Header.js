@@ -11,7 +11,9 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
+    // Гистерезис: сворачиваем после 70px, разворачиваем только ниже 15px —
+    // это убирает дрожание, когда скролл замирает у самого порога.
+    const onScroll = () => setScrolled((prev) => (prev ? window.scrollY > 15 : window.scrollY > 70));
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -64,35 +66,34 @@ export default function Header() {
           <a href="#request" className="btn-green whitespace-nowrap !px-5">{t(lang, "freeConsult")}</a>
         </div>
 
-        <button className="lg:hidden" aria-label="Menu" onClick={() => setOpen((v) => !v)}>
+        <button className="lg:hidden" aria-label="Menu" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
           <div className="space-y-1.5">
-            <span className={`block h-0.5 w-7 bg-brand-blue transition-all dark:bg-accent ${open ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`block h-0.5 w-7 bg-brand-blue transition-all dark:bg-accent ${open ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-7 bg-brand-blue transition-all dark:bg-accent ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+            <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "translate-y-2 rotate-45" : ""}`} />
+            <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "opacity-0" : ""}`} />
+            <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "-translate-y-2 -rotate-45" : ""}`} />
           </div>
         </button>
       </div>
 
-      {open && (
-        <div className="border-t border-line bg-page lg:hidden">
-          <div className="wrap flex flex-col py-4">
-            {nav.map((n) => (
-              <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="border-b border-line/60 py-3 font-semibold text-body">
-                {pick(n.label, lang)}
-              </Link>
-            ))}
-            <a href="#request" onClick={() => setOpen(false)} className="btn-green mt-4">{t(lang, "freeConsult")}</a>
-            <div className="mt-4 flex items-center justify-between">
-              <div className="flex flex-col gap-1 text-sm">
-                {site.phones.map((p) => (
-                  <a key={p.value} href={p.href} className="font-semibold text-brand-blue dark:text-accent">{p.flag} {p.value}</a>
-                ))}
-              </div>
-              <LangSwitch />
+      {/* Мобильное меню — всегда в DOM, плавно выезжает по высоте */}
+      <div className={`overflow-hidden bg-page transition-all duration-300 ease-out lg:hidden ${open ? "max-h-[560px] border-t border-line opacity-100" : "max-h-0 opacity-0"}`}>
+        <div className="wrap flex flex-col py-4">
+          {nav.map((n) => (
+            <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="border-b border-line/60 py-3 font-semibold text-body">
+              {pick(n.label, lang)}
+            </Link>
+          ))}
+          <a href="#request" onClick={() => setOpen(false)} className="btn-green mt-4">{t(lang, "freeConsult")}</a>
+          <div className="mt-4 flex items-center justify-between">
+            <div className="flex flex-col gap-1 text-sm">
+              {site.phones.map((p) => (
+                <a key={p.value} href={p.href} className="font-semibold text-brand-blue dark:text-accent">{p.flag} {p.value}</a>
+              ))}
             </div>
+            <LangSwitch />
           </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }

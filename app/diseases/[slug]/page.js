@@ -5,6 +5,7 @@ import PageHero from "@/components/PageHero";
 import RequestForm from "@/components/RequestForm";
 import DoctorCard from "@/components/DoctorCard";
 import Reveal from "@/components/Reveal";
+import Arrow from "@/components/Arrow";
 import { findDisease, diseaseContent, doctorsForCategory } from "@/data/diseases";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
@@ -41,7 +42,7 @@ export default function DiseasePage() {
                 </div>
               </div>
             </Reveal>
-            <div className="mt-10"><Link href="/diseases" className="btn-ghost">{t(lang, "backToDiseases")}</Link></div>
+            <div className="mt-10"><Link href="/diseases" className="btn-ghost gap-1.5"><Arrow dir="left" />{t(lang, "backToDiseases")}</Link></div>
           </article>
           <aside>
             <div className="sticky top-28 rounded-xl2 bg-surface2 p-6">
