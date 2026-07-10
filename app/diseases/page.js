@@ -17,7 +17,7 @@ export default function DiseasesPage() {
           {diseasesByCategory.map((cat, i) => (
             <Reveal key={i} delay={(i % 3) * 0.06} className="h-full">
               <div className="card h-full p-6">
-                <h2 className="mb-4 text-lg font-bold text-title">{pick(cat.category, lang)}</h2>
+                <h2 className="mb-4 break-words text-lg font-bold text-title">{pick(cat.category, lang)}</h2>
                 <ul className="space-y-3">
                   {cat.items.map((it) => (
                     <li key={it.slug}><Link href={`/diseases/${it.slug}`} className="link-underline text-sm">{pick(it.title, lang)}</Link></li>

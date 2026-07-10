@@ -93,7 +93,7 @@ export default function Home() {
               <Reveal key={d.slug} delay={(i % 4) * 0.06} className="h-full">
                 <Link href="/departments" className="card card-hover group flex h-full flex-col p-6">
                   <div className="mb-4 text-4xl">{d.icon}</div>
-                  <h3 className="mb-2 text-lg font-bold text-body">{pick(d.title, lang)}</h3>
+                  <h3 className="mb-2 break-words text-lg font-bold text-body">{pick(d.title, lang)}</h3>
                   <p className="text-sm text-muted">{pick(d.desc, lang)}</p>
                 </Link>
               </Reveal>
@@ -127,7 +127,7 @@ export default function Home() {
             {diseasesByCategory.map((cat, i) => (
               <Reveal key={i} delay={(i % 3) * 0.08} className="h-full">
                 <div className="card h-full p-6">
-                  <h3 className="mb-4 text-lg font-bold text-title">{pick(cat.category, lang)}</h3>
+                  <h3 className="mb-4 break-words text-lg font-bold text-title">{pick(cat.category, lang)}</h3>
                   <ul className="space-y-3">
                     {cat.items.slice(0, 6).map((it) => (
                       <li key={it.slug}><Link href={`/diseases/${it.slug}`} className="link-underline text-sm">{pick(it.title, lang)}</Link></li>

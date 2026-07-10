@@ -15,10 +15,13 @@ export default function DoctorCard({ doc }) {
           <span className="text-4xl font-bold text-brand-blue/30">{name.split(" ").slice(-1)[0]?.[0] || "A"}</span>
         )}
       </div>
-      <h3 className="mb-1 text-lg font-bold text-body">{name}</h3>
-      <p className="mb-4 text-sm text-muted">{pick(doc.spec, lang)}</p>
-      <span className="mt-auto text-sm font-semibold uppercase text-brand-green transition-colors group-hover:text-brand-blue dark:group-hover:text-accent">
-        {t(lang, "more")} →
+      <h3 className="mb-1 break-words text-lg font-bold text-body">{name}</h3>
+      <p className="mb-4 break-words text-sm text-muted">{pick(doc.spec, lang)}</p>
+      <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold uppercase text-brand-green transition-colors group-hover:text-brand-blue dark:group-hover:text-accent">
+        {t(lang, "more")}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
       </span>
     </Link>
   );

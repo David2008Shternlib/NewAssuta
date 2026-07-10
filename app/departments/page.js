@@ -18,7 +18,7 @@ export default function DepartmentsPage() {
             <Reveal key={d.slug} delay={(i % 3) * 0.06} className="h-full">
               <Link href="/doctors" className="card card-hover group flex h-full flex-col p-7">
                 <div className="mb-4 text-5xl">{d.icon}</div>
-                <h2 className="mb-2 text-xl font-bold text-body">{pick(d.title, lang)}</h2>
+                <h2 className="mb-2 break-words text-xl font-bold text-body">{pick(d.title, lang)}</h2>
                 <p className="flex-1 text-sm text-muted">{pick(d.desc, lang)}</p>
                 <span className="mt-5 text-sm font-semibold uppercase text-brand-green group-hover:text-brand-blue dark:group-hover:text-accent">{t(lang, "deptDoctors")} →</span>
               </Link>
