@@ -44,7 +44,6 @@ body {
   .eyebrow { @apply text-sm font-semibold uppercase tracking-wide text-brand-green; }
 }
 
-/* Заголовок секции с фирменной зелёной полоской слева */
 .section-title {
   position: relative;
   color: #283890;
@@ -52,17 +51,6 @@ body {
   text-transform: uppercase;
   line-height: 1.15;
 }
-.section-title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: -22px;
-  height: 12px;
-  width: 84px;
-  border-radius: 12px;
-  background: #86be56;
-}
-
 .link-underline {
   color: rgba(51,51,51,0.6);
   border-bottom: 1px solid rgba(51,51,51,0.2);
@@ -70,7 +58,6 @@ body {
 }
 .link-underline:hover { color: #283890; border-color: #86be56; }
 
-/* Плавное появление при скролле */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
