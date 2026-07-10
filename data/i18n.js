@@ -1,0 +1,85 @@
+// Выбор значения по языку: строка или объект {ru,en}
+export function pick(v, lang) {
+  if (v && typeof v === "object" && ("ru" in v || "en" in v)) return v[lang] ?? v.ru;
+  return v;
+}
+
+// Словарь интерфейсных строк
+export const ui = {
+  freeConsult: { ru: "Бесплатная консультация", en: "Free consultation" },
+  getConsult: { ru: "Получить консультацию", en: "Get a consultation" },
+  ourDoctors: { ru: "Наши врачи", en: "Our doctors" },
+  allDoctors: { ru: "Все врачи", en: "All doctors" },
+  allDiseases: { ru: "Все заболевания", en: "All conditions" },
+  learnMore: { ru: "Узнать больше", en: "Learn more" },
+  more: { ru: "Подробнее", en: "More" },
+  home: { ru: "Главная", en: "Home" },
+  headerTagline: { ru: "Ведущая частная клиника Израиля", en: "Israel's leading private clinic" },
+  clinicIn: { ru: "Клиника\nв Израиле", en: "Clinic\nin Israel" },
+  support247: { ru: "Круглосуточная поддержка", en: "24/7 support" },
+
+  heroSub: { ru: "Современный частный медицинский центр в Израиле", en: "A modern private medical center in Israel" },
+
+  offersEyebrow: { ru: "Что мы предлагаем", en: "What we offer" },
+  offersTitle: { ru: "Преимущества клиники Ассута", en: "Advantages of Assuta clinic" },
+
+  deptEyebrow: { ru: "Более 20 специальностей", en: "More than 20 specialties" },
+  deptTitle: { ru: "Направления лечения", en: "Treatment areas" },
+  deptSub: { ru: "От пластической хирургии до нейрохирургии — комплексная помощь по всем ключевым направлениям.", en: "From plastic surgery to neurosurgery — comprehensive care across all key areas." },
+  deptDoctors: { ru: "Врачи направления", en: "Doctors of the area" },
+
+  docEyebrow: { ru: "Более 3000 врачей", en: "More than 3000 doctors" },
+  docTitle: { ru: "Наши ведущие специалисты", en: "Our leading specialists" },
+  docSub: { ru: "Профессора и врачи высшей категории с мировым именем.", en: "Professors and top-tier doctors with a global reputation." },
+  expertise: { ru: "Области экспертизы", en: "Areas of expertise" },
+  bookDoctor: { ru: "Записаться к врачу", en: "Book an appointment" },
+  leaveRequestHint: { ru: "Оставьте заявку — координатор свяжется с вами.", en: "Leave a request — our coordinator will contact you." },
+  backToDoctors: { ru: "← Ко всем врачам", en: "← Back to all doctors" },
+  backToDiseases: { ru: "← Ко всем заболеваниям", en: "← Back to all conditions" },
+
+  disEyebrow: { ru: "Клиника Ассута", en: "Assuta clinic" },
+  disTitle: { ru: "Что мы лечим", en: "What we treat" },
+  disSub: { ru: "Схема комплексного ведения пациента и техническое оснащение отвечают высочайшим медицинским стандартам.", en: "Comprehensive patient management and technical equipment meet the highest medical standards." },
+  area: { ru: "Направление", en: "Area" },
+  getCost: { ru: "Узнать стоимость лечения", en: "Get treatment cost" },
+  costHint: { ru: "Оставьте заявку — рассчитаем программу и цену.", en: "Leave a request — we'll calculate the program and price." },
+
+  newsEyebrow: { ru: "Медицинские новости", en: "Medical news" },
+  newsTitle: { ru: "Статьи и технологии", en: "Articles & technologies" },
+
+  reviewsEyebrow: { ru: "Отзывы пациентов", en: "Patient reviews" },
+  reviewsTitle: { ru: "Нам доверяют", en: "They trust us" },
+
+  ctaEyebrow: { ru: "Бесплатная консультация", en: "Free consultation" },
+  ctaTitle: { ru: "Оставьте заявку на лечение в Ассута", en: "Request treatment at Assuta" },
+  ctaSub: { ru: "Мы возьмём на себя весь процесс организации поездки: подбор врача, программу диагностики, перевод, трансфер и проживание.", en: "We handle the whole trip: choosing a doctor, the diagnostic program, translation, transfer and accommodation." },
+
+  formName: { ru: "Ваше имя", en: "Your name" },
+  formPhone: { ru: "Телефон", en: "Phone" },
+  formComment: { ru: "Кратко опишите ситуацию (необязательно)", en: "Briefly describe your situation (optional)" },
+  formPrivacy: { ru: "Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности", en: "By clicking the button you agree to the privacy policy" },
+  sentTitle: { ru: "Заявка отправлена", en: "Request sent" },
+  sentMsg: { ru: "Спасибо! Наш координатор свяжется с вами в ближайшее время.", en: "Thank you! Our coordinator will contact you shortly." },
+  demoNote: { ru: "Демо-режим: на рабочем сайте заявка уходит на почту и в Telegram.", en: "Demo mode: on the live site the request is sent to email and Telegram." },
+  phoneError: { ru: "Введите корректный номер телефона", en: "Please enter a valid phone number" },
+
+  // подписи страниц
+  pgDoctorsSub: { ru: "Более 3000 узкопрофильных специалистов: профессора и врачи высшей категории с мировым именем.", en: "More than 3000 specialists: professors and top-tier doctors with a global reputation." },
+  pgDiseasesSub: { ru: "Диагностика и лечение по всем ключевым направлениям современной медицины.", en: "Diagnostics and treatment across all key areas of modern medicine." },
+  pgDeptSub: { ru: "Более 20 медицинских специальностей под одной крышей.", en: "More than 20 medical specialties under one roof." },
+  pgDiagTitle: { ru: "Диагностические программы", en: "Diagnostic programs" },
+  pgDiagSub: { ru: "Комплексное обследование организма за 1–3 дня на оборудовании экспертного класса.", en: "A full body check-up in 1–3 days on expert-class equipment." },
+  pgPricesSub: { ru: "Ориентировочная стоимость. Точную цену программы рассчитывает координатор после изучения ситуации.", en: "Indicative prices. The exact program cost is calculated by a coordinator after reviewing your case." },
+  pgReviewsSub: { ru: "Истории людей, которые прошли лечение в клинике Ассута.", en: "Stories of people who were treated at Assuta clinic." },
+  pgNewsSub: { ru: "Новые технологии, методы лечения и полезные материалы.", en: "New technologies, treatment methods and useful materials." },
+  book: { ru: "Записаться", en: "Book now" },
+  contactUs: { ru: "Свяжитесь с нами", en: "Contact us" },
+  leaveRequest: { ru: "Оставить заявку", en: "Leave a request" },
+  contactsSub: { ru: "Ответим и составим программу лечения.", en: "We'll reply and prepare a treatment program." },
+  priceDisclaimer: { ru: "* Цены указаны для демонстрации и не являются публичной офертой.", en: "* Prices are shown for demonstration and are not a public offer." },
+};
+
+export function t(lang, key) {
+  const e = ui[key];
+  return e ? e[lang] ?? e.ru : key;
+}

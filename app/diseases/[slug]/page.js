@@ -1,64 +1,52 @@
+"use client";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import PageHero from "@/components/PageHero";
 import RequestForm from "@/components/RequestForm";
 import DoctorCard from "@/components/DoctorCard";
 import Reveal from "@/components/Reveal";
-import { allDiseases, findDisease, diseaseContent, doctorsForCategory } from "@/data/diseases";
+import { findDisease, diseaseContent, doctorsForCategory } from "@/data/diseases";
+import { pick, t } from "@/data/i18n";
+import { useLang } from "@/components/LangProvider";
 
-export function generateStaticParams() {
-  return allDiseases.map((d) => ({ slug: d.slug }));
-}
-
-export function generateMetadata({ params }) {
-  const d = findDisease(params.slug);
-  return { title: d ? `${d.title} — лечение в Израиле | Ассута` : "Лечение" };
-}
-
-export default function DiseasePage({ params }) {
-  const d = findDisease(params.slug);
+export default function DiseasePage() {
+  const { lang } = useLang();
+  const { slug } = useParams();
+  const d = findDisease(slug);
   if (!d) return notFound();
-  const c = diseaseContent(d);
+  const c = diseaseContent(d, lang);
   const docs = doctorsForCategory(d.category);
+  const title = pick(d.title, lang);
 
   return (
     <>
-      <PageHero title={d.title} crumb={d.title} subtitle={`Направление: ${d.category}`} />
+      <PageHero title={title} crumb={title} subtitle={`${t(lang, "area")}: ${pick(d.category, lang)}`} />
       <section className="py-16">
         <div className="wrap grid gap-10 lg:grid-cols-3">
           <article className="lg:col-span-2">
-            <Reveal>
-              <p className="text-lg leading-relaxed text-brand-ink/80">{c.intro}</p>
-            </Reveal>
+            <Reveal><p className="text-lg leading-relaxed text-body/80">{c.intro}</p></Reveal>
             {c.blocks.map((b, i) => (
-              <Reveal key={b.h} delay={0.06 * (i + 1)}>
+              <Reveal key={i} delay={0.06 * (i + 1)}>
                 <div className="mt-8">
-                  <h2 className="mb-3 text-xl font-bold text-brand-blue">{b.h}</h2>
-                  <p className="leading-relaxed text-brand-ink/75">{b.p}</p>
+                  <h2 className="mb-3 text-xl font-bold text-title">{b.h}</h2>
+                  <p className="leading-relaxed text-body/75">{b.p}</p>
                 </div>
               </Reveal>
             ))}
-
             <Reveal>
               <div className="mt-10">
-                <h2 className="mb-5 text-xl font-bold text-brand-blue">Врачи направления</h2>
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-                  {docs.slice(0, 3).map((doc) => (
-                    <DoctorCard key={doc.slug} doc={doc} />
-                  ))}
+                <h2 className="mb-5 text-xl font-bold text-title">{t(lang, "deptDoctors")}</h2>
+                <div className="grid grid-cols-2 items-stretch gap-4 sm:grid-cols-3">
+                  {docs.slice(0, 3).map((doc) => (<DoctorCard key={doc.slug} doc={doc} />))}
                 </div>
               </div>
             </Reveal>
-
-            <div className="mt-10">
-              <Link href="/diseases" className="btn-ghost">← Ко всем заболеваниям</Link>
-            </div>
+            <div className="mt-10"><Link href="/diseases" className="btn-ghost">{t(lang, "backToDiseases")}</Link></div>
           </article>
-
           <aside>
-            <div className="sticky top-28 rounded-xl2 bg-brand-bg p-6">
-              <h3 className="mb-1 text-lg font-bold text-brand-blue">Узнать стоимость лечения</h3>
-              <p className="mb-5 text-sm text-brand-ink/60">Оставьте заявку — рассчитаем программу и цену.</p>
+            <div className="sticky top-28 rounded-xl2 bg-surface2 p-6">
+              <h3 className="mb-1 text-lg font-bold text-title">{t(lang, "getCost")}</h3>
+              <p className="mb-5 text-sm text-muted">{t(lang, "costHint")}</p>
               <RequestForm compact />
             </div>
           </aside>

@@ -1,32 +1,47 @@
+"use client";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CTASection from "@/components/CTASection";
-
-export const metadata = { title: "Цены на лечение и диагностику — клиника Ассута" };
+import { pick, t } from "@/data/i18n";
+import { useLang } from "@/components/LangProvider";
 
 const groups = [
-  { group: "Консультации", rows: [["Консультация профессора", "$550"], ["Консультация врача-специалиста", "$450"], ["Второе врачебное мнение", "$700"]] },
-  { group: "Диагностика", rows: [["МРТ (одна область)", "$1 100"], ["КТ (одна область)", "$650"], ["ПЭТ-КТ всего тела", "$1 900"], ["УЗИ", "$300"]] },
-  { group: "Онкология", rows: [["Биопсия с гистологией", "от $1 400"], ["Курс химиотерапии (сессия)", "от $1 200"], ["Таргетная терапия", "по запросу"]] },
-  { group: "Хирургия", rows: [["Эндопротезирование сустава", "от $22 000"], ["Лапароскопическая операция", "от $12 000"], ["Нейрохирургическая операция", "по запросу"]] },
+  { group: { ru: "Консультации", en: "Consultations" }, rows: [
+    [{ ru: "Консультация профессора", en: "Professor consultation" }, "$550"],
+    [{ ru: "Консультация врача-специалиста", en: "Specialist consultation" }, "$450"],
+    [{ ru: "Второе врачебное мнение", en: "Second medical opinion" }, "$700"] ] },
+  { group: { ru: "Диагностика", en: "Diagnostics" }, rows: [
+    [{ ru: "МРТ (одна область)", en: "MRI (one area)" }, "$1 100"],
+    [{ ru: "КТ (одна область)", en: "CT (one area)" }, "$650"],
+    [{ ru: "ПЭТ-КТ всего тела", en: "Whole-body PET-CT" }, "$1 900"],
+    [{ ru: "УЗИ", en: "Ultrasound" }, "$300"] ] },
+  { group: { ru: "Онкология", en: "Oncology" }, rows: [
+    [{ ru: "Биопсия с гистологией", en: "Biopsy with histology" }, { ru: "от $1 400", en: "from $1 400" }],
+    [{ ru: "Курс химиотерапии (сессия)", en: "Chemotherapy (session)" }, { ru: "от $1 200", en: "from $1 200" }],
+    [{ ru: "Таргетная терапия", en: "Targeted therapy" }, { ru: "по запросу", en: "on request" }] ] },
+  { group: { ru: "Хирургия", en: "Surgery" }, rows: [
+    [{ ru: "Эндопротезирование сустава", en: "Joint replacement" }, { ru: "от $22 000", en: "from $22 000" }],
+    [{ ru: "Лапароскопическая операция", en: "Laparoscopic surgery" }, { ru: "от $12 000", en: "from $12 000" }],
+    [{ ru: "Нейрохирургическая операция", en: "Neurosurgery" }, { ru: "по запросу", en: "on request" }] ] },
 ];
 
 export default function PricesPage() {
+  const { lang } = useLang();
   return (
     <>
-      <PageHero title="Цены" crumb="Цены" subtitle="Ориентировочная стоимость. Точную цену программы рассчитывает координатор после изучения ситуации." />
+      <PageHero title={lang === "en" ? "Prices" : "Цены"} crumb={lang === "en" ? "Prices" : "Цены"} subtitle={t(lang, "pgPricesSub")} />
       <section className="py-16">
-        <div className="wrap grid gap-6 md:grid-cols-2">
+        <div className="wrap grid items-stretch gap-6 md:grid-cols-2">
           {groups.map((g, i) => (
-            <Reveal key={g.group} delay={(i % 2) * 0.08}>
-              <div className="card p-7">
-                <h2 className="mb-4 text-lg font-bold text-brand-blue">{g.group}</h2>
+            <Reveal key={i} delay={(i % 2) * 0.08} className="h-full">
+              <div className="card h-full p-7">
+                <h2 className="mb-4 text-lg font-bold text-title">{pick(g.group, lang)}</h2>
                 <table className="w-full text-sm">
                   <tbody>
-                    {g.rows.map(([name, price]) => (
-                      <tr key={name} className="border-b border-brand-ink/10 last:border-0">
-                        <td className="py-3 pr-4 text-brand-ink/80">{name}</td>
-                        <td className="py-3 text-right font-semibold text-brand-ink">{price}</td>
+                    {g.rows.map(([name, price], j) => (
+                      <tr key={j} className="border-b border-line last:border-0">
+                        <td className="py-3 pr-4 text-body/80">{pick(name, lang)}</td>
+                        <td className="py-3 text-right font-semibold text-body">{pick(price, lang)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -35,7 +50,7 @@ export default function PricesPage() {
             </Reveal>
           ))}
         </div>
-        <p className="wrap mt-6 text-sm text-brand-ink/40">* Цены указаны для демонстрации и не являются публичной офертой.</p>
+        <p className="wrap mt-6 text-sm text-muted/70">{t(lang, "priceDisclaimer")}</p>
       </section>
       <CTASection />
     </>
