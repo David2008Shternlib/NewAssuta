@@ -21,6 +21,7 @@ export default function Footer() {
           <div>
             <h4 className="mb-4 text-sm font-bold uppercase text-title">{lang === "en" ? "Clinic" : "Клиника"}</h4>
             <ul className="space-y-2 text-sm">
+              <li><Link href="/about" className="text-muted hover:text-brand-blue dark:hover:text-accent">{t(lang, "aboutTitle")}</Link></li>
               {nav.map((n) => (
                 <li key={n.href}><Link href={n.href} className="text-muted hover:text-brand-blue dark:hover:text-accent">{pick(n.label, lang)}</Link></li>
               ))}

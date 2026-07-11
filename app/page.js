@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
+import Counter from "@/components/Counter";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
@@ -49,13 +50,14 @@ export default function Home() {
       {/* STATS */}
       <section className="relative z-10 -mt-10">
         <div className="wrap">
-          <div className="grid items-stretch gap-4 rounded-xl2 bg-surface p-6 shadow-soft sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid items-stretch gap-y-8 rounded-xl2 bg-surface p-8 shadow-soft sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s, i) => (
-              <Reveal key={i} delay={i * 0.08} className="h-full">
-                <div className="flex h-full flex-col items-center px-4 py-3 text-center">
-                  <div className="text-4xl font-bold text-brand-green">{s.num}{s.unit ? ` ${pick(s.unit, lang)}` : ""}</div>
-                  <div className="mb-4 mt-2 text-sm font-medium text-muted">{pick(s.label, lang)}</div>
-                  <Link href={s.href} className="btn-ghost mt-auto gap-1.5">{t(lang, s.btn)}<Arrow dir="chevron" /></Link>
+              <Reveal key={i} delay={i * 0.1} className="h-full lg:border-l lg:border-line lg:first:border-l-0">
+                <div className="flex h-full flex-col items-center justify-center px-6 text-center">
+                  <div className="text-5xl font-extrabold text-brand-green">
+                    <Counter value={s.num} />{s.unit ? <span className="text-3xl font-bold"> {pick(s.unit, lang)}</span> : null}
+                  </div>
+                  <div className="mt-3 text-sm font-medium text-muted">{pick(s.label, lang)}</div>
                 </div>
               </Reveal>
             ))}
