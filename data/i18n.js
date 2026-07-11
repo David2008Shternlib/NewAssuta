@@ -63,6 +63,9 @@ export const ui = {
   demoNote: { ru: "Демо-режим: на рабочем сайте заявка уходит на почту и в Telegram.", en: "Demo mode: on the live site the request is sent to email and Telegram." },
   phoneError: { ru: "Введите корректный номер телефона", en: "Please enter a valid phone number" },
   nameError: { ru: "Введите имя", en: "Please enter your name" },
+  aboutClinic: { ru: "О клинике", en: "About clinic" },
+  diagnosticsBtn: { ru: "Диагностика", en: "Diagnostics" },
+  aboutTitle: { ru: "О клинике", en: "About the clinic" },
 
   // подписи страниц
   pgDoctorsSub: { ru: "Более 3000 узкопрофильных специалистов: профессора и врачи высшей категории с мировым именем.", en: "More than 3000 specialists: professors and top-tier doctors with a global reputation." },

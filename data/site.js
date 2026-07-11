@@ -22,10 +22,10 @@ export const site = {
 };
 
 export const stats = [
-  { num: "100%", label: { ru: "всех операций в Израиле проводятся в Ассута", en: "of all surgeries in Israel are done at Assuta" } },
-  { num: "20+", label: { ru: "медицинских специальностей", en: "medical specialties" } },
-  { num: "1935", label: { ru: "год основания клиники", en: "the year the clinic was founded" } },
-  { num: "3000+", label: { ru: "узкопрофильных врачей", en: "specialist doctors" } },
+  { num: "13%", label: { ru: "Всех операций в Израиле проводятся в Ассута", en: "All operations in Israel are conducted in Assuta" }, href: "/about", btn: "aboutClinic" },
+  { num: "500+", label: { ru: "Видов операций", en: "Types of operations" }, href: "/diagnostics", btn: "diagnosticsBtn" },
+  { num: "88", unit: { ru: "лет", en: "years" }, label: { ru: "Клиника Ассута основана в 1935 году", en: "Clinic Assuta was founded in 1935" }, href: "/about", btn: "aboutClinic" },
+  { num: "92000+", label: { ru: "Столько операций врачи выполняют ежегодно", en: "That's how many surgeries doctors perform every year" }, href: "/diagnostics", btn: "diagnosticsBtn" },
 ];
 
 export const offers = [

@@ -49,12 +49,13 @@ export default function Home() {
       {/* STATS */}
       <section className="relative z-10 -mt-10">
         <div className="wrap">
-          <div className="grid gap-4 rounded-xl2 bg-surface p-6 shadow-soft sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid items-stretch gap-4 rounded-xl2 bg-surface p-6 shadow-soft sm:grid-cols-2 lg:grid-cols-4">
             {stats.map((s, i) => (
-              <Reveal key={i} delay={i * 0.08}>
-                <div className="px-4 py-3 text-center">
-                  <div className="text-4xl font-bold text-brand-green">{s.num}</div>
-                  <div className="mt-2 text-sm font-medium text-muted">{pick(s.label, lang)}</div>
+              <Reveal key={i} delay={i * 0.08} className="h-full">
+                <div className="flex h-full flex-col items-center px-4 py-3 text-center">
+                  <div className="text-4xl font-bold text-brand-green">{s.num}{s.unit ? ` ${pick(s.unit, lang)}` : ""}</div>
+                  <div className="mb-4 mt-2 text-sm font-medium text-muted">{pick(s.label, lang)}</div>
+                  <Link href={s.href} className="btn-ghost mt-auto gap-1.5">{t(lang, s.btn)}<Arrow dir="chevron" /></Link>
                 </div>
               </Reveal>
             ))}
