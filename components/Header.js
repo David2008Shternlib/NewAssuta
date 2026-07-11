@@ -35,7 +35,10 @@ export default function Header() {
       {/* Верхняя полоса — сворачивается при скролле */}
       <div className={`overflow-hidden border-line bg-surface2 transition-all duration-300 hidden md:block ${scrolled ? "max-h-0 border-b-0 opacity-0" : "max-h-16 border-b opacity-100"}`}>
         <div className="wrap flex items-center justify-between py-2 text-xs">
-          <span className="text-muted">{t(lang, "headerTagline")}</span>
+          <div className="flex items-center gap-5">
+            <span className="text-muted">{t(lang, "headerTagline")}</span>
+            <Link href="/about" className="font-semibold text-body hover:text-brand-blue dark:hover:text-accent">{t(lang, "aboutTitle")}</Link>
+          </div>
           <div className="flex items-center gap-5">
             {site.phones.map((p) => (
               <a key={p.value} href={p.href} className="flex items-center gap-1.5 font-semibold text-body hover:text-brand-blue">
@@ -62,7 +65,6 @@ export default function Header() {
         </nav>
 
         <div className="hidden flex-none items-center gap-3 lg:flex">
-          <LangSwitch />
           <a href="#request" className="btn-green whitespace-nowrap !px-5">{t(lang, "freeConsult")}</a>
         </div>
 
