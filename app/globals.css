@@ -15,17 +15,15 @@
   --accent: 134 190 86;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --page: 15 20 32;
-    --surface: 26 32 48;
-    --surface2: 20 26 40;
-    --text: 229 232 240;
-    --muted: 160 166 184;
-    --line: 54 62 86;
-    --title: 173 190 255;
-    --accent: 150 205 100;
-  }
+.dark {
+  --page: 15 20 32;
+  --surface: 26 32 48;
+  --surface2: 20 26 40;
+  --text: 229 232 240;
+  --muted: 160 166 184;
+  --line: 54 62 86;
+  --title: 173 190 255;
+  --accent: 150 205 100;
 }
 
 html { scroll-behavior: smooth; }

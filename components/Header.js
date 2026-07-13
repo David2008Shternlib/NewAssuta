@@ -4,6 +4,7 @@ import Link from "next/link";
 import { nav, site } from "@/data/site";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Header() {
   const { lang, setLang } = useLang();
@@ -45,6 +46,7 @@ export default function Header() {
                 <span>{p.flag}</span>{p.value}
               </a>
             ))}
+            <ThemeToggle />
             <LangSwitch />
           </div>
         </div>
@@ -92,7 +94,7 @@ export default function Header() {
                 <a key={p.value} href={p.href} className="font-semibold text-brand-blue dark:text-accent">{p.flag} {p.value}</a>
               ))}
             </div>
-            <LangSwitch />
+            <div className="flex items-center gap-2"><ThemeToggle /><LangSwitch /></div>
           </div>
         </div>
       </div>
