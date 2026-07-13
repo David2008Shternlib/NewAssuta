@@ -63,7 +63,7 @@ export default function Home() {
                   <div className="text-5xl font-extrabold text-brand-green">
                     <Counter value={s.num} />{s.unit ? <span className="text-3xl font-bold"> {pick(s.unit, lang)}</span> : null}
                   </div>
-                  <div className="mt-3 text-sm font-medium text-muted">{pick(s.label, lang)}</div>
+                  <div className="mt-5 text-sm font-medium text-muted">{pick(s.label, lang)}</div>
                 </div>
               </Reveal>
             ))}
