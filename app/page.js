@@ -72,7 +72,7 @@ export default function Home() {
       </section>
 
       {/* TRUST BAR */}
-      <section className="border-y border-line bg-surface2 py-7">
+      <section className="mt-10 border-y border-line bg-surface2 py-7">
         <div className="wrap grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-4">
           {trust.map((it, i) => (
             <Reveal key={i} delay={i * 0.06}>
