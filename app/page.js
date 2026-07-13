@@ -12,6 +12,12 @@ import { useLang } from "@/components/LangProvider";
 
 export default function Home() {
   const { lang } = useLang();
+  const trust = [
+    { icon: "🛡️", label: { ru: "Под контролем Минздрава Израиля", en: "Overseen by Israel's Ministry of Health" } },
+    { icon: "⭐", label: { ru: "Реальные отзывы пациентов", en: "Real patient reviews" } },
+    { icon: "🏥", label: { ru: "Частная клиника с 1935 года", en: "Private clinic since 1935" } },
+    { icon: "🌐", label: { ru: "Сопровождение на вашем языке", en: "Support in your language" } },
+  ];
   return (
     <>
       {/* HERO */}
@@ -62,6 +68,20 @@ export default function Home() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* TRUST BAR */}
+      <section className="border-y border-line bg-surface2 py-7">
+        <div className="wrap grid grid-cols-2 gap-x-6 gap-y-5 md:grid-cols-4">
+          {trust.map((it, i) => (
+            <Reveal key={i} delay={i * 0.06}>
+              <div className="flex flex-col items-center gap-1.5 text-center">
+                <span className="text-2xl">{it.icon}</span>
+                <span className="text-sm font-semibold leading-snug text-body">{pick(it.label, lang)}</span>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </section>
 

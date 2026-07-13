@@ -6,14 +6,18 @@ import { pick, t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
 import ThemeToggle from "./ThemeToggle";
 
+const PhoneIcon = ({ className = "" }) => (
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+  </svg>
+);
+
 export default function Header() {
   const { lang, setLang } = useLang();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    // Гистерезис: сворачиваем после 70px, разворачиваем только ниже 15px —
-    // это убирает дрожание, когда скролл замирает у самого порога.
     const onScroll = () => setScrolled((prev) => (prev ? window.scrollY > 15 : window.scrollY > 70));
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -58,7 +62,7 @@ export default function Header() {
           <img src={site.logo} alt="Assuta" className={`w-auto transition-all dark:brightness-0 dark:invert ${scrolled ? "h-7" : "h-9"}`} />
         </Link>
 
-        <nav className="hidden items-center gap-4 xl:gap-5 lg:flex">
+        <nav className="hidden items-center gap-4 xl:flex xl:gap-6">
           {nav.map((n) => (
             <Link key={n.href} href={n.href} className="whitespace-nowrap text-sm font-semibold text-body transition-colors hover:text-brand-green">
               {pick(n.label, lang)}
@@ -66,21 +70,29 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="hidden flex-none items-center gap-3 lg:flex">
+        <div className="hidden flex-none items-center gap-4 xl:flex">
+          <a href={site.phones[0].href} className="flex items-center gap-2 text-base font-bold text-brand-blue transition-opacity hover:opacity-80 dark:text-accent">
+            <PhoneIcon />{site.phones[0].value}
+          </a>
           <a href="#request" className="btn-green whitespace-nowrap !px-5">{t(lang, "freeConsult")}</a>
         </div>
 
-        <button className="lg:hidden" aria-label="Menu" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
-          <div className="space-y-1.5">
-            <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "translate-y-2 rotate-45" : ""}`} />
-            <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "-translate-y-2 -rotate-45" : ""}`} />
-          </div>
-        </button>
+        <div className="flex items-center gap-2 xl:hidden">
+          <a href={site.phones[0].href} aria-label="Call" className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-sm">
+            <PhoneIcon />
+          </a>
+          <button aria-label="Menu" aria-expanded={open} onClick={() => setOpen((v) => !v)} className="flex h-11 w-11 items-center justify-center">
+            <div className="space-y-1.5">
+              <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "translate-y-2 rotate-45" : ""}`} />
+              <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "opacity-0" : ""}`} />
+              <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+            </div>
+          </button>
+        </div>
       </div>
 
       {/* Мобильное меню — всегда в DOM, плавно выезжает по высоте */}
-      <div className={`overflow-hidden bg-page transition-all duration-300 ease-out lg:hidden ${open ? "max-h-[560px] border-t border-line opacity-100" : "max-h-0 opacity-0"}`}>
+      <div className={`overflow-hidden bg-page transition-all duration-300 ease-out xl:hidden ${open ? "max-h-[560px] border-t border-line opacity-100" : "max-h-0 opacity-0"}`}>
         <div className="wrap flex flex-col py-4">
           {nav.map((n) => (
             <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="border-b border-line/60 py-3 font-semibold text-body">
