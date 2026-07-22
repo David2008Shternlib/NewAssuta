@@ -1,58 +1,58 @@
-"use client";
-import Link from "next/link";
-import { useParams, notFound } from "next/navigation";
-import PageHero from "@/components/PageHero";
-import RequestForm from "@/components/RequestForm";
-import DoctorCard from "@/components/DoctorCard";
-import Reveal from "@/components/Reveal";
-import Arrow from "@/components/Arrow";
-import { findDisease, diseaseContent, doctorsForCategory } from "@/data/diseases";
-import { pick, t } from "@/data/i18n";
-import { useLang } from "@/components/LangProvider";
+import { notFound } from "next/navigation";
+import DiseaseDetail from "./DiseaseDetail";
+import { siteUrl } from "@/data/site";
+import { allDiseases, findDisease } from "@/data/diseases";
+import { pick } from "@/data/i18n";
 
-export default function DiseasePage() {
-  const { lang } = useLang();
-  const { slug } = useParams();
-  const d = findDisease(slug);
+export function generateStaticParams() {
+  return allDiseases.map((d) => ({ slug: d.slug }));
+}
+
+export function generateMetadata({ params }) {
+  const d = findDisease(params.slug);
+  if (!d) return {};
+  const title = pick(d.title, "ru");
+  const category = pick(d.category, "ru");
+  const description = `${title}: диагностика и лечение в Израиле в клинике Ассута. Направление «${category}», современные протоколы, ведущие врачи, расчёт стоимости программы.`;
+  return {
+    title: `${title} — лечение в Израиле`,
+    description,
+    alternates: { canonical: `/diseases/${d.slug}` },
+    openGraph: {
+      title: `${title} — лечение в Израиле | Assuta`,
+      description,
+      url: `${siteUrl}/diseases/${d.slug}`,
+    },
+  };
+}
+
+export default function Page({ params }) {
+  const d = findDisease(params.slug);
   if (!d) return notFound();
-  const c = diseaseContent(d, lang);
-  const docs = doctorsForCategory(d.category);
-  const title = pick(d.title, lang);
-
+  const title = pick(d.title, "ru");
+  const webpage = {
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    name: `${title} — лечение в Израиле`,
+    url: `${siteUrl}/diseases/${d.slug}`,
+    about: { "@type": "MedicalCondition", name: title },
+    audience: { "@type": "MedicalAudience", audienceType: "Patient" },
+    publisher: { "@type": "MedicalOrganization", name: "Assuta", url: siteUrl },
+  };
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Главная", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: "Заболевания", item: `${siteUrl}/diseases` },
+      { "@type": "ListItem", position: 3, name: title, item: `${siteUrl}/diseases/${d.slug}` },
+    ],
+  };
   return (
     <>
-      <PageHero title={title} crumb={title} subtitle={`${t(lang, "area")}: ${pick(d.category, lang)}`} />
-      <section className="py-16">
-        <div className="wrap grid gap-10 lg:grid-cols-3">
-          <article className="lg:col-span-2">
-            <Reveal><p className="text-lg leading-relaxed text-body/80">{c.intro}</p></Reveal>
-            {c.blocks.map((b, i) => (
-              <Reveal key={i} delay={0.06 * (i + 1)}>
-                <div className="mt-8">
-                  <h2 className="mb-3 text-xl font-bold text-title">{b.h}</h2>
-                  <p className="leading-relaxed text-body/75">{b.p}</p>
-                </div>
-              </Reveal>
-            ))}
-            <Reveal>
-              <div className="mt-10">
-                <h2 className="mb-5 text-xl font-bold text-title">{t(lang, "deptDoctors")}</h2>
-                <div className="grid grid-cols-2 items-stretch gap-4 sm:grid-cols-3">
-                  {docs.slice(0, 3).map((doc) => (<DoctorCard key={doc.slug} doc={doc} />))}
-                </div>
-              </div>
-            </Reveal>
-            <div className="mt-10"><Link href="/diseases" className="btn-ghost gap-1.5"><Arrow dir="left" />{t(lang, "backToDiseases")}</Link></div>
-          </article>
-          <aside>
-            <div className="sticky top-28 rounded-xl2 bg-surface2 p-6">
-              <h3 className="mb-1 text-lg font-bold text-title">{t(lang, "getCost")}</h3>
-              <p className="mb-5 text-sm text-muted">{t(lang, "costHint")}</p>
-              <RequestForm compact />
-            </div>
-          </aside>
-        </div>
-      </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webpage) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+      <DiseaseDetail slug={d.slug} />
     </>
   );
 }
