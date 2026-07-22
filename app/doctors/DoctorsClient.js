@@ -3,11 +3,10 @@ import PageHero from "@/components/PageHero";
 import DoctorCard from "@/components/DoctorCard";
 import Reveal from "@/components/Reveal";
 import CTASection from "@/components/CTASection";
-import { doctors } from "@/data/site";
 import { t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
-export default function DoctorsPage() {
+export default function DoctorsClient({ doctors = [] }) {
   const { lang } = useLang();
   return (
     <>

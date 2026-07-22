@@ -87,3 +87,17 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Рендер HTML-контента из CMS (импорт со старого сайта) */
+.cms-body h2 { color: rgb(var(--title)); font-weight: 700; font-size: 1.35rem; margin: 1.4em 0 .5em; }
+.cms-body h3 { color: rgb(var(--title)); font-weight: 700; font-size: 1.15rem; margin: 1.2em 0 .4em; }
+.cms-body p { margin: 0 0 1em; }
+.cms-body ul, .cms-body ol { margin: 0 0 1em 1.25em; }
+.cms-body ul { list-style: disc; }
+.cms-body ol { list-style: decimal; }
+.cms-body li { margin-bottom: .4em; }
+.cms-body a { color: rgb(var(--title)); text-decoration: underline; }
+.cms-body img { border-radius: 12px; margin: 1em 0; max-width: 100%; height: auto; }
+.cms-body table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: .95em; }
+.cms-body td, .cms-body th { border: 1px solid rgb(var(--line)); padding: .5em .7em; }
+.cms-body strong { color: rgb(var(--text)); }

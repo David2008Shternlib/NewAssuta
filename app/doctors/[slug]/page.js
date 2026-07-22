@@ -1,25 +1,26 @@
 import { notFound } from "next/navigation";
 import DoctorDetail from "./DoctorDetail";
-import { doctors, deptNames, siteUrl } from "@/data/site";
-import { pick } from "@/data/i18n";
+import { getAllDoctors, getDoctor } from "@/lib/sanity";
+import { siteUrl } from "@/data/site";
 
-export function generateStaticParams() {
-  return doctors.map((d) => ({ slug: d.slug }));
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const docs = await getAllDoctors();
+  return docs.map((d) => ({ slug: d.slug }));
 }
 
-export function generateMetadata({ params }) {
-  const doc = doctors.find((d) => d.slug === params.slug);
+export async function generateMetadata({ params }) {
+  const doc = await getDoctor(params.slug);
   if (!doc) return {};
-  const name = pick(doc.name, "ru");
-  const spec = pick(doc.spec, "ru");
-  const dept = pick(deptNames[doc.dept], "ru");
-  const description = `${name} — ${spec}, ${dept} в клинике Ассута (Израиль, Тель-Авив). Запись на консультацию и лечение, второе мнение.`;
+  const spec = doc.spec ? ` — ${doc.spec}` : "";
+  const description = `${doc.name}${spec}, клиника Ассута (Израиль, Тель-Авив). Запись на консультацию и лечение, второе врачебное мнение.`;
   return {
-    title: `${name} — ${spec}`,
+    title: `${doc.name}${spec}`,
     description,
     alternates: { canonical: `/doctors/${doc.slug}` },
     openGraph: {
-      title: `${name} — ${spec} | Assuta`,
+      title: `${doc.name}${spec} | Assuta`,
       description,
       url: `${siteUrl}/doctors/${doc.slug}`,
       images: doc.photo ? [{ url: doc.photo }] : undefined,
@@ -27,15 +28,14 @@ export function generateMetadata({ params }) {
   };
 }
 
-export default function Page({ params }) {
-  const doc = doctors.find((d) => d.slug === params.slug);
+export default async function Page({ params }) {
+  const doc = await getDoctor(params.slug);
   if (!doc) return notFound();
-  const name = pick(doc.name, "ru");
   const physician = {
     "@context": "https://schema.org",
     "@type": "Physician",
-    name,
-    medicalSpecialty: pick(doc.spec, "ru"),
+    name: doc.name,
+    medicalSpecialty: doc.spec || doc.dept || undefined,
     image: doc.photo || undefined,
     url: `${siteUrl}/doctors/${doc.slug}`,
     worksFor: { "@type": "MedicalOrganization", name: "Assuta", url: siteUrl },
@@ -46,14 +46,14 @@ export default function Page({ params }) {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Главная", item: siteUrl },
       { "@type": "ListItem", position: 2, name: "Врачи", item: `${siteUrl}/doctors` },
-      { "@type": "ListItem", position: 3, name, item: `${siteUrl}/doctors/${doc.slug}` },
+      { "@type": "ListItem", position: 3, name: doc.name, item: `${siteUrl}/doctors/${doc.slug}` },
     ],
   };
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(physician) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
-      <DoctorDetail slug={doc.slug} />
+      <DoctorDetail doc={doc} />
     </>
   );
 }
