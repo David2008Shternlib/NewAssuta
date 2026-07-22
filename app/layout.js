@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
       </head>
       <body>
-        <LangProvider initialLang={locale === "en" ? "en" : undefined}>
+        <LangProvider initialLang={locale}>
           <Header />
           <main>{children}</main>
           <Footer />

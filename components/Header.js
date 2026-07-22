@@ -14,7 +14,7 @@ const PhoneIcon = ({ className = "" }) => (
 );
 
 export default function Header() {
-  const { lang } = useLang();
+  const { lang, setLang } = useLang();
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -31,6 +31,7 @@ export default function Header() {
   const switchLang = (l) => {
     const bare = (pathname || "/").replace(/^\/en(?=\/|$)/, "") || "/";
     const target = l === "en" ? (bare === "/" ? "/en" : `/en${bare}`) : bare;
+    setLang(l);
     router.push(target);
   };
 
