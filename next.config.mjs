@@ -22,10 +22,6 @@ const nextConfig = {
       { source: "/medical-tourism-department", destination: "/about", permanent: true },
       { source: "/medical-tourism-department/:slug*", destination: "/about", permanent: true },
       { source: "/uslugi-logistiki", destination: "/about", permanent: true },
-      // старый /en/* (клиентский тумблер) — временно на соответствующие страницы,
-      // пока не сделаны настоящие SSR-маршруты /en/*
-      { source: "/en", destination: "/", permanent: false },
-      { source: "/en/:path*", destination: "/:path*", permanent: false },
       // категории врачей
       ...doctorCategories.map((c) => ({ source: `/doctors/${c}`, destination: "/doctors", permanent: true })),
     ];

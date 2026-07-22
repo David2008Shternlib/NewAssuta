@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { nav, site } from "@/data/site";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
@@ -13,7 +14,9 @@ const PhoneIcon = ({ className = "" }) => (
 );
 
 export default function Header() {
-  const { lang, setLang } = useLang();
+  const { lang } = useLang();
+  const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -24,16 +27,25 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // переключение языка = навигация между / и /en/*
+  const switchLang = (l) => {
+    const bare = (pathname || "/").replace(/^\/en(?=\/|$)/, "") || "/";
+    const target = l === "en" ? (bare === "/" ? "/en" : `/en${bare}`) : bare;
+    router.push(target);
+  };
+
   const LangSwitch = ({ className = "" }) => (
     <div className={`flex flex-none items-center rounded-pill border border-line p-0.5 text-xs font-bold ${className}`}>
       {["ru", "en"].map((l) => (
-        <button key={l} onClick={() => setLang(l)}
+        <button key={l} onClick={() => switchLang(l)}
           className={`rounded-pill px-2.5 py-1 uppercase transition-colors ${lang === l ? "bg-brand-blue text-white" : "text-muted hover:text-brand-blue"}`}>
           {l}
         </button>
       ))}
     </div>
   );
+
+  const homeHref = lang === "en" ? "/en" : "/";
 
   return (
     <header className="sticky top-0 z-50 bg-page/95 backdrop-blur">
@@ -42,7 +54,7 @@ export default function Header() {
         <div className="wrap flex items-center justify-between py-2 text-xs">
           <div className="flex items-center gap-5">
             <span className="text-muted">{t(lang, "headerTagline")}</span>
-            <Link href="/about" className="font-semibold text-body hover:text-brand-blue dark:hover:text-accent">{t(lang, "aboutTitle")}</Link>
+            <Link href={lang === "en" ? "/en/about" : "/about"} className="font-semibold text-body hover:text-brand-blue dark:hover:text-accent">{t(lang, "aboutTitle")}</Link>
           </div>
           <div className="flex items-center gap-5">
             {site.phones.map((p) => (
@@ -58,13 +70,13 @@ export default function Header() {
 
       {/* Основная строка */}
       <div className={`wrap flex items-center justify-between gap-4 transition-all duration-300 ${scrolled ? "py-2.5" : "py-4"}`}>
-        <Link href="/" className="flex-none">
+        <Link href={homeHref} className="flex-none">
           <img src={site.logo} alt="Assuta" className={`w-auto transition-all dark:brightness-0 dark:invert ${scrolled ? "h-7" : "h-9"}`} />
         </Link>
 
         <nav className="hidden items-center gap-4 xl:flex xl:gap-6">
           {nav.map((n) => (
-            <Link key={n.href} href={n.href} className="whitespace-nowrap text-sm font-semibold text-body transition-colors hover:text-brand-green">
+            <Link key={n.href} href={lang === "en" ? `/en${n.href}` : n.href} className="whitespace-nowrap text-sm font-semibold text-body transition-colors hover:text-brand-green">
               {pick(n.label, lang)}
             </Link>
           ))}
@@ -91,11 +103,11 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Мобильное меню — всегда в DOM, плавно выезжает по высоте */}
+      {/* Мобильное меню */}
       <div className={`overflow-hidden bg-page transition-all duration-300 ease-out xl:hidden ${open ? "max-h-[560px] border-t border-line opacity-100" : "max-h-0 opacity-0"}`}>
         <div className="wrap flex flex-col py-4">
           {nav.map((n) => (
-            <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="border-b border-line/60 py-3 font-semibold text-body">
+            <Link key={n.href} href={lang === "en" ? `/en${n.href}` : n.href} onClick={() => setOpen(false)} className="border-b border-line/60 py-3 font-semibold text-body">
               {pick(n.label, lang)}
             </Link>
           ))}
