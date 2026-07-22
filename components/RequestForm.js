@@ -25,6 +25,8 @@ export default function RequestForm({ compact = false }) {
   const [phone, setPhone] = useState("");
   const [comment, setComment] = useState("");
   const [errors, setErrors] = useState({});
+  const [company, setCompany] = useState(""); // honeypot против ботов
+  const [busy, setBusy] = useState(false);
 
   function onPhoneChange(e) {
     setPhone(e.target.value.replace(/\D/g, "").slice(0, country.max));
@@ -37,14 +39,29 @@ export default function RequestForm({ compact = false }) {
     setErrors((x) => ({ ...x, phone: null }));
   }
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault();
     const err = {};
     if (!name.trim()) err.name = t(lang, "nameError");
     if (phone.length < country.min || phone.length > country.max) err.phone = t(lang, "phoneError");
     setErrors(err);
     if (Object.keys(err).length) return;
-    // В превью заявка не уходит на сервер. На боевом — на почту/Telegram/CRM.
+    setBusy(true);
+    try {
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          phone: `${country.dial} ${phone}`,
+          country: country.code,
+          comment,
+          company,
+          source: typeof window !== "undefined" ? window.location.pathname : "",
+        }),
+      });
+    } catch (_) {}
+    setBusy(false);
     setSent(true);
   }
 
@@ -66,6 +83,9 @@ export default function RequestForm({ compact = false }) {
 
   return (
     <form onSubmit={submit} className="space-y-3" noValidate>
+      {/* honeypot — скрыто от людей, ловит ботов */}
+      <input type="text" name="company" tabIndex={-1} autoComplete="off" aria-hidden="true"
+        value={company} onChange={(e) => setCompany(e.target.value)} className="hidden" />
       {/* Имя */}
       <div>
         <input
@@ -113,7 +133,7 @@ export default function RequestForm({ compact = false }) {
         </div>
       )}
 
-      <button type="submit" className="btn-blue w-full !py-4">{t(lang, "getConsult")}</button>
+      <button type="submit" disabled={busy} className="btn-blue w-full !py-4 disabled:opacity-60">{t(lang, "getConsult")}</button>
       <p className="text-center text-xs text-muted/70">{t(lang, "formPrivacy")}</p>
     </form>
   );
