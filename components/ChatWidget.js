@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useLang } from "./LangProvider";
+import { integrations } from "@/data/site";
 
 const txt = {
   title: { ru: "Онлайн-консультант", en: "Online consultant" },
@@ -22,6 +23,7 @@ const txt = {
 
 export default function ChatWidget() {
   const { lang } = useLang();
+  if (integrations.jivoId) return null; // включён настоящий Jivo — демо-виджет прячем
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([{ from: "bot", text: txt.greeting.en }]);
   const [input, setInput] = useState("");

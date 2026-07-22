@@ -1,3 +1,12 @@
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://assuta.org";
+
+// Интеграции: чтобы ВКЛЮЧИТЬ — впиши значение, чтобы выключить — оставь "".
+// Jivo: ID виджета из кода Jivo (например "awgE4pOVUu"). Метрика: номер счётчика (например 39297525).
+export const integrations = {
+  jivoId: "",            // JivoChat: вставь виджет-ID — чат включится, наш демо-виджет спрячется
+  yandexMetrikaId: "",   // Яндекс.Метрика: вставь номер счётчика — метрика включится
+};
+
 // Билингвальные данные (RU/EN), собранные с assuta.org, для превью.
 export const site = {
   name: "Assuta",
