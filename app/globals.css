@@ -33,6 +33,8 @@ body {
   color: rgb(var(--text));
   background: rgb(var(--page));
   -webkit-font-smoothing: antialiased;
+  /* страховка от горизонтальной прокрутки; clip (а не hidden) — чтобы не сломать липкую шапку */
+  overflow-x: clip;
 }
 
 @layer components {

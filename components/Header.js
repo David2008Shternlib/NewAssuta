@@ -75,19 +75,26 @@ export default function Header() {
           <img src={site.logo} alt="Assuta" className={`w-auto transition-all dark:brightness-0 dark:invert ${scrolled ? "h-7" : "h-9"}`} />
         </Link>
 
-        <nav className="hidden items-center gap-4 xl:flex xl:gap-6">
+        <nav className="hidden min-w-0 items-center xl:flex xl:gap-3.5 2xl:gap-6">
           {nav.map((n) => (
-            <Link key={n.href} href={lang === "en" ? `/en${n.href}` : n.href} className="whitespace-nowrap text-sm font-semibold text-body transition-colors hover:text-brand-green">
+            <Link key={n.href} href={lang === "en" ? `/en${n.href}` : n.href} className="whitespace-nowrap text-[13px] font-semibold text-body transition-colors hover:text-brand-green 2xl:text-sm">
               {pick(n.label, lang)}
             </Link>
           ))}
         </nav>
 
-        <div className="hidden flex-none items-center gap-4 xl:flex">
-          <a href={site.phones[0].href} className="flex items-center gap-2 text-base font-bold text-brand-blue transition-opacity hover:opacity-80 dark:text-accent">
-            <PhoneIcon />{site.phones[0].value}
+        <div className="hidden flex-none items-center gap-2.5 xl:flex 2xl:gap-4">
+          {/* до 2xl телефон показываем иконкой — номер целиком есть в верхней строке */}
+          <a
+            href={site.phones[0].href}
+            aria-label={site.phones[0].value}
+            title={site.phones[0].value}
+            className="flex h-10 w-10 items-center justify-center gap-2 rounded-full text-brand-blue ring-1 ring-line transition-opacity hover:opacity-80 dark:text-accent 2xl:h-auto 2xl:w-auto 2xl:rounded-none 2xl:text-base 2xl:font-bold 2xl:ring-0"
+          >
+            <PhoneIcon />
+            <span className="hidden whitespace-nowrap 2xl:inline">{site.phones[0].value}</span>
           </a>
-          <a href="#request" className="btn-green whitespace-nowrap !px-5">{t(lang, "freeConsult")}</a>
+          <a href="#request" className="btn-green whitespace-nowrap !px-4 !py-3 !text-xs 2xl:!px-7 2xl:!text-sm">{t(lang, "freeConsult")}</a>
         </div>
 
         <div className="flex items-center gap-2 xl:hidden">
