@@ -1,0 +1,27 @@
+import { notFound } from "next/navigation";
+import NewsDetail from "./NewsDetail";
+import { getAllNews, getNews } from "@/lib/sanity";
+import { siteUrl } from "@/data/site";
+
+export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const items = await getAllNews();
+  return items.map((n) => ({ slug: n.slug }));
+}
+export async function generateMetadata({ params }) {
+  const n = await getNews(params.slug);
+  if (!n) return {};
+  const description = (n.excerpt || n.title || "").slice(0, 180);
+  return {
+    title: n.title,
+    description,
+    alternates: { canonical: `/news/${n.slug}` },
+    openGraph: { title: `${n.title} | Assuta`, description, url: `${siteUrl}/news/${n.slug}`, images: n.image ? [{ url: n.image }] : undefined },
+  };
+}
+export default async function Page({ params }) {
+  const n = await getNews(params.slug);
+  if (!n) return notFound();
+  return <NewsDetail item={n} />;
+}

@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --page: 255 255 255;
+  --surface: 255 255 255;
+  --surface2: 244 245 249;
+  --text: 51 51 51;
+  --muted: 84 90 107;
+  --line: 224 227 238;
+  --title: 40 56 144;
+  --accent: 134 190 86;
+}
+
+.dark {
+  --page: 15 20 32;
+  --surface: 26 32 48;
+  --surface2: 20 26 40;
+  --text: 229 232 240;
+  --muted: 160 166 184;
+  --line: 54 62 86;
+  --title: 173 190 255;
+  --accent: 150 205 100;
+}
+
+html { scroll-behavior: smooth; font-size: 112.5%; } /* база 18px для читаемости */
+
+body {
+  font-family: Montserrat, system-ui, sans-serif;
+  color: rgb(var(--text));
+  background: rgb(var(--page));
+  -webkit-font-smoothing: antialiased;
+  /* страховка от горизонтальной прокрутки; clip (а не hidden) — чтобы не сломать липкую шапку */
+  overflow-x: clip;
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-wrap px-5 md:px-8; }
+
+  .btn-blue {
+    @apply inline-flex items-center justify-center rounded-pill bg-brand-blue px-7 py-3.5 text-sm font-bold text-white
+    border border-brand-blue transition-all duration-300 hover:bg-transparent hover:text-brand-blue dark:hover:text-white;
+  }
+  .btn-green {
+    @apply inline-flex items-center justify-center rounded-pill bg-brand-green px-7 py-3.5 text-sm font-bold text-white
+    border border-brand-green transition-all duration-300 hover:bg-transparent hover:text-brand-green;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-pill bg-brand-blue/10 px-5 py-2.5 text-sm font-bold uppercase
+    text-brand-blue transition-all duration-300 hover:bg-brand-green hover:text-white dark:text-accent dark:bg-white/10;
+  }
+
+  .card {
+    @apply rounded-card border border-line bg-surface transition-all duration-300;
+  }
+  .card-hover:hover { @apply border-brand-green/60 shadow-card -translate-y-1; }
+
+  .eyebrow { @apply text-sm font-semibold uppercase tracking-wide text-brand-green; }
+
+  .section-title {
+    @apply text-title font-bold uppercase leading-tight;
+  }
+}
+
+.link-underline {
+  color: rgb(var(--muted));
+  border-bottom: 1px solid rgb(var(--line));
+  transition: color .25s, border-color .25s;
+}
+.link-underline:hover { color: rgb(var(--title)); border-color: rgb(var(--accent)); }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+  will-change: opacity, transform;
+}
+.reveal-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Рендер HTML-контента из CMS (импорт со старого сайта) */
+.cms-body h2 { color: rgb(var(--title)); font-weight: 700; font-size: 1.35rem; margin: 1.4em 0 .5em; }
+.cms-body h3 { color: rgb(var(--title)); font-weight: 700; font-size: 1.15rem; margin: 1.2em 0 .4em; }
+.cms-body p { margin: 0 0 1em; }
+.cms-body ul, .cms-body ol { margin: 0 0 1em 1.25em; }
+.cms-body ul { list-style: disc; }
+.cms-body ol { list-style: decimal; }
+.cms-body li { margin-bottom: .4em; }
+.cms-body a { color: rgb(var(--title)); text-decoration: underline; }
+.cms-body img { border-radius: 12px; margin: 1em 0; max-width: 100%; height: auto; }
+.cms-body table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: .95em; }
+.cms-body td, .cms-body th { border: 1px solid rgb(var(--line)); padding: .5em .7em; }
+.cms-body strong { color: rgb(var(--text)); }
