@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/LocaleLink";
 import Reveal from "./Reveal";
 import { t } from "@/data/i18n";
 import { useLang } from "./LangProvider";

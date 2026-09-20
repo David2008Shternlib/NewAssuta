@@ -63,6 +63,14 @@ export const ui = {
   demoNote: { ru: "Демо-режим: на рабочем сайте заявка уходит на почту и в Telegram.", en: "Demo mode: on the live site the request is sent to email and Telegram." },
   phoneError: { ru: "Введите корректный номер телефона", en: "Please enter a valid phone number" },
   nameError: { ru: "Введите имя", en: "Please enter your name" },
+  sendError: {
+    ru: "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.",
+    en: "Could not send the request. Please try again or call us.",
+  },
+  tooManyError: {
+    ru: "Слишком много заявок подряд. Попробуйте через несколько минут или позвоните нам.",
+    en: "Too many requests in a row. Please try again in a few minutes or call us.",
+  },
   aboutClinic: { ru: "О клинике", en: "About clinic" },
   diagnosticsBtn: { ru: "Диагностика", en: "Diagnostics" },
   aboutTitle: { ru: "О клинике", en: "About the clinic" },

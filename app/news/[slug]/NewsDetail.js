@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/LocaleLink";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";

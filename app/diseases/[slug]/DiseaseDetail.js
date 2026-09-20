@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/LocaleLink";
 import PageHero from "@/components/PageHero";
 import RequestForm from "@/components/RequestForm";
 import DoctorCard from "@/components/DoctorCard";

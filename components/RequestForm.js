@@ -48,7 +48,7 @@ export default function RequestForm({ compact = false }) {
     if (Object.keys(err).length) return;
     setBusy(true);
     try {
-      await fetch("/api/lead", {
+      const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -60,7 +60,17 @@ export default function RequestForm({ compact = false }) {
           source: typeof window !== "undefined" ? window.location.pathname : "",
         }),
       });
-    } catch (_) {}
+      if (!res.ok) {
+        // не показываем «Спасибо», если заявка на самом деле не ушла
+        setErrors({ form: t(lang, res.status === 429 ? "tooManyError" : "sendError") });
+        setBusy(false);
+        return;
+      }
+    } catch (_) {
+      setErrors({ form: t(lang, "sendError") });
+      setBusy(false);
+      return;
+    }
     setBusy(false);
     setSent(true);
   }
@@ -130,6 +140,10 @@ export default function RequestForm({ compact = false }) {
           />
           <div className={counterCls}>{comment.length}/{COMMENT_MAX}</div>
         </div>
+      )}
+
+      {errors.form && (
+        <p role="alert" className="rounded-lg bg-red-500/10 px-4 py-3 text-sm font-semibold text-red-500">{errors.form}</p>
       )}
 
       <button type="submit" disabled={busy} className="btn-blue w-full !py-4 disabled:opacity-60">{t(lang, "getConsult")}</button>
