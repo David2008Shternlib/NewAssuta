@@ -179,7 +179,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           <div className="grid items-stretch gap-6 md:grid-cols-3">
             {news.map((n, i) => (
               <Reveal key={n.slug} delay={i * 0.1} className="h-full">
-                <Link href="/news" className="card card-hover group flex h-full flex-col overflow-hidden">
+                <Link href={n.slug ? `/news/${n.slug}` : "/news"} className="card card-hover group flex h-full flex-col overflow-hidden">
                   <div className="h-48 overflow-hidden">
                     <img src={n.img} alt={pick(n.title, lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>

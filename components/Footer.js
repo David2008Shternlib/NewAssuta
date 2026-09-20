@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-line pt-6 text-center text-xs text-muted/70">
-          © Assuta, {new Date().getFullYear()}. {lang === "en" ? "Demo version of the website." : "Демо-версия сайта."}
+          © Assuta, {new Date().getFullYear()}. {lang === "en" ? "All rights reserved." : "Все права защищены."}
         </div>
       </div>
     </footer>

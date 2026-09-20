@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLang } from "./LangProvider";
 import { integrations } from "@/data/site";
 
@@ -23,10 +23,18 @@ const txt = {
 
 export default function ChatWidget() {
   const { lang } = useLang();
-  if (integrations.jivoId) return null; // включён настоящий Jivo — демо-виджет прячем
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([{ from: "bot", text: txt.greeting.en }]);
+  const [messages, setMessages] = useState([{ from: "bot", text: txt.greeting[lang] }]);
   const [input, setInput] = useState("");
+
+  // приветствие следует языку сайта, пока переписка не началась
+  useEffect(() => {
+    setMessages((m) => (m.length === 1 && m[0].from === "bot" ? [{ from: "bot", text: txt.greeting[lang] }] : m));
+  }, [lang]);
+
+  // Настоящий Jivo подключён — демо-виджет не нужен.
+  // Проверка обязана идти ПОСЛЕ хуков, иначе React упадёт при включении Jivo.
+  if (integrations.jivoId) return null;
 
   function send(text) {
     const t = (text ?? input).trim();

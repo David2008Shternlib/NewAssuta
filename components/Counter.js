@@ -1,5 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+
+// В разметку сразу попадает настоящее число — его видят поисковые роботы
+// и посетители с отключённым JS. Анимация досчёта — необязательное улучшение
+// поверх готового значения.
+const useIsoLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export default function Counter({ value, className = "" }) {
   const str = String(value);
@@ -7,11 +12,22 @@ export default function Counter({ value, className = "" }) {
   const target = m ? parseInt(m[1].replace(/\s/g, ""), 10) : 0;
   const prefix = m ? str.slice(0, m.index) : "";
   const suffix = m ? str.slice(m.index + m[1].length) : str;
-  const [n, setN] = useState(0);
+
+  const [n, setN] = useState(target);
   const ref = useRef(null);
   const done = useRef(false);
+  const animate = useRef(false);
+
+  // До первой отрисовки решаем, будем ли анимировать, и только тогда обнуляем
+  useIsoLayoutEffect(() => {
+    const reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced || typeof IntersectionObserver === "undefined") return;
+    animate.current = true;
+    setN(0);
+  }, []);
 
   useEffect(() => {
+    if (!animate.current) return;
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(

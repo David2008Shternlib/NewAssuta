@@ -76,7 +76,6 @@ export default function RequestForm({ compact = false }) {
         <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand-green/15 text-3xl">✓</div>
         <h3 className="mb-2 text-xl font-bold text-title">{t(lang, "sentTitle")}</h3>
         <p className="text-muted">{name ? `${name}, ` : ""}{t(lang, "sentMsg")}</p>
-        <p className="mt-3 text-xs text-muted/70">{t(lang, "demoNote")}</p>
       </div>
     );
   }
