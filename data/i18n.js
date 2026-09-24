@@ -4,6 +4,15 @@ export function pick(v, lang) {
   return v;
 }
 
+
+// Имя врача по языку: на английской версии берём «Имя (EN)», если оно
+// заполнено в CMS, иначе показываем русское — пустого места не будет.
+export function docName(doc, lang) {
+  if (!doc) return "";
+  if (lang === "en" && (doc.nameEn || "").trim()) return doc.nameEn.trim();
+  return doc.name || "";
+}
+
 // Словарь интерфейсных строк
 export const ui = {
   freeConsult: { ru: "Бесплатная консультация", en: "Free consultation" },

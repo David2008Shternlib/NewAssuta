@@ -1,11 +1,11 @@
 "use client";
 import Link from "@/components/LocaleLink";
-import { pick, t } from "@/data/i18n";
+import { docName, pick, t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
 
 export default function DoctorCard({ doc }) {
   const { lang } = useLang();
-  const name = pick(doc.name, lang);
+  const name = docName(doc, lang);
   return (
     <Link href={`/doctors/${doc.slug}`} className="card card-hover group flex h-full flex-col items-center p-6 text-center">
       <div className="mb-5 flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border border-line bg-surface2">

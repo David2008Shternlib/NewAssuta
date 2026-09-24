@@ -5,12 +5,12 @@ import RequestForm from "@/components/RequestForm";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import MedicalDisclaimer from "@/components/MedicalDisclaimer";
-import { t } from "@/data/i18n";
+import { docName, t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
 export default function DoctorDetail({ doc }) {
   const { lang } = useLang();
-  const name = doc.name || "";
+  const name = docName(doc, lang);
 
   return (
     <>
