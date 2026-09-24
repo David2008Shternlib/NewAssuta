@@ -8,8 +8,28 @@ const doctorCategories = [
   "vascular-surgery", "diagnostic", "revmatologi", "gastroenterologiya",
 ];
 
+// Политика безопасности контента. Аудит: CSP нет ни у одного из пяти
+// конкурентов — это позиция, которую можно занять первыми.
+// 'unsafe-inline' для скриптов нужен из-за JSON-LD и инлайнового скрипта темы.
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://*.jivosite.com https://code.jivosite.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://cdn.sanity.io https://mc.yandex.ru https://*.jivosite.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io https://mc.yandex.ru https://*.jivosite.com wss://*.jivosite.com",
+  "frame-src 'self' https://www.google.com https://maps.google.com https://*.jivosite.com",
+  "media-src 'self' https://cdn.sanity.io",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
 // Заголовки безопасности (на своём хостинге их нужно задавать самим)
 const securityHeaders = [
+  { key: "Content-Security-Policy", value: csp },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "SAMEORIGIN" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

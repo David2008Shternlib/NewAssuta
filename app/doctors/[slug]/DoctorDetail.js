@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 import RequestForm from "@/components/RequestForm";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
+import MedicalDisclaimer from "@/components/MedicalDisclaimer";
 import { t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
@@ -38,6 +39,8 @@ export default function DoctorDetail({ doc }) {
                 <div className="cms-body mt-8 space-y-4 leading-relaxed text-body/85" dangerouslySetInnerHTML={{ __html: doc.bodyHtml }} />
               </Reveal>
             )}
+            <Reveal><MedicalDisclaimer className="mt-10" /></Reveal>
+
             <div className="mt-10">
               <Link href="/doctors" className="btn-ghost gap-1.5"><Arrow dir="left" />{t(lang, "backToDoctors")}</Link>
             </div>

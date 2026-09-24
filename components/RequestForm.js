@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "@/components/LocaleLink";
 import { t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
 
@@ -26,6 +27,7 @@ export default function RequestForm({ compact = false }) {
   const [comment, setComment] = useState("");
   const [errors, setErrors] = useState({});
   const [company, setCompany] = useState(""); // honeypot против ботов
+  const [consent, setConsent] = useState(false); // согласие на обработку данных
   const [busy, setBusy] = useState(false);
 
   function onPhoneChange(e) {
@@ -44,6 +46,7 @@ export default function RequestForm({ compact = false }) {
     const err = {};
     if (!name.trim()) err.name = t(lang, "nameError");
     if (phone.length < country.min || phone.length > country.max) err.phone = t(lang, "phoneError");
+    if (!consent) err.consent = t(lang, "consentError");
     setErrors(err);
     if (Object.keys(err).length) return;
     setBusy(true);
@@ -57,6 +60,7 @@ export default function RequestForm({ compact = false }) {
           country: country.code,
           comment,
           company,
+          consent: true,
           source: typeof window !== "undefined" ? window.location.pathname : "",
         }),
       });
@@ -142,12 +146,30 @@ export default function RequestForm({ compact = false }) {
         </div>
       )}
 
+      {/* Согласие на обработку данных — требование закона и аудита */}
+      <div>
+        <label className="flex cursor-pointer items-start gap-3 text-sm text-muted">
+          <input
+            type="checkbox"
+            checked={consent}
+            onChange={(e) => { setConsent(e.target.checked); setErrors((x) => ({ ...x, consent: null })); }}
+            className="mt-0.5 h-5 w-5 flex-none cursor-pointer accent-brand-green"
+          />
+          <span>
+            {t(lang, "consentLabel")}{" "}
+            <Link href="/privacy" target="_blank" className="underline hover:text-brand-blue dark:hover:text-accent">
+              {t(lang, "consentLink")}
+            </Link>
+          </span>
+        </label>
+        {errors.consent && <p className={errCls}>{errors.consent}</p>}
+      </div>
+
       {errors.form && (
         <p role="alert" className="rounded-lg bg-red-500/10 px-4 py-3 text-sm font-semibold text-red-500">{errors.form}</p>
       )}
 
       <button type="submit" disabled={busy} className="btn-blue w-full !py-4 disabled:opacity-60">{t(lang, "getConsult")}</button>
-      <p className="text-center text-xs text-muted/70">{t(lang, "formPrivacy")}</p>
     </form>
   );
 }

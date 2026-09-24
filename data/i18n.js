@@ -60,9 +60,23 @@ export const ui = {
   formPrivacy: { ru: "Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности", en: "By clicking the button you agree to the privacy policy" },
   sentTitle: { ru: "Заявка отправлена", en: "Request sent" },
   sentMsg: { ru: "Спасибо! Наш координатор свяжется с вами в ближайшее время.", en: "Thank you! Our coordinator will contact you shortly." },
-  demoNote: { ru: "Демо-режим: на рабочем сайте заявка уходит на почту и в Telegram.", en: "Demo mode: on the live site the request is sent to email and Telegram." },
   phoneError: { ru: "Введите корректный номер телефона", en: "Please enter a valid phone number" },
   nameError: { ru: "Введите имя", en: "Please enter your name" },
+  consentLabel: {
+    ru: "Я согласен на обработку моих персональных данных",
+    en: "I consent to the processing of my personal data",
+  },
+  consentLink: { ru: "политикой конфиденциальности", en: "privacy policy" },
+  consentError: {
+    ru: "Без согласия на обработку данных мы не можем принять заявку",
+    en: "We cannot accept the request without your consent to data processing",
+  },
+  privacyTitle: { ru: "Политика конфиденциальности", en: "Privacy policy" },
+  medDisclaimerTitle: { ru: "Важно", en: "Important" },
+  medDisclaimer: {
+    ru: "Материал носит информационный характер и не заменяет очную консультацию врача. Диагноз и тактику лечения определяет лечащий врач после осмотра и обследования. Мы организуем лечение и сопровождение пациентов и не являемся медицинским учреждением.",
+    en: "This material is for information only and does not replace an in-person medical consultation. Diagnosis and treatment are determined by the treating physician after examination. We organise treatment and patient support and are not a medical institution.",
+  },
   sendError: {
     ru: "Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.",
     en: "Could not send the request. Please try again or call us.",
@@ -88,7 +102,10 @@ export const ui = {
   contactUs: { ru: "Свяжитесь с нами", en: "Contact us" },
   leaveRequest: { ru: "Оставить заявку", en: "Leave a request" },
   contactsSub: { ru: "Ответим и составим программу лечения.", en: "We'll reply and prepare a treatment program." },
-  priceDisclaimer: { ru: "* Цены указаны для демонстрации и не являются публичной офертой.", en: "* Prices are shown for demonstration and are not a public offer." },
+  priceDisclaimer: {
+    ru: "* Цены ориентировочные, действительны на 2026 год и не являются публичной офертой. Точную стоимость программы координатор рассчитывает после изучения медицинских документов.",
+    en: "* Prices are indicative, valid for 2026 and do not constitute a public offer. The exact programme cost is calculated by a coordinator after reviewing your medical records.",
+  },
 };
 
 export function t(lang, key) {

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import NewsDetail from "./NewsDetail";
 import { getAllNews, getNews } from "@/lib/sanity";
 import { siteUrl } from "@/data/site";
+import { breadcrumb } from "@/lib/schema";
 
 export const revalidate = 3600;
 
@@ -23,5 +24,32 @@ export async function generateMetadata({ params }) {
 export default async function Page({ params }) {
   const n = await getNews(params.slug);
   if (!n) return notFound();
-  return <NewsDetail item={n} />;
+
+  const article = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: n.title,
+    description: n.excerpt || undefined,
+    image: n.image || undefined,
+    datePublished: n.date || undefined,
+    dateModified: n.date || undefined,
+    url: `${siteUrl}/news/${n.slug}`,
+    isPartOf: { "@id": `${siteUrl}/#website` },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    author: { "@id": `${siteUrl}/#organization` },
+  };
+
+  const crumbs = breadcrumb([
+    { name: "Главная", path: "" },
+    { name: "Новости", path: "/news" },
+    { name: n.title, path: `/news/${n.slug}` },
+  ]);
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(article) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(crumbs) }} />
+      <NewsDetail item={n} />
+    </>
+  );
 }
