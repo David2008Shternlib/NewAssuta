@@ -2,7 +2,6 @@
 import PageHero from "@/components/PageHero";
 import RequestForm from "@/components/RequestForm";
 import Reveal from "@/components/Reveal";
-import Icon from "@/components/Icon";
 import { site } from "@/data/site";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";

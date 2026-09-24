@@ -2,7 +2,6 @@
 import Link from "@/components/LocaleLink";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import Icon from "@/components/Icon";
 import Arrow from "@/components/Arrow";
 import CTASection from "@/components/CTASection";
 import { departments } from "@/data/site";

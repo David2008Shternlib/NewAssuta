@@ -5,7 +5,6 @@ import RequestForm from "@/components/RequestForm";
 import DoctorCard from "@/components/DoctorCard";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
-import Icon from "@/components/Icon";
 import MedicalDisclaimer from "@/components/MedicalDisclaimer";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
@@ -23,7 +22,6 @@ export default function DepartmentDetail({ dept, doctors = [], diseases = [] }) 
           <div className="lg:col-span-2">
             <Reveal>
               <div className="mb-8 flex items-start gap-4 rounded-xl2 bg-surface2 p-6">
-                <Icon name={dept.icon} size={40} className="flex-none text-brand-green" />
                 <p className="leading-relaxed text-body/85">{pick(dept.desc, lang)}</p>
               </div>
             </Reveal>

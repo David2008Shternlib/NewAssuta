@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import Link from "@/components/LocaleLink";
-import Icon from "@/components/Icon";
 import { t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
 
@@ -88,7 +87,6 @@ export default function RequestForm({ compact = false }) {
   if (sent) {
     return (
       <div className="rounded-xl2 bg-surface p-8 text-center shadow-card">
-        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand-green/15 text-brand-green"><Icon name="check" size={28} /></div>
         <h3 className="mb-2 text-xl font-bold text-title">{t(lang, "sentTitle")}</h3>
         <p className="text-muted">{name ? `${name}, ` : ""}{t(lang, "sentMsg")}</p>
       </div>
