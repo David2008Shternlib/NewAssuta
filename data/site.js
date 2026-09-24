@@ -3,28 +3,28 @@ export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://assuta.org";
 // Интеграции: чтобы ВКЛЮЧИТЬ — впиши значение, чтобы выключить — оставь "".
 // Jivo: ID виджета из кода Jivo (например "awgE4pOVUu"). Метрика: номер счётчика (например 39297525).
 export const integrations = {
-  jivoId: "",            // JivoChat: вставь виджет-ID — чат включится, наш демо-виджет спрячется
-  yandexMetrikaId: "",   // Яндекс.Метрика: вставь номер счётчика — метрика включится
+  jivoId: "", // JivoChat: вставь виджет-ID — чат включится, наш демо-виджет спрячется
+  yandexMetrikaId: "", // Яндекс.Метрика: вставь номер счётчика — метрика включится
 };
 
 /* ─────────────────────────────────────────────────────────────────────
-   ОПЕРАТОР САЙТА.
-   Ключевое требование аудита: сайт обязан называть того, кто за ним стоит.
-   Мы — компания-организатор лечения, а НЕ больница. Всё, что ниже,
-   выводится в подвале, на странице «О компании» и в разметке Organization.
+ ОПЕРАТОР САЙТА.
+ Ключевое требование аудита: сайт обязан называть того, кто за ним стоит.
+ Мы — компания-организатор лечения, а НЕ больница. Всё, что ниже,
+ выводится в подвале, на странице «О компании» и в разметке Organization.
 
-   ⚠️ ДАННЫЕ ВЗЯТЫ ИЗ АУДИТА (реестр компаний Израиля) И ТРЕБУЮТ
-   ПИСЬМЕННОГО ПОДТВЕРЖДЕНИЯ КЛИЕНТА ПЕРЕД ЗАПУСКОМ.
-   Пустое значение — блок просто не выводится, ничего не ломается.
-   ───────────────────────────────────────────────────────────────────── */
+ ДАННЫЕ ВЗЯТЫ ИЗ АУДИТА (реестр компаний Израиля) И ТРЕБУЮТ
+ ПИСЬМЕННОГО ПОДТВЕРЖДЕНИЯ КЛИЕНТА ПЕРЕД ЗАПУСКОМ.
+ Пустое значение — блок просто не выводится, ничего не ломается.
+ ───────────────────────────────────────────────────────────────────── */
 export const operator = {
   legalName: "MONADA MEDICAL GROUP LTD",
   displayName: { ru: "Monada Medical Center", en: "Monada Medical Center" },
-  registryNumber: "516117348",          // номер в реестре компаний Израиля
+  registryNumber: "516117348", // номер в реестре компаний Израиля
   registeredSince: "2019-12-10",
   // Адрес ОФИСА ОПЕРАТОРА (не больницы). Ждём от клиента.
   office: { ru: "", en: "" },
-  email: "",                            // ждём от клиента
+  email: "", // ждём от клиента
   // Запись в реестре агентов медицинского туризма Минздрава Израиля
   license: { number: "", url: "" },
   // Членство в отраслевых ассоциациях (в аудите упомянута IMTA)
@@ -62,10 +62,26 @@ export const site = {
 };
 
 export const stats = [
-  { num: "13%", label: { ru: "Всех операций в Израиле проводятся в Ассута", en: "All operations in Israel are conducted in Assuta" }, href: "/about", btn: "aboutClinic" },
+  {
+    num: "13%",
+    label: { ru: "Всех операций в Израиле проводятся в Ассута", en: "All operations in Israel are conducted in Assuta" },
+    href: "/about",
+    btn: "aboutClinic",
+  },
   { num: "500+", label: { ru: "Видов операций", en: "Types of operations" }, href: "/diagnostics", btn: "diagnosticsBtn" },
-  { num: "88", unit: { ru: "лет", en: "years" }, label: { ru: "Клиника Ассута основана в 1935 году", en: "Clinic Assuta was founded in 1935" }, href: "/about", btn: "aboutClinic" },
-  { num: "92000+", label: { ru: "Столько операций врачи выполняют ежегодно", en: "That's how many surgeries doctors perform every year" }, href: "/diagnostics", btn: "diagnosticsBtn" },
+  {
+    num: "88",
+    unit: { ru: "лет", en: "years" },
+    label: { ru: "Клиника Ассута основана в 1935 году", en: "Clinic Assuta was founded in 1935" },
+    href: "/about",
+    btn: "aboutClinic",
+  },
+  {
+    num: "92000+",
+    label: { ru: "Столько операций врачи выполняют ежегодно", en: "That's how many surgeries doctors perform every year" },
+    href: "/diagnostics",
+    btn: "diagnosticsBtn",
+  },
 ];
 
 export const offers = [
@@ -110,18 +126,102 @@ export const nav = [
 ];
 
 export const departments = [
-  { icon: "oncology", slug: "oncology", docDepts: ["Онкологи"], disCats: ["Онкология"], title: { ru: "Онкология", en: "Oncology" }, desc: { ru: "Диагностика и лечение всех видов рака по современным протоколам.", en: "Diagnosis and treatment of all cancers by modern protocols." } },
-  { icon: "cardiology", slug: "cardiology", docDepts: ["Кардиологи"], disCats: ["Кардиология"], title: { ru: "Кардиология", en: "Cardiology" }, desc: { ru: "Полный спектр кардиохирургии и интервенционного лечения сердца.", en: "Full range of cardiac surgery and interventional heart care." } },
-  { icon: "orthopedic", slug: "orthopedic", docDepts: ["Ортопеды"], disCats: ["Ортопедия"], title: { ru: "Ортопедия", en: "Orthopedics" }, desc: { ru: "Эндопротезирование суставов и лечение позвоночника.", en: "Joint replacement and spine treatment." } },
-  { icon: "neurosurgery", slug: "neurosurgery", docDepts: ["Нейрохирурги", "Неврологи"], disCats: ["Нейрохирургия", "Неврология"], title: { ru: "Нейрохирургия", en: "Neurosurgery" }, desc: { ru: "Операции на головном и спинном мозге любой сложности.", en: "Brain and spinal surgery of any complexity." } },
-  { icon: "urology", slug: "urology", docDepts: ["Урологи", "Урогинекологи"], disCats: ["Урология"], title: { ru: "Урология", en: "Urology" }, desc: { ru: "Диагностика и лечение заболеваний мочеполовой системы.", en: "Diagnosis and treatment of the urogenital system." } },
-  { icon: "gynecologists", slug: "gynecologists", docDepts: ["Гинекологи", "Акушеры", "Специалисты ЭКО"], disCats: ["Гинекология", "ЭКО"], title: { ru: "Гинекология", en: "Gynecology" }, desc: { ru: "Женское здоровье, репродукция, онкогинекология.", en: "Women's health, reproduction, gynecologic oncology." } },
-  { icon: "gastroenterology", slug: "gastroenterology", docDepts: ["Гастроэнтерологи"], disCats: ["Гастроэнторология"], title: { ru: "Гастроэнтерология", en: "Gastroenterology" }, desc: { ru: "Заболевания ЖКТ, эндоскопия, малоинвазивная хирургия.", en: "GI disorders, endoscopy, minimally invasive surgery." } },
-  { icon: "plastic-surgery", slug: "plastic-surgery", docDepts: ["Пластические хирурги"], disCats: ["Пластическая хирургия"], title: { ru: "Пластическая хирургия", en: "Plastic surgery" }, desc: { ru: "Эстетическая и реконструктивная хирургия.", en: "Aesthetic and reconstructive surgery." } },
-  { icon: "ophthalmolog", slug: "ophthalmolog", docDepts: ["Офтальмологи"], disCats: ["Офтальмология"], title: { ru: "Офтальмология", en: "Ophthalmology" }, desc: { ru: "Микрохирургия глаза, катаракта, лечение сетчатки.", en: "Eye microsurgery, cataract, retinal care." } },
-  { icon: "endocrinologists", slug: "endocrinologists", docDepts: ["Эндокринологи"], disCats: ["Эндокринология"], title: { ru: "Эндокринология", en: "Endocrinology" }, desc: { ru: "Диабет, щитовидная железа, гормональные нарушения.", en: "Diabetes, thyroid, hormonal disorders." } },
-  { icon: "ent-doctors", slug: "ent-doctors", docDepts: ["ЛОР-специалисты"], disCats: ["ЛОР"], title: { ru: "ЛОР", en: "ENT" }, desc: { ru: "Диагностика и хирургия уха, горла и носа.", en: "Diagnosis and surgery of ear, nose and throat." } },
-  { icon: "hematology", slug: "hematology", docDepts: ["Гематологи", "Онкологи"], disCats: ["Гематология"], title: { ru: "Гематология", en: "Hematology" }, desc: { ru: "Лечение заболеваний крови и лимфатической системы.", en: "Treatment of blood and lymphatic diseases." } },
+  {
+    icon: "oncology",
+    slug: "oncology",
+    docDepts: ["Онкологи"],
+    disCats: ["Онкология"],
+    title: { ru: "Онкология", en: "Oncology" },
+    desc: { ru: "Диагностика и лечение всех видов рака по современным протоколам.", en: "Diagnosis and treatment of all cancers by modern protocols." },
+  },
+  {
+    icon: "cardiology",
+    slug: "cardiology",
+    docDepts: ["Кардиологи"],
+    disCats: ["Кардиология"],
+    title: { ru: "Кардиология", en: "Cardiology" },
+    desc: { ru: "Полный спектр кардиохирургии и интервенционного лечения сердца.", en: "Full range of cardiac surgery and interventional heart care." },
+  },
+  {
+    icon: "orthopedic",
+    slug: "orthopedic",
+    docDepts: ["Ортопеды"],
+    disCats: ["Ортопедия"],
+    title: { ru: "Ортопедия", en: "Orthopedics" },
+    desc: { ru: "Эндопротезирование суставов и лечение позвоночника.", en: "Joint replacement and spine treatment." },
+  },
+  {
+    icon: "neurosurgery",
+    slug: "neurosurgery",
+    docDepts: ["Нейрохирурги", "Неврологи"],
+    disCats: ["Нейрохирургия", "Неврология"],
+    title: { ru: "Нейрохирургия", en: "Neurosurgery" },
+    desc: { ru: "Операции на головном и спинном мозге любой сложности.", en: "Brain and spinal surgery of any complexity." },
+  },
+  {
+    icon: "urology",
+    slug: "urology",
+    docDepts: ["Урологи", "Урогинекологи"],
+    disCats: ["Урология"],
+    title: { ru: "Урология", en: "Urology" },
+    desc: { ru: "Диагностика и лечение заболеваний мочеполовой системы.", en: "Diagnosis and treatment of the urogenital system." },
+  },
+  {
+    icon: "gynecologists",
+    slug: "gynecologists",
+    docDepts: ["Гинекологи", "Акушеры", "Специалисты ЭКО"],
+    disCats: ["Гинекология", "ЭКО"],
+    title: { ru: "Гинекология", en: "Gynecology" },
+    desc: { ru: "Женское здоровье, репродукция, онкогинекология.", en: "Women's health, reproduction, gynecologic oncology." },
+  },
+  {
+    icon: "gastroenterology",
+    slug: "gastroenterology",
+    docDepts: ["Гастроэнтерологи"],
+    disCats: ["Гастроэнторология"],
+    title: { ru: "Гастроэнтерология", en: "Gastroenterology" },
+    desc: { ru: "Заболевания ЖКТ, эндоскопия, малоинвазивная хирургия.", en: "GI disorders, endoscopy, minimally invasive surgery." },
+  },
+  {
+    icon: "plastic-surgery",
+    slug: "plastic-surgery",
+    docDepts: ["Пластические хирурги"],
+    disCats: ["Пластическая хирургия"],
+    title: { ru: "Пластическая хирургия", en: "Plastic surgery" },
+    desc: { ru: "Эстетическая и реконструктивная хирургия.", en: "Aesthetic and reconstructive surgery." },
+  },
+  {
+    icon: "ophthalmolog",
+    slug: "ophthalmolog",
+    docDepts: ["Офтальмологи"],
+    disCats: ["Офтальмология"],
+    title: { ru: "Офтальмология", en: "Ophthalmology" },
+    desc: { ru: "Микрохирургия глаза, катаракта, лечение сетчатки.", en: "Eye microsurgery, cataract, retinal care." },
+  },
+  {
+    icon: "endocrinologists",
+    slug: "endocrinologists",
+    docDepts: ["Эндокринологи"],
+    disCats: ["Эндокринология"],
+    title: { ru: "Эндокринология", en: "Endocrinology" },
+    desc: { ru: "Диабет, щитовидная железа, гормональные нарушения.", en: "Diabetes, thyroid, hormonal disorders." },
+  },
+  {
+    icon: "ent-doctors",
+    slug: "ent-doctors",
+    docDepts: ["ЛОР-специалисты"],
+    disCats: ["ЛОР"],
+    title: { ru: "ЛОР", en: "ENT" },
+    desc: { ru: "Диагностика и хирургия уха, горла и носа.", en: "Diagnosis and surgery of ear, nose and throat." },
+  },
+  {
+    icon: "hematology",
+    slug: "hematology",
+    docDepts: ["Гематологи", "Онкологи"],
+    disCats: ["Гематология"],
+    title: { ru: "Гематология", en: "Hematology" },
+    desc: { ru: "Лечение заболеваний крови и лимфатической системы.", en: "Treatment of blood and lymphatic diseases." },
+  },
 ];
 
 // Старые статические списки врачей/заболеваний/отзывов/новостей удалены:
