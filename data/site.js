@@ -61,6 +61,20 @@ export const site = {
   ],
 };
 
+// Возраст клиники считается от года основания, а не вписан числом:
+// на оригинальном сайте стоит 88 лет — значение, зашитое ещё в 2023 году
+// и с тех пор не обновлявшееся. Здесь оно всегда актуально.
+export const clinicAge = new Date().getFullYear() - site.founded;
+
+// «91 год», «92 года», «95 лет» — русский требует согласования
+function yearsWord(n) {
+  const d = n % 10;
+  const h = n % 100;
+  if (d === 1 && h !== 11) return "год";
+  if (d >= 2 && d <= 4 && (h < 12 || h > 14)) return "года";
+  return "лет";
+}
+
 export const stats = [
   {
     num: "13%",
@@ -70,9 +84,12 @@ export const stats = [
   },
   { num: "500+", label: { ru: "Видов операций", en: "Types of operations" }, href: "/diagnostics", btn: "diagnosticsBtn" },
   {
-    num: "88",
-    unit: { ru: "лет", en: "years" },
-    label: { ru: "Клиника Ассута основана в 1935 году", en: "Clinic Assuta was founded in 1935" },
+    num: String(clinicAge),
+    unit: { ru: yearsWord(clinicAge), en: clinicAge === 1 ? "year" : "years" },
+    label: {
+      ru: `Клиника Ассута основана в ${site.founded} году`,
+      en: `Clinic Assuta was founded in ${site.founded}`,
+    },
     href: "/about",
     btn: "aboutClinic",
   },

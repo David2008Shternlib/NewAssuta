@@ -15,7 +15,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
   const trust = [
     { label: { ru: "Под контролем Минздрава Израиля", en: "Overseen by Israel's Ministry of Health" } },
     { label: { ru: "Реальные отзывы пациентов", en: "Real patient reviews" } },
-    { label: { ru: "Частная клиника с 1935 года", en: "Private clinic since 1935" } },
+    { label: { ru: `Частная клиника с ${site.founded} года`, en: `Private clinic since ${site.founded}` } },
     { label: { ru: "Сопровождение на вашем языке", en: "Support in your language" } },
   ];
   return (
