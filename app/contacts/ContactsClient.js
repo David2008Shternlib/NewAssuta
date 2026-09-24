@@ -2,6 +2,7 @@
 import PageHero from "@/components/PageHero";
 import RequestForm from "@/components/RequestForm";
 import Reveal from "@/components/Reveal";
+import Icon from "@/components/Icon";
 import { site } from "@/data/site";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
@@ -17,11 +18,11 @@ export default function ContactsPage() {
           <Reveal>
             <div>
               <h2 className="mb-4 text-xl font-bold text-title">{t(lang, "contactUs")}</h2>
-              <a href={site.mapUrl} target="_blank" rel="noreferrer" className="mb-6 block text-muted hover:text-brand-blue dark:hover:text-accent">📍 {pick(site.address, lang)}</a>
+              <a href={site.mapUrl} target="_blank" rel="noreferrer" className="mb-6 block text-muted hover:text-brand-blue dark:hover:text-accent">{pick(site.address, lang)}</a>
               <div className="space-y-3">
                 {site.phones.map((p) => (
                   <a key={p.value} href={p.href} className="flex items-center gap-3 text-lg font-semibold text-body hover:text-brand-blue dark:hover:text-accent">
-                    <span className="text-2xl">{p.flag}</span>{p.value}
+                    <span className="text-2xl"><span className="rounded bg-line/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">{p.code}</span></span>{p.value}
                     <span className="text-sm font-normal text-muted">{pick(p.label, lang)}</span>
                   </a>
                 ))}

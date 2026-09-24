@@ -38,7 +38,7 @@ export default function Footer() {
             <h4 className="mb-4 text-sm font-bold uppercase text-title">{lang === "en" ? "Areas" : "Направления"}</h4>
             <ul className="space-y-2 text-sm">
               {departments.slice(0, 7).map((d) => (
-                <li key={d.slug}><Link href="/departments" className="text-muted hover:text-brand-blue dark:hover:text-accent">{pick(d.title, lang)}</Link></li>
+                <li key={d.slug}><Link href={`/departments/${d.slug}`} className="text-muted hover:text-brand-blue dark:hover:text-accent">{pick(d.title, lang)}</Link></li>
               ))}
             </ul>
           </div>
@@ -47,7 +47,7 @@ export default function Footer() {
             <h4 className="mb-4 text-sm font-bold uppercase text-title">{lang === "en" ? "Contact us" : "Связаться"}</h4>
             <ul className="space-y-2 text-sm">
               {site.phones.map((p) => (
-                <li key={p.value}><a href={p.href} className="font-semibold text-body hover:text-brand-blue dark:hover:text-accent">{p.flag} {p.value}</a></li>
+                <li key={p.value}><a href={p.href} className="font-semibold text-body hover:text-brand-blue dark:hover:text-accent"><span className="rounded bg-line/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">{p.code}</span> {p.value}</a></li>
               ))}
               {site.messengers.map((m) => (
                 <li key={m.label}><a href={m.href} className="text-brand-green hover:underline">{m.label}: {m.value}</a></li>

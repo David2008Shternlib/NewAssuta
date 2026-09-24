@@ -20,12 +20,44 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // Сворачивание верхней полосы меняет высоту документа, из-за чего позиция
+  // прокрутки смещается и состояние переключается обратно — шапка дрожит.
+  // Лечим двумя способами сразу: широкая зона нечувствительности (40/130)
+  // и блокировка переключений на 400 мс после каждого срабатывания.
   useEffect(() => {
-    const onScroll = () => setScrolled((prev) => (prev ? window.scrollY > 15 : window.scrollY > 70));
-    onScroll();
+    let lockedUntil = 0;
+    let frame = 0;
+
+    const evaluate = () => {
+      frame = 0;
+      if (performance.now() < lockedUntil) return;
+      const y = window.scrollY;
+      setScrolled((prev) => {
+        const next = prev ? y > 40 : y > 130;
+        if (next !== prev) lockedUntil = performance.now() + 400;
+        return next;
+      });
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(evaluate);
+    };
+
+    evaluate();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
+
+  // при открытом мобильном меню фон не прокручивается
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = prev; };
+  }, [open]);
 
   // переключение языка = навигация между / и /en/*
   const switchLang = (l) => {
@@ -60,7 +92,7 @@ export default function Header() {
           <div className="flex items-center gap-5">
             {site.phones.map((p) => (
               <a key={p.value} href={p.href} className="flex items-center gap-1.5 font-semibold text-body hover:text-brand-blue">
-                <span>{p.flag}</span>{p.value}
+                <span className="rounded bg-line/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">{p.code}</span>{p.value}
               </a>
             ))}
             <ThemeToggle />
@@ -113,7 +145,9 @@ export default function Header() {
       </div>
 
       {/* Мобильное меню */}
-      <div className={`overflow-hidden bg-page transition-all duration-300 ease-out xl:hidden ${open ? "max-h-[560px] border-t border-line opacity-100" : "max-h-0 opacity-0"}`}>
+      {/* Меню прокручивается внутри себя: пунктов больше, чем помещалось
+          в прежние 560px, и хвост наезжал на страницу */}
+      <div className={`bg-page transition-[max-height,opacity] duration-300 ease-out xl:hidden ${open ? "max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
         <div className="wrap flex flex-col py-4">
           {nav.map((n) => (
             <Link key={n.href} href={lang === "en" ? `/en${n.href}` : n.href} onClick={() => setOpen(false)} className="border-b border-line/60 py-3 font-semibold text-body">
@@ -124,7 +158,7 @@ export default function Header() {
           <div className="mt-4 flex items-center justify-between">
             <div className="flex flex-col gap-1 text-sm">
               {site.phones.map((p) => (
-                <a key={p.value} href={p.href} className="font-semibold text-brand-blue dark:text-accent">{p.flag} {p.value}</a>
+                <a key={p.value} href={p.href} className="font-semibold text-brand-blue dark:text-accent"><span className="rounded bg-line/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">{p.code}</span> {p.value}</a>
               ))}
             </div>
             <div className="flex items-center gap-2"><ThemeToggle /><LangSwitch /></div>

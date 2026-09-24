@@ -17,7 +17,7 @@ export default function CTASection() {
           <div className="mt-8 flex flex-wrap gap-4">
             {site.phones.map((p) => (
               <a key={p.value} href={p.href} className="flex items-center gap-2 rounded-pill bg-surface px-4 py-2 text-sm font-semibold text-body shadow-sm">
-                <span>{p.flag}</span>{p.value}
+                <span className="rounded bg-line/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">{p.code}</span>{p.value}
               </a>
             ))}
           </div>

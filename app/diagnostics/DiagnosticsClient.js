@@ -1,6 +1,7 @@
 "use client";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import Icon from "@/components/Icon";
 import CTASection from "@/components/CTASection";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
@@ -36,7 +37,7 @@ export default function DiagnosticsPage() {
                   <span className="whitespace-nowrap rounded-pill bg-brand-green/15 px-4 py-1 text-sm font-bold text-brand-greenDark dark:text-accent">{from}{p.price}</span>
                 </div>
                 <ul className="flex-1 space-y-2 text-sm text-muted">
-                  {pick(p.items, lang).map((it) => (<li key={it} className="flex gap-2"><span className="text-brand-green">✓</span>{it}</li>))}
+                  {pick(p.items, lang).map((it) => (<li key={it} className="flex gap-2"><Icon name="check" size={16} className="mt-0.5 flex-none text-brand-green" />{it}</li>))}
                 </ul>
                 <a href="#request" className="btn-blue mt-6 self-start">{t(lang, "book")}</a>
               </div>

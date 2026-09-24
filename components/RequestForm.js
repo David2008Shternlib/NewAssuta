@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "@/components/LocaleLink";
+import Icon from "@/components/Icon";
 import { t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
 
@@ -8,14 +9,14 @@ const NAME_MAX = 100;
 const COMMENT_MAX = 500;
 
 const COUNTRIES = [
-  { code: "IL", flag: "🇮🇱", dial: "+972", min: 8, max: 9 },
-  { code: "RU", flag: "🇷🇺", dial: "+7", min: 10, max: 10 },
-  { code: "UA", flag: "🇺🇦", dial: "+380", min: 9, max: 9 },
-  { code: "KZ", flag: "🇰🇿", dial: "+7", min: 10, max: 10 },
-  { code: "US", flag: "🇺🇸", dial: "+1", min: 10, max: 10 },
-  { code: "DE", flag: "🇩🇪", dial: "+49", min: 10, max: 11 },
-  { code: "GB", flag: "🇬🇧", dial: "+44", min: 10, max: 10 },
-  { code: "FR", flag: "🇫🇷", dial: "+33", min: 9, max: 9 },
+  { code: "IL", dial: "+972", min: 8, max: 9 },
+  { code: "RU", dial: "+7", min: 10, max: 10 },
+  { code: "UA", dial: "+380", min: 9, max: 9 },
+  { code: "KZ", dial: "+7", min: 10, max: 10 },
+  { code: "US", dial: "+1", min: 10, max: 10 },
+  { code: "DE", dial: "+49", min: 10, max: 11 },
+  { code: "GB", dial: "+44", min: 10, max: 10 },
+  { code: "FR", dial: "+33", min: 9, max: 9 },
 ];
 
 export default function RequestForm({ compact = false }) {
@@ -87,7 +88,7 @@ export default function RequestForm({ compact = false }) {
   if (sent) {
     return (
       <div className="rounded-xl2 bg-surface p-8 text-center shadow-card">
-        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand-green/15 text-3xl">✓</div>
+        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-brand-green/15 text-brand-green"><Icon name="check" size={28} /></div>
         <h3 className="mb-2 text-xl font-bold text-title">{t(lang, "sentTitle")}</h3>
         <p className="text-muted">{name ? `${name}, ` : ""}{t(lang, "sentMsg")}</p>
       </div>
@@ -118,14 +119,14 @@ export default function RequestForm({ compact = false }) {
       <div>
         <div className="flex gap-2">
           <div className="relative flex items-center rounded-lg bg-page shadow-sm ring-1 ring-line focus-within:ring-2 focus-within:ring-brand-green">
-            <span className="pl-3 text-lg">{country.flag}</span>
+            <span className="pl-3 text-xs font-bold uppercase tracking-wide text-muted">{country.code}</span>
             <select value={country.code} onChange={onCountryChange} aria-label="Country"
               className="h-14 appearance-none bg-transparent pl-1.5 pr-6 text-sm font-semibold text-body outline-none">
               {COUNTRIES.map((c) => (
                 <option key={c.code} value={c.code} style={{ backgroundColor: "rgb(var(--surface))", color: "rgb(var(--text))" }}>{c.dial}</option>
               ))}
             </select>
-            <span className="pointer-events-none absolute right-2 text-muted">▾</span>
+            <svg className="pointer-events-none absolute right-2 text-muted" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
           </div>
           <input required type="tel" inputMode="numeric" placeholder={t(lang, "formPhone")} value={phone} onChange={onPhoneChange} className={`${inputCls} flex-1`} />
         </div>

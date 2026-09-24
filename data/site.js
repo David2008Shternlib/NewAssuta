@@ -50,9 +50,9 @@ export const site = {
   logo: "/images/assuta-logo.png",
   heroBg: "/images/hero-bg.webp",
   phones: [
-    { label: { ru: "Израиль", en: "Israel" }, value: "+972 74-702-0202", href: "tel:+972747020202", flag: "🇮🇱" },
-    { label: { ru: "Россия (бесплатно)", en: "Russia (toll-free)" }, value: "8 800-302-49-06", href: "tel:88003024906", flag: "🇷🇺" },
-    { label: { ru: "Украина", en: "Ukraine" }, value: "0 800-357-14", href: "tel:080035714", flag: "🇺🇦" },
+    { label: { ru: "Израиль", en: "Israel" }, value: "+972 74-702-0202", href: "tel:+972747020202", code: "IL" },
+    { label: { ru: "Россия (бесплатно)", en: "Russia (toll-free)" }, value: "8 800-302-49-06", href: "tel:88003024906", code: "RU" },
+    { label: { ru: "Украина", en: "Ukraine" }, value: "0 800-357-14", href: "tel:080035714", code: "UA" },
   ],
   messengers: [
     { label: "WhatsApp", value: "+972 53-425-3652", href: "https://api.whatsapp.com/send/?phone=972534253652" },
@@ -110,18 +110,18 @@ export const nav = [
 ];
 
 export const departments = [
-  { icon: "🎗️", slug: "oncology", title: { ru: "Онкология", en: "Oncology" }, desc: { ru: "Диагностика и лечение всех видов рака по современным протоколам.", en: "Diagnosis and treatment of all cancers by modern protocols." } },
-  { icon: "🫀", slug: "cardiology", title: { ru: "Кардиология", en: "Cardiology" }, desc: { ru: "Полный спектр кардиохирургии и интервенционного лечения сердца.", en: "Full range of cardiac surgery and interventional heart care." } },
-  { icon: "🦴", slug: "orthopedic", title: { ru: "Ортопедия", en: "Orthopedics" }, desc: { ru: "Эндопротезирование суставов и лечение позвоночника.", en: "Joint replacement and spine treatment." } },
-  { icon: "🧠", slug: "neurosurgery", title: { ru: "Нейрохирургия", en: "Neurosurgery" }, desc: { ru: "Операции на головном и спинном мозге любой сложности.", en: "Brain and spinal surgery of any complexity." } },
-  { icon: "🔬", slug: "urology", title: { ru: "Урология", en: "Urology" }, desc: { ru: "Диагностика и лечение заболеваний мочеполовой системы.", en: "Diagnosis and treatment of the urogenital system." } },
-  { icon: "👶", slug: "gynecologists", title: { ru: "Гинекология", en: "Gynecology" }, desc: { ru: "Женское здоровье, репродукция, онкогинекология.", en: "Women's health, reproduction, gynecologic oncology." } },
-  { icon: "🩺", slug: "gastroenterology", title: { ru: "Гастроэнтерология", en: "Gastroenterology" }, desc: { ru: "Заболевания ЖКТ, эндоскопия, малоинвазивная хирургия.", en: "GI disorders, endoscopy, minimally invasive surgery." } },
-  { icon: "✨", slug: "plastic-surgery", title: { ru: "Пластическая хирургия", en: "Plastic surgery" }, desc: { ru: "Эстетическая и реконструктивная хирургия.", en: "Aesthetic and reconstructive surgery." } },
-  { icon: "👁️", slug: "ophthalmolog", title: { ru: "Офтальмология", en: "Ophthalmology" }, desc: { ru: "Микрохирургия глаза, катаракта, лечение сетчатки.", en: "Eye microsurgery, cataract, retinal care." } },
-  { icon: "🧬", slug: "endocrinologists", title: { ru: "Эндокринология", en: "Endocrinology" }, desc: { ru: "Диабет, щитовидная железа, гормональные нарушения.", en: "Diabetes, thyroid, hormonal disorders." } },
-  { icon: "👂", slug: "ent-doctors", title: { ru: "ЛОР", en: "ENT" }, desc: { ru: "Диагностика и хирургия уха, горла и носа.", en: "Diagnosis and surgery of ear, nose and throat." } },
-  { icon: "🩸", slug: "hematology", title: { ru: "Гематология", en: "Hematology" }, desc: { ru: "Лечение заболеваний крови и лимфатической системы.", en: "Treatment of blood and lymphatic diseases." } },
+  { icon: "oncology", slug: "oncology", docDepts: ["Онкологи"], disCats: ["Онкология"], title: { ru: "Онкология", en: "Oncology" }, desc: { ru: "Диагностика и лечение всех видов рака по современным протоколам.", en: "Diagnosis and treatment of all cancers by modern protocols." } },
+  { icon: "cardiology", slug: "cardiology", docDepts: ["Кардиологи"], disCats: ["Кардиология"], title: { ru: "Кардиология", en: "Cardiology" }, desc: { ru: "Полный спектр кардиохирургии и интервенционного лечения сердца.", en: "Full range of cardiac surgery and interventional heart care." } },
+  { icon: "orthopedic", slug: "orthopedic", docDepts: ["Ортопеды"], disCats: ["Ортопедия"], title: { ru: "Ортопедия", en: "Orthopedics" }, desc: { ru: "Эндопротезирование суставов и лечение позвоночника.", en: "Joint replacement and spine treatment." } },
+  { icon: "neurosurgery", slug: "neurosurgery", docDepts: ["Нейрохирурги", "Неврологи"], disCats: ["Нейрохирургия", "Неврология"], title: { ru: "Нейрохирургия", en: "Neurosurgery" }, desc: { ru: "Операции на головном и спинном мозге любой сложности.", en: "Brain and spinal surgery of any complexity." } },
+  { icon: "urology", slug: "urology", docDepts: ["Урологи", "Урогинекологи"], disCats: ["Урология"], title: { ru: "Урология", en: "Urology" }, desc: { ru: "Диагностика и лечение заболеваний мочеполовой системы.", en: "Diagnosis and treatment of the urogenital system." } },
+  { icon: "gynecologists", slug: "gynecologists", docDepts: ["Гинекологи", "Акушеры", "Специалисты ЭКО"], disCats: ["Гинекология", "ЭКО"], title: { ru: "Гинекология", en: "Gynecology" }, desc: { ru: "Женское здоровье, репродукция, онкогинекология.", en: "Women's health, reproduction, gynecologic oncology." } },
+  { icon: "gastroenterology", slug: "gastroenterology", docDepts: ["Гастроэнтерологи"], disCats: ["Гастроэнторология"], title: { ru: "Гастроэнтерология", en: "Gastroenterology" }, desc: { ru: "Заболевания ЖКТ, эндоскопия, малоинвазивная хирургия.", en: "GI disorders, endoscopy, minimally invasive surgery." } },
+  { icon: "plastic-surgery", slug: "plastic-surgery", docDepts: ["Пластические хирурги"], disCats: ["Пластическая хирургия"], title: { ru: "Пластическая хирургия", en: "Plastic surgery" }, desc: { ru: "Эстетическая и реконструктивная хирургия.", en: "Aesthetic and reconstructive surgery." } },
+  { icon: "ophthalmolog", slug: "ophthalmolog", docDepts: ["Офтальмологи"], disCats: ["Офтальмология"], title: { ru: "Офтальмология", en: "Ophthalmology" }, desc: { ru: "Микрохирургия глаза, катаракта, лечение сетчатки.", en: "Eye microsurgery, cataract, retinal care." } },
+  { icon: "endocrinologists", slug: "endocrinologists", docDepts: ["Эндокринологи"], disCats: ["Эндокринология"], title: { ru: "Эндокринология", en: "Endocrinology" }, desc: { ru: "Диабет, щитовидная железа, гормональные нарушения.", en: "Diabetes, thyroid, hormonal disorders." } },
+  { icon: "ent-doctors", slug: "ent-doctors", docDepts: ["ЛОР-специалисты"], disCats: ["ЛОР"], title: { ru: "ЛОР", en: "ENT" }, desc: { ru: "Диагностика и хирургия уха, горла и носа.", en: "Diagnosis and surgery of ear, nose and throat." } },
+  { icon: "hematology", slug: "hematology", docDepts: ["Гематологи", "Онкологи"], disCats: ["Гематология"], title: { ru: "Гематология", en: "Hematology" }, desc: { ru: "Лечение заболеваний крови и лимфатической системы.", en: "Treatment of blood and lymphatic diseases." } },
 ];
 
 // Старые статические списки врачей/заболеваний/отзывов/новостей удалены:

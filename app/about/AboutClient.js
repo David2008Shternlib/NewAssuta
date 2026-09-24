@@ -1,6 +1,7 @@
 "use client";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
+import Icon from "@/components/Icon";
 import CTASection from "@/components/CTASection";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
@@ -27,10 +28,10 @@ const about = {
   },
   advTitle: { ru: "Преимущества", en: "Advantages" },
   advantages: [
-    { icon: "👨‍⚕️", ru: "Компетентные и опытные специалисты, прошедшие подготовку в престижных медицинских учреждениях мира.", en: "Competent and experienced specialists trained in the world's most prestigious medical institutions." },
-    { icon: "🔬", ru: "Инновационное и лучшее в мире оборудование.", en: "Innovative, best-in-class equipment." },
-    { icon: "🧭", ru: "Индивидуальный подход к каждому пациенту и подбор оптимальной программы лечения.", en: "An individual approach to each patient and the most suitable treatment programme." },
-    { icon: "🏨", ru: "Отличные условия пребывания — чтобы пациент чувствовал себя как дома.", en: "Excellent conditions so patients feel at home during their stay." },
+    { icon: "doctor", ru: "Компетентные и опытные специалисты, прошедшие подготовку в престижных медицинских учреждениях мира.", en: "Competent and experienced specialists trained in the world's most prestigious medical institutions." },
+    { icon: "microscope", ru: "Инновационное и лучшее в мире оборудование.", en: "Innovative, best-in-class equipment." },
+    { icon: "compass", ru: "Индивидуальный подход к каждому пациенту и подбор оптимальной программы лечения.", en: "An individual approach to each patient and the most suitable treatment programme." },
+    { icon: "building", ru: "Отличные условия пребывания — чтобы пациент чувствовал себя как дома.", en: "Excellent conditions so patients feel at home during their stay." },
   ],
 };
 
@@ -72,7 +73,7 @@ export default function AboutPage() {
             {about.advantages.map((a, i) => (
               <Reveal key={i} delay={(i % 4) * 0.06} className="h-full">
                 <div className="card h-full p-6">
-                  <div className="mb-4 text-4xl">{a.icon}</div>
+                  <Icon name={a.icon} size={34} className="mb-4 text-brand-green" />
                   <p className="text-sm leading-relaxed text-muted">{pick(a, lang)}</p>
                 </div>
               </Reveal>

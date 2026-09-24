@@ -7,8 +7,8 @@ const txt = {
   title: { ru: "Онлайн-консультант", en: "Online consultant" },
   online: { ru: "Операторы онлайн", en: "Operators online" },
   greeting: {
-    ru: "Здравствуйте! 👋 Чем можем помочь? Задайте вопрос — ответим в течение пары минут.",
-    en: "Hello! 👋 How can we help? Ask a question — we'll reply within a couple of minutes.",
+    ru: "Здравствуйте! Чем можем помочь? Задайте вопрос — ответим в течение пары минут.",
+    en: "Hello! How can we help? Ask a question — we'll reply within a couple of minutes.",
   },
   reply: {
     ru: "Спасибо за сообщение! Наш координатор скоро ответит. Вы также можете оставить заявку — и мы перезвоним.",
@@ -56,7 +56,7 @@ export default function ChatWidget() {
                 <span className="h-2 w-2 animate-pulse rounded-full bg-brand-green" />{txt.online[lang]}
               </div>
             </div>
-            <button onClick={() => setOpen(false)} aria-label="Close" className="text-xl leading-none text-white/80 hover:text-white">✕</button>
+            <button onClick={() => setOpen(false)} aria-label="Close" className="text-white/80 hover:text-white"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12" /></svg></button>
           </div>
 
           <div className="flex-1 space-y-3 overflow-y-auto bg-surface2 p-4">

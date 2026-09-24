@@ -7,7 +7,9 @@ import { useLang } from "./LangProvider";
 export default function PageHero({ title, subtitle, crumb }) {
   const { lang } = useLang();
   return (
-    <section className="border-b border-line bg-surface2 py-14">
+    // pt больше pb: липкая шапка не должна наезжать на хлебные крошки
+    // в первые же пиксели прокрутки
+    <section className="border-b border-line bg-surface2 pb-12 pt-8 md:pt-12">
       <div className="wrap">
         <Reveal>
           <nav className="mb-4 text-sm text-muted/70">

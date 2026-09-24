@@ -3,6 +3,7 @@ import Link from "@/components/LocaleLink";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import Counter from "@/components/Counter";
+import Icon, { Stars } from "@/components/Icon";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
@@ -13,10 +14,10 @@ import { useLang } from "@/components/LangProvider";
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
   const trust = [
-    { icon: "🛡️", label: { ru: "Под контролем Минздрава Израиля", en: "Overseen by Israel's Ministry of Health" } },
-    { icon: "⭐", label: { ru: "Реальные отзывы пациентов", en: "Real patient reviews" } },
-    { icon: "🏥", label: { ru: "Частная клиника с 1935 года", en: "Private clinic since 1935" } },
-    { icon: "🌐", label: { ru: "Сопровождение на вашем языке", en: "Support in your language" } },
+    { icon: "shield", label: { ru: "Под контролем Минздрава Израиля", en: "Overseen by Israel's Ministry of Health" } },
+    { icon: "star", label: { ru: "Реальные отзывы пациентов", en: "Real patient reviews" } },
+    { icon: "hospital", label: { ru: "Частная клиника с 1935 года", en: "Private clinic since 1935" } },
+    { icon: "globe", label: { ru: "Сопровождение на вашем языке", en: "Support in your language" } },
   ];
   return (
     <>
@@ -39,7 +40,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           <Reveal delay={0.2}>
             <a href={site.mapUrl} target="_blank" rel="noreferrer"
                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-white/80 underline-offset-4 hover:text-white hover:underline">
-              📍 {pick(site.address, lang)}
+              <Icon name="pin" size={18} className="flex-none" />{pick(site.address, lang)}
             </a>
           </Reveal>
           <Reveal delay={0.28}>
@@ -77,7 +78,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           {trust.map((it, i) => (
             <Reveal key={i} delay={i * 0.06}>
               <div className="flex flex-col items-center gap-1.5 text-center">
-                <span className="text-2xl">{it.icon}</span>
+                <Icon name={it.icon} size={26} className="text-brand-green" />
                 <span className="text-sm font-semibold leading-snug text-body">{pick(it.label, lang)}</span>
               </div>
             </Reveal>
@@ -115,8 +116,8 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {departments.map((d, i) => (
               <Reveal key={d.slug} delay={(i % 4) * 0.06} className="h-full">
-                <Link href="/departments" className="card card-hover group flex h-full items-center gap-4 p-5 sm:flex-col sm:items-start sm:gap-0 sm:p-6">
-                  <div className="flex-none text-4xl sm:mb-4">{d.icon}</div>
+                <Link href={`/departments/${d.slug}`} className="card card-hover group flex h-full items-center gap-4 p-5 sm:flex-col sm:items-start sm:gap-0 sm:p-6">
+                  <Icon name={d.icon} size={34} className="flex-none text-brand-green sm:mb-4" />
                   <div className="min-w-0 flex-1">
                     <h3 className="mb-1 text-lg font-bold text-body sm:mb-2">{pick(d.title, lang)}</h3>
                     <p className="text-sm text-muted">{pick(d.desc, lang)}</p>
@@ -202,7 +203,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             {reviews.map((r, i) => (
               <Reveal key={i} delay={(i % 2) * 0.08} className="h-full">
                 <div className="card h-full p-7">
-                  <div className="mb-3 text-brand-green">★★★★★</div>
+                  <Stars value={5} className="mb-3 text-brand-green" />
                   <p className="mb-5 italic text-body/80">«{pick(r.text, lang)}»</p>
                   <div className="text-sm font-bold text-body">{r.author}</div>
                   <div className="text-xs text-muted">{pick(r.country, lang)}</div>

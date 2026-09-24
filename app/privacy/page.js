@@ -8,6 +8,11 @@ export const metadata = {
     "Как мы обрабатываем персональные данные, отправленные через формы сайта: какие данные собираем, зачем, кому передаём, сколько храним и как их удалить.",
   alternates: { canonical: "/privacy" },
   robots: { index: true, follow: true },
+  openGraph: {
+    title: "Политика конфиденциальности | Assuta",
+    description: "Какие данные собираем через формы сайта, зачем, кому передаём, сколько храним и как их удалить.",
+    url: `${siteUrl}/privacy`,
+  },
 };
 
 export default function Page() {
