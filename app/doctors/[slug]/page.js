@@ -3,7 +3,9 @@ import DoctorDetail from "./DoctorDetail";
 import { getAllDoctors, getDoctor } from "@/lib/sanity";
 import { siteUrl } from "@/data/site";
 
-export const revalidate = 3600;
+// Страховка на случай, если сигнал из CMS не дошёл: обновление раз в 5 минут.
+// Основной путь — вебхук Sanity на /api/revalidate (см. cms/README.md).
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const docs = await getAllDoctors();

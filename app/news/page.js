@@ -2,7 +2,9 @@ import NewsClient from "./NewsClient";
 import { getAllNews } from "@/lib/sanity";
 import { breadcrumb, webPage } from "@/lib/schema";
 
-export const revalidate = 3600;
+// Страховка на случай, если сигнал из CMS не дошёл: обновление раз в 5 минут.
+// Основной путь — вебхук Sanity на /api/revalidate (см. cms/README.md).
+export const revalidate = 300;
 export const metadata = {
   title: "Медицинские новости — клиника Ассута",
   description: "Новости медицины Израиля: новые технологии диагностики и лечения, методы онкологической помощи, полезные материалы для пациентов клиники Ассута.",

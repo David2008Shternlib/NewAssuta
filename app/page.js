@@ -24,7 +24,9 @@ const __faq = faqPage([
   },
 ]);
 
-export const revalidate = 3600;
+// Страховка на случай, если сигнал из CMS не дошёл: обновление раз в 5 минут.
+// Основной путь — вебхук Sanity на /api/revalidate (см. cms/README.md).
+export const revalidate = 300;
 
 export default async function Page() {
   const [doctors, diseases, reviews, newsRaw] = await Promise.all([
