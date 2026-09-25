@@ -17,7 +17,7 @@ npm create sanity@latest -- --project ogu6ewxe --dataset production
 Затем скопировать `schemaTypes.js` из этой папки в студию и подключить:
 в `sanity.config.js` → `schema: { types: schemaTypes }` (импортом из файла).
 Проверить локально: `npm run dev` (студия на http://localhost:3333).
-Опубликовать редактор для клиента: `npx sanity deploy` → адрес вида `assuta.sanity.studio`.
+Редактор уже создан и выложен. Адрес и порядок обновления — в `cms/studio/README.md`.
 
 ## 2. Запустить импорт (заливает контент в Sanity)
 В КОРНЕ этого репозитория:
@@ -148,5 +148,6 @@ node cms/i18n-export.mjs
 
 ### Поля в Studio
 
-Новые поля появятся в Studio только после того, как туда попадёт обновлённая
-схема из `cms/schemaTypes.js` и Studio будет передеплоена (`npx sanity deploy`).
+Схему редактора я уже обновил — новые поля лежат в
+`C:\Projects\assuta-studio\schemaTypes\index.js`. Чтобы они появились
+у клиента, редактор нужно выложить заново: см. `cms/studio/README.md`.
