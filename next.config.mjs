@@ -1,12 +1,29 @@
 /** @type {import('next').NextConfig} */
 
-// Категории врачей со старого сайта (/doctors/{category}) → на общий список
-const doctorCategories = [
-  "oncology", "surgeons", "urology", "gynecologists", "orthopedic", "endocrinologists",
-  "neurology", "neurosurgery", "ophthalmolog", "ent-doctors", "gastroenterology",
-  "cardiology", "plastic-surgery", "urogynecologists", "ivf-specialists",
-  "vascular-surgery", "diagnostic", "revmatologi", "gastroenterologiya",
-];
+// Старые адреса вида /doctors/oncology вели список онкологов.
+// Ведём их на страницу направления, где эти врачи и есть,
+// а не в общий список из 148 человек.
+const categoryToDepartment = {
+  oncology: "oncology",
+  surgeons: "oncology",
+  urology: "urology",
+  urogynecologists: "urology",
+  gynecologists: "gynecologists",
+  "ivf-specialists": "gynecologists",
+  orthopedic: "orthopedic",
+  endocrinologists: "endocrinologists",
+  neurology: "neurosurgery",
+  neurosurgery: "neurosurgery",
+  ophthalmolog: "ophthalmolog",
+  "ent-doctors": "ent-doctors",
+  gastroenterology: "gastroenterology",
+  gastroenterologiya: "gastroenterology",
+  cardiology: "cardiology",
+  "plastic-surgery": "plastic-surgery",
+};
+
+// Категории без своего направления — ведём в общий список врачей
+const categoriesWithoutDepartment = ["diagnostic", "revmatologi", "vascular-surgery"];
 
 // Политика безопасности контента. Аудит: CSP нет ни у одного из пяти
 // конкурентов — это позиция, которую можно занять первыми.
@@ -15,10 +32,10 @@ const csp = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://*.jivosite.com https://code.jivosite.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://cdn.sanity.io https://mc.yandex.ru https://*.jivosite.com",
+  "img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com https://img.youtube.com https://mc.yandex.ru https://*.jivosite.com",
   "font-src 'self' data:",
   "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io https://mc.yandex.ru https://*.jivosite.com wss://*.jivosite.com",
-  "frame-src 'self' https://www.google.com https://maps.google.com https://*.jivosite.com",
+  "frame-src 'self' https://www.google.com https://maps.google.com https://www.youtube-nocookie.com https://www.youtube.com https://*.jivosite.com",
   "media-src 'self' https://cdn.sanity.io",
   "object-src 'none'",
   "base-uri 'self'",
@@ -58,7 +75,12 @@ const nextConfig = {
       { source: "/medical-tourism-department/:slug*", destination: "/about", permanent: true },
       { source: "/uslugi-logistiki", destination: "/about", permanent: true },
       // категории врачей
-      ...doctorCategories.map((c) => ({ source: `/doctors/${c}`, destination: "/doctors", permanent: true })),
+      ...Object.entries(categoryToDepartment).map(([c, d]) => ({
+        source: `/doctors/${c}`,
+        destination: `/departments/${d}`,
+        permanent: true,
+      })),
+      ...categoriesWithoutDepartment.map((c) => ({ source: `/doctors/${c}`, destination: "/doctors", permanent: true })),
     ];
   },
 };

@@ -53,6 +53,8 @@ export const ui = {
   getCost: { ru: "Узнать стоимость лечения", en: "Get treatment cost" },
   costHint: { ru: "Оставьте заявку — рассчитаем программу и цену.", en: "Leave a request — we'll calculate the program and price." },
 
+  videoTitle: { ru: "Клиника Ассута", en: "Assuta clinic" },
+  videoCaption: { ru: "Видео о клинике Ассута", en: "Video about Assuta clinic" },
   newsEyebrow: { ru: "Медицинские новости", en: "Medical news" },
   newsTitle: { ru: "Статьи и технологии", en: "Articles & technologies" },
 

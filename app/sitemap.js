@@ -1,4 +1,4 @@
-import { siteUrl } from "@/data/site";
+import { siteUrl, departments } from "@/data/site";
 import { getAllDoctors, getAllDiseases, getAllNews } from "@/lib/sanity";
 
 // Карта сайта строится из CMS, а не из статических списков,
@@ -14,6 +14,14 @@ export default async function sitemap() {
     priority: p === "" ? 1 : 0.8,
   }));
 
+  // страницы направлений — их не было в карте сайта, хотя это 12 живых разделов
+  const departmentRoutes = departments.map((d) => ({
+    url: `${siteUrl}/departments/${d.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
   let doctors = [];
   let diseases = [];
   let news = [];
@@ -21,7 +29,7 @@ export default async function sitemap() {
     [doctors, diseases, news] = await Promise.all([getAllDoctors(), getAllDiseases(), getAllNews()]);
   } catch (e) {
     // если CMS недоступна — отдаём хотя бы основные разделы, а не пустую карту
-    return staticRoutes;
+    return [...staticRoutes, ...departmentRoutes];
   }
 
   const entry = (path, priority, lastModified) => ({
@@ -33,6 +41,7 @@ export default async function sitemap() {
 
   return [
     ...staticRoutes,
+    ...departmentRoutes,
     ...(doctors || []).filter((d) => d.slug).map((d) => entry(`/doctors/${d.slug}`, 0.6)),
     ...(diseases || []).filter((d) => d.slug).map((d) => entry(`/diseases/${d.slug}`, 0.6)),
     ...(news || []).filter((n) => n.slug).map((n) => entry(`/news/${n.slug}`, 0.5, n.date)),

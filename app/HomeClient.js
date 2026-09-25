@@ -3,6 +3,7 @@ import Link from "@/components/LocaleLink";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import Counter from "@/components/Counter";
+import VideoEmbed from "@/components/VideoEmbed";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
@@ -123,6 +124,16 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                 </Link>
               </Reveal>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ВИДЕО О КЛИНИКЕ — как на оригинале, но плеер грузится только по клику */}
+      <section className="py-20">
+        <div className="wrap">
+          <SectionTitle eyebrow={t(lang, "disEyebrow")} title={t(lang, "videoTitle")} />
+          <div className="mx-auto max-w-4xl">
+            <VideoEmbed id="uSyaf-gHzyo" title={t(lang, "videoCaption")} />
           </div>
         </div>
       </section>

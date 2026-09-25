@@ -140,6 +140,7 @@ export const nav = [
   { label: { ru: "Отзывы", en: "Reviews" }, href: "/reviews" },
   { label: { ru: "Новости", en: "News" }, href: "/news" },
   { label: { ru: "Контакты", en: "Contacts" }, href: "/contacts" },
+  { label: { ru: "Поиск", en: "Search" }, href: "/search" },
 ];
 
 export const departments = [
@@ -234,7 +235,7 @@ export const departments = [
   {
     icon: "hematology",
     slug: "hematology",
-    docDepts: ["Гематологи", "Онкологи"],
+    docDepts: ["Гематологи"],
     disCats: ["Гематология"],
     title: { ru: "Гематология", en: "Hematology" },
     desc: { ru: "Лечение заболеваний крови и лимфатической системы.", en: "Treatment of blood and lymphatic diseases." },
