@@ -4,7 +4,7 @@ import PageHero from "@/components/PageHero";
 import DoctorCard from "@/components/DoctorCard";
 import Reveal from "@/components/Reveal";
 import CTASection from "@/components/CTASection";
-import { t } from "@/data/i18n";
+import { t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
 export default function SearchClient({ q = "", results }) {
@@ -90,7 +90,7 @@ export default function SearchClient({ q = "", results }) {
             <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
               {diseases.map((d) => (
                 <li key={d.slug}>
-                  <Link href={`/diseases/${d.slug}`} className="link-underline text-sm">{d.title}</Link>
+                  <Link href={`/diseases/${d.slug}`} className="link-underline text-sm">{cms(d, "title", lang)}</Link>
                   {d.category && <span className="ml-2 text-xs text-muted">{d.category}</span>}
                 </li>
               ))}
@@ -109,7 +109,7 @@ export default function SearchClient({ q = "", results }) {
               {news.map((n) => (
                 <li key={n.slug}>
                   <Reveal>
-                    <Link href={`/news/${n.slug}`} className="link-underline font-semibold text-body">{n.title}</Link>
+                    <Link href={`/news/${n.slug}`} className="link-underline font-semibold text-body">{cms(n, "title", lang)}</Link>
                     {n.excerpt && <p className="mt-1 text-sm text-muted">{n.excerpt.slice(0, 160)}</p>}
                   </Reveal>
                 </li>

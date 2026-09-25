@@ -6,7 +6,7 @@ import DoctorCard from "@/components/DoctorCard";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import MedicalDisclaimer from "@/components/MedicalDisclaimer";
-import { pick, t } from "@/data/i18n";
+import { pick, t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
 export default function DepartmentDetail({ dept, doctors = [], diseases = [] }) {
@@ -50,7 +50,7 @@ export default function DepartmentDetail({ dept, doctors = [], diseases = [] }) 
                   <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
                     {diseases.map((d) => (
                       <li key={d.slug}>
-                        <Link href={`/diseases/${d.slug}`} className="link-underline text-sm">{d.title}</Link>
+                        <Link href={`/diseases/${d.slug}`} className="link-underline text-sm">{cms(d, "title", lang)}</Link>
                       </li>
                     ))}
                   </ul>

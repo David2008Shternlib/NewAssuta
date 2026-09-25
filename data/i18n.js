@@ -13,6 +13,18 @@ export function docName(doc, lang) {
   return doc.name || "";
 }
 
+// Поле из CMS по языку. На английской версии берём соседнее поле «…En»
+// («titleEn», «bodyHtmlEn» и так далее), если оно заполнено; иначе показываем
+// русское — пустого места на странице не будет, даже пока перевод не готов.
+export function cms(doc, field, lang) {
+  if (!doc) return "";
+  if (lang === "en") {
+    const en = doc[`${field}En`];
+    if (typeof en === "string" && en.trim()) return en.trim();
+  }
+  return doc[field] || "";
+}
+
 // Словарь интерфейсных строк
 export const ui = {
   freeConsult: { ru: "Бесплатная консультация", en: "Free consultation" },

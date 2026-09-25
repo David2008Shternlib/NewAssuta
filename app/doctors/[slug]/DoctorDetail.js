@@ -5,12 +5,16 @@ import RequestForm from "@/components/RequestForm";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import MedicalDisclaimer from "@/components/MedicalDisclaimer";
-import { docName, t } from "@/data/i18n";
+import { docName, t, cms } from "@/data/i18n";
+import { cmsLabel } from "@/data/site";
 import { useLang } from "@/components/LangProvider";
 
 export default function DoctorDetail({ doc }) {
   const { lang } = useLang();
   const name = docName(doc, lang);
+  const dept = cmsLabel(doc.dept, lang);
+  const spec = cms(doc, "spec", lang);
+  const bodyHtml = cms(doc, "bodyHtml", lang);
 
   return (
     <>
@@ -28,15 +32,15 @@ export default function DoctorDetail({ doc }) {
                   )}
                 </div>
                 <div>
-                  {doc.dept && <span className="eyebrow">{doc.dept}</span>}
+                  {dept && <span className="eyebrow">{dept}</span>}
                   <h2 className="mt-2 text-2xl font-bold text-body">{name}</h2>
-                  {doc.spec && doc.spec !== doc.dept && <p className="mt-1 text-muted">{doc.spec}</p>}
+                  {spec && spec !== dept && <p className="mt-1 text-muted">{spec}</p>}
                 </div>
               </div>
             </Reveal>
-            {doc.bodyHtml && (
+            {bodyHtml && (
               <Reveal delay={0.1}>
-                <div className="cms-body mt-8 space-y-4 leading-relaxed text-body/85" dangerouslySetInnerHTML={{ __html: doc.bodyHtml }} />
+                <div className="cms-body mt-8 space-y-4 leading-relaxed text-body/85" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
               </Reveal>
             )}
             <Reveal><MedicalDisclaimer className="mt-10" /></Reveal>

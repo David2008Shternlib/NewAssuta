@@ -246,3 +246,18 @@ export const departments = [
 // всё это теперь приходит из CMS (Sanity). Они же тянули картинки со старого сайта.
 
 export const deptNames = Object.fromEntries(departments.map((d) => [d.slug, d.title]));
+
+// Названия отделений и категорий в CMS («Онкологи», «Кардиология») работают
+// ключами: по ним сайт собирает врачей и статьи в разделы. Поэтому в базе они
+// не переводятся, а подпись для английской версии берётся отсюда.
+// На русской версии значение остаётся ровно таким, как его ввели в CMS.
+const cmsLabelsEn = {};
+for (const d of departments) {
+  for (const n of d.docDepts || []) cmsLabelsEn[n] = d.title.en;
+  for (const c of d.disCats || []) cmsLabelsEn[c] = d.title.en;
+}
+
+export function cmsLabel(value, lang) {
+  if (lang !== "en") return value || "";
+  return cmsLabelsEn[value] || value || "";
+}

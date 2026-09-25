@@ -7,8 +7,8 @@ import VideoEmbed from "@/components/VideoEmbed";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
-import { site, stats, offers, departments } from "@/data/site";
-import { pick, t } from "@/data/i18n";
+import { site, stats, offers, departments, cmsLabel } from "@/data/site";
+import { pick, t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
@@ -163,10 +163,10 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             {diseasesByCategory.map((cat, i) => (
               <Reveal key={i} delay={(i % 3) * 0.08} className="h-full">
                 <div className="card h-full p-6">
-                  <h3 className="mb-4 break-words text-lg font-bold text-title">{pick(cat.category, lang)}</h3>
+                  <h3 className="mb-4 break-words text-lg font-bold text-title">{cmsLabel(cat.category, lang)}</h3>
                   <ul className="space-y-3">
                     {cat.items.slice(0, 6).map((it) => (
-                      <li key={it.slug}><Link href={`/diseases/${it.slug}`} className="link-underline text-sm">{pick(it.title, lang)}</Link></li>
+                      <li key={it.slug}><Link href={`/diseases/${it.slug}`} className="link-underline text-sm">{cms(it, "title", lang)}</Link></li>
                     ))}
                   </ul>
                 </div>
@@ -190,10 +190,10 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
               <Reveal key={n.slug} delay={i * 0.1} className="h-full">
                 <Link href={n.slug ? `/news/${n.slug}` : "/news"} className="card card-hover group flex h-full flex-col overflow-hidden">
                   <div className="h-48 overflow-hidden">
-                    <img src={n.img} alt={pick(n.title, lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={n.img} alt={cms(n, "title", lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
                   <div className="p-6">
-                    <h3 className="mb-2 text-base font-bold leading-snug text-body">{pick(n.title, lang)}</h3>
+                    <h3 className="mb-2 text-base font-bold leading-snug text-body">{cms(n, "title", lang)}</h3>
                     <p className="text-sm text-muted">{pick(n.excerpt, lang)}</p>
                   </div>
                 </Link>

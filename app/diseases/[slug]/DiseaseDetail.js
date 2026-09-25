@@ -6,12 +6,14 @@ import DoctorCard from "@/components/DoctorCard";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import MedicalDisclaimer from "@/components/MedicalDisclaimer";
-import { t } from "@/data/i18n";
+import { t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
 export default function DiseaseDetail({ doc, doctors = [] }) {
   const { lang } = useLang();
-  const title = doc.title || "";
+  const title = cms(doc, "title", lang);
+  const bodyHtml = cms(doc, "bodyHtml", lang);
+  const excerpt = cms(doc, "excerpt", lang);
 
   return (
     <>
@@ -19,12 +21,12 @@ export default function DiseaseDetail({ doc, doctors = [] }) {
       <section className="py-16">
         <div className="wrap grid gap-10 lg:grid-cols-3">
           <article className="lg:col-span-2">
-            {doc.bodyHtml ? (
+            {bodyHtml ? (
               <Reveal>
-                <div className="cms-body leading-relaxed text-body/85" dangerouslySetInnerHTML={{ __html: doc.bodyHtml }} />
+                <div className="cms-body leading-relaxed text-body/85" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
               </Reveal>
             ) : (
-              doc.excerpt && <Reveal><p className="text-lg leading-relaxed text-body/80">{doc.excerpt}</p></Reveal>
+              excerpt && <Reveal><p className="text-lg leading-relaxed text-body/80">{excerpt}</p></Reveal>
             )}
 
             {doctors.length > 0 && (

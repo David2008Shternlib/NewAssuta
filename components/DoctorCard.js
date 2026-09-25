@@ -1,6 +1,6 @@
 "use client";
 import Link from "@/components/LocaleLink";
-import { docName, pick, t } from "@/data/i18n";
+import { docName, pick, t, cms } from "@/data/i18n";
 import { useLang } from "./LangProvider";
 
 export default function DoctorCard({ doc }) {
@@ -16,7 +16,7 @@ export default function DoctorCard({ doc }) {
         )}
       </div>
       <h3 className="mb-1 break-words text-lg font-bold text-body">{name}</h3>
-      <p className="mb-4 break-words text-sm text-muted">{pick(doc.spec, lang)}</p>
+      <p className="mb-4 break-words text-sm text-muted">{cms(doc, "spec", lang)}</p>
       <span className="mt-auto inline-flex items-center gap-1.5 text-sm font-semibold uppercase text-brand-green transition-colors group-hover:text-brand-blue dark:group-hover:text-accent">
         {t(lang, "more")}
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

@@ -13,9 +13,13 @@ export const doctor = {
     { name: "nameEn", title: "Имя (EN)", type: "string" },
     { name: "slug", title: "Слаг", type: "slug", options: { source: "name" } },
     { name: "specialization", title: "Специализация", type: "string" },
+    { name: "specializationEn", title: "Специализация (EN)", type: "string" },
+    // Направление не дублируется на английском: по нему сайт собирает врачей
+    // в разделы, поэтому значение должно оставаться одним и тем же.
     { name: "department", title: "Направление", type: "string" },
     { name: "photo", title: "Фото", type: "image", options: { hotspot: true } },
     { name: "bodyHtml", title: "Описание (HTML с оригинала)", type: "text", rows: 12 },
+    { name: "bodyHtmlEn", title: "Описание, EN (HTML)", type: "text", rows: 12 },
     { name: "sourceUrl", title: "Источник (старый URL)", type: "url" },
   ],
   preview: { select: { title: "name", subtitle: "specialization", media: "photo" } },
@@ -27,9 +31,13 @@ export const disease = {
     { name: "title", title: "Название", type: "string" },
     { name: "titleEn", title: "Название (EN)", type: "string" },
     { name: "slug", title: "Слаг", type: "slug", options: { source: "title" } },
+    // Направление не дублируется на английском: по нему сайт собирает статьи
+    // в разделы, поэтому значение должно оставаться одним и тем же.
     { name: "category", title: "Направление", type: "string" },
     { name: "excerpt", title: "Краткое описание", type: "text", rows: 3 },
+    { name: "excerptEn", title: "Краткое описание (EN)", type: "text", rows: 3 },
     { name: "bodyHtml", title: "Текст статьи (HTML с оригинала)", type: "text", rows: 20 },
+    { name: "bodyHtmlEn", title: "Текст статьи, EN (HTML)", type: "text", rows: 20 },
     { name: "image", title: "Изображение", type: "image", options: { hotspot: true } },
     { name: "sourceUrl", title: "Источник (старый URL)", type: "url" },
   ],
@@ -52,9 +60,12 @@ export const news = {
   name: "news", title: "Новость", type: "document",
   fields: [
     { name: "title", title: "Заголовок", type: "string" },
+    { name: "titleEn", title: "Заголовок (EN)", type: "string" },
     { name: "slug", title: "Слаг", type: "slug", options: { source: "title" } },
     { name: "excerpt", title: "Анонс", type: "text", rows: 3 },
+    { name: "excerptEn", title: "Анонс (EN)", type: "text", rows: 3 },
     { name: "bodyHtml", title: "Текст (HTML с оригинала)", type: "text", rows: 20 },
+    { name: "bodyHtmlEn", title: "Текст, EN (HTML)", type: "text", rows: 20 },
     { name: "image", title: "Изображение", type: "image", options: { hotspot: true } },
     { name: "date", title: "Дата", type: "datetime" },
     { name: "sourceUrl", title: "Источник (старый URL)", type: "url" },

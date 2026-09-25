@@ -38,9 +38,9 @@ export default async function Page() {
   for (const d of diseases) {
     const c = d.category || "Другое";
     if (!map.has(c)) { const arr = []; map.set(c, arr); diseasesByCategory.push({ category: c, items: arr }); }
-    map.get(c).push({ slug: d.slug, title: d.title });
+    map.get(c).push({ slug: d.slug, title: d.title, titleEn: d.titleEn });
   }
-  const news = newsRaw.map((n) => ({ slug: n.slug, title: n.title, excerpt: n.excerpt, img: n.image }));
+  const news = newsRaw.map((n) => ({ slug: n.slug, title: n.title, titleEn: n.titleEn, excerpt: n.excerpt, excerptEn: n.excerptEn, img: n.image }));
 
   return (
     <>

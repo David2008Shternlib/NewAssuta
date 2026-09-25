@@ -2,7 +2,7 @@
 import Link from "@/components/LocaleLink";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
-import { t } from "@/data/i18n";
+import { t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
 export default function NewsClient({ news = [] }) {
@@ -17,12 +17,12 @@ export default function NewsClient({ news = [] }) {
               <Link href={`/news/${n.slug}`} className="card card-hover group h-full overflow-hidden">
                 {n.image && (
                   <div className="h-48 overflow-hidden">
-                    <img src={n.image} alt={n.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={n.image} alt={cms(n, "title", lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
                 )}
                 <div className="p-6">
-                  <h2 className="mb-2 text-base font-bold leading-snug text-body">{n.title}</h2>
-                  {n.excerpt && <p className="text-sm text-muted">{n.excerpt}</p>}
+                  <h2 className="mb-2 text-base font-bold leading-snug text-body">{cms(n, "title", lang)}</h2>
+                  {cms(n, "excerpt", lang) && <p className="text-sm text-muted">{cms(n, "excerpt", lang)}</p>}
                 </div>
               </Link>
             </Reveal>
