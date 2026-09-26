@@ -143,159 +143,251 @@ export const nav = [
   { label: { ru: "Поиск", en: "Search" }, href: "/search" },
 ];
 
+// Разделы повторяют /departments/ старого сайта: тот же состав, тот же порядок.
+// Состав задан списками адресов, а не полем в базе, по двум причинам.
+// Во-первых, на старом сайте врач и статья могли стоять сразу в нескольких
+// разделах (Цви Рам — онкология, хирургия и нейрохирургия; меланома —
+// онкология и дерматология), а в базе специальность и категория по одной.
+// Во-вторых, поле «специальность» в базе взято из текста карточки врача и во
+// многих местах не совпадает с тем, где врач стоял у них.
+// Списки снимались прямо со старого сайта, менять их вручную не нужно.
 export const departments = [
   {
-    icon: "oncology",
     slug: "oncology",
-    docDepts: ["Онкологи"],
-    disCats: ["Онкология"],
     title: { ru: "Онкология", en: "Oncology" },
     desc: { ru: "Диагностика и лечение всех видов рака по современным протоколам.", en: "Diagnosis and treatment of all cancers by modern protocols." },
+    docSlugs: [
+      "dan-grisar", "irina-stefanski", "irina-zhivelyuk", "zoar-dotan", "avi-hefecz",
+      "doktor-yuliya-grinberg", "ofer-merimskij", "professor-yakov-shehter", "professor-dan-aderka",
+      "professor-haim-gutman", "czvi-ram", "nissan-aviram", "professor-shlomo-shnejbaum", "yakov-bikels",
+      "svetlana-zalmanova", "ella-tepper", "doktor-ram-ejtan", "feliks-bokshtejn", "professor-dzhek-baniel",
+      "professor-moshe-pappa", "doktor-sharon-peles", "doktor-david-sarid", "professor-mihael-shapira"
+    ],
+    disSlugs: [
+      "rak-slyunnyh-zhelez-2", "bazilioma-2", "rak-guby-2", "rak-uretry-2", "rak-shhitovidnoj-zhelezy",
+      "rak-yazyka-2", "detskaya-onkologiya", "nejroblastoma", "rak-grudi", "rak-dvenadczatiperstnoj-kishki",
+      "rak-zheludka", "rak-zhelchnogo-puzyrya", "rak-legkih", "rak-matki", "rak-mochevogo-puzyrya",
+      "rak-nadpochechnikov", "rak-pecheni", "rak-podzheludochnoj-zhelezy", "rak-pochki", "rak-prostaty",
+      "rak-pryamoj-kishki", "rak-tolstogo-kishechnika", "rak-tonkogo-kishechnika", "rak-shejki-matki",
+      "rak-yaichka", "rak-yaichnikov", "raka-kostej", "rak-pozvonochnika", "lejkoma", "lejkoz", "mieloma",
+      "limfoma-hodzhkina", "nehodzhkinskaya-limfoma", "onko-ortopediya", "melanoma", "osteosarkoma",
+      "mezotelioma-bryushiny-ili-peritonealnaya-mezotelioma", "ploskokletochnyj-rak", "rak-vlagalishha",
+      "rak-kostej", "rak-mozga", "rak-polosti-rta", "rak-polovogo-chlena", "rak-timusa",
+      "sinovialnaya-sarkoma", "nejroendokrinnyj-rak", "rak-pishhevoda", "rak-glazniczy",
+      "glioma-hiazmy-diagnostika-i-lechenie-v-izraile", "melanoma-glaza", "rak-sleznoj-zhelezy",
+      "retinoblastoma"
+    ],
   },
   {
-    icon: "cardiology",
     slug: "cardiology",
-    docDepts: ["Кардиологи"],
-    disCats: ["Кардиология"],
     title: { ru: "Кардиология", en: "Cardiology" },
     desc: { ru: "Полный спектр кардиохирургии и интервенционного лечения сердца.", en: "Full range of cardiac surgery and interventional heart care." },
+    docSlugs: [
+      "professor-ehud-raanani", "leonid-sternik", "doktor-amir-kramer", "professor-shmuel-rat",
+      "mihael-shehter", "doktor-german-gandelman", "gadi-keren", "shmuel-banaj", "david-lure",
+      "professor-mihael-eldar", "sami-viskin", "lev-mendelevich"
+    ],
+    disSlugs: [
+      "ablyacziya-serdcza", "aortokoronarnoe-shuntirovanie", "aritmiya", "ateroskleroz", "blokady-serdcza",
+      "gipertenziya", "gipertoniya", "zamena-serdechnogo-klapana", "insult", "infarkt-miokarda",
+      "ishemicheskaya-bolezn-serdcza", "kardiostimulyatory-i-koronarnaya-angiografiya", "poroki-serdcza",
+      "senokardiya", "stentirovanie", "tromboz", "endokardit"
+    ],
   },
   {
-    icon: "orthopedic",
-    slug: "orthopedic",
-    docDepts: ["Ортопеды"],
-    disCats: ["Ортопедия"],
-    title: { ru: "Ортопедия", en: "Orthopedics" },
-    desc: { ru: "Эндопротезирование суставов и лечение позвоночника.", en: "Joint replacement and spine treatment." },
-  },
-  {
-    icon: "neurosurgery",
-    slug: "neurosurgery",
-    docDepts: ["Нейрохирурги", "Неврологи"],
-    disCats: ["Нейрохирургия", "Неврология"],
-    title: { ru: "Нейрохирургия", en: "Neurosurgery" },
-    desc: { ru: "Операции на головном и спинном мозге любой сложности.", en: "Brain and spinal surgery of any complexity." },
-  },
-  {
-    icon: "urology",
-    slug: "urology",
-    docDepts: ["Урологи", "Урогинекологи"],
-    disCats: ["Урология"],
-    title: { ru: "Урология", en: "Urology" },
-    desc: { ru: "Диагностика и лечение заболеваний мочеполовой системы.", en: "Diagnosis and treatment of the urogenital system." },
-  },
-  {
-    icon: "gynecologists",
-    slug: "gynecologists",
-    docDepts: ["Гинекологи", "Акушеры", "Специалисты ЭКО"],
-    disCats: ["Гинекология", "ЭКО"],
-    title: { ru: "Гинекология", en: "Gynecology" },
-    desc: { ru: "Женское здоровье, репродукция, онкогинекология.", en: "Women's health, reproduction, gynecologic oncology." },
-  },
-  {
-    icon: "gastroenterology",
     slug: "gastroenterology",
-    docDepts: ["Гастроэнтерологи"],
-    disCats: ["Гастроэнторология"],
     title: { ru: "Гастроэнтерология", en: "Gastroenterology" },
     desc: { ru: "Заболевания ЖКТ, эндоскопия, малоинвазивная хирургия.", en: "GI disorders, endoscopy, minimally invasive surgery." },
-  },
-  {
-    icon: "plastic-surgery",
-    slug: "plastic-surgery",
-    docDepts: ["Пластические хирурги"],
-    disCats: ["Пластическая хирургия"],
-    title: { ru: "Пластическая хирургия", en: "Plastic surgery" },
-    desc: { ru: "Эстетическая и реконструктивная хирургия.", en: "Aesthetic and reconstructive surgery." },
-  },
-  {
-    icon: "ophthalmolog",
-    slug: "ophthalmolog",
-    docDepts: ["Офтальмологи"],
-    disCats: ["Офтальмология"],
-    title: { ru: "Офтальмология", en: "Ophthalmology" },
-    desc: { ru: "Микрохирургия глаза, катаракта, лечение сетчатки.", en: "Eye microsurgery, cataract, retinal care." },
-  },
-  {
-    icon: "endocrinologists",
-    slug: "endocrinologists",
-    docDepts: ["Эндокринологи"],
-    disCats: ["Эндокринология"],
-    title: { ru: "Эндокринология", en: "Endocrinology" },
-    desc: { ru: "Диабет, щитовидная железа, гормональные нарушения.", en: "Diabetes, thyroid, hormonal disorders." },
-  },
-  {
-    icon: "ent-doctors",
-    slug: "ent-doctors",
-    docDepts: ["ЛОР-специалисты"],
-    disCats: ["ЛОР"],
-    // Статей с категорией «ЛОР» в базе нет, раздел выходил без заболеваний.
-    // Добираем опухоли головы и шеи: в самих этих статьях приём ведёт
-    // ЛОР-хирург (так написано в их же таблицах цен). Из онкологии они,
-    // как и статьи по гематологии, никуда не уходят.
-    disSlugs: ["rak-guby-2", "rak-polosti-rta", "rak-slyunnyh-zhelez-2", "rak-yazyka-2"],
-    title: { ru: "ЛОР", en: "ENT" },
-    desc: { ru: "Диагностика и хирургия уха, горла и носа.", en: "Diagnosis and surgery of ear, nose and throat." },
-  },
-  {
-    icon: "hematology",
-    slug: "hematology",
-    docDepts: ["Гематологи"],
-    disCats: ["Гематология"],
-    // В базе нет ни одного врача с пометкой «Гематологи» и ни одной статьи с
-    // категорией «Гематология» — раздел выходил пустым. Категория у статьи и
-    // специальность у врача только одна, а эти материалы по смыслу относятся
-    // сразу к двум разделам, как и было на старом сайте. Поэтому добираем их
-    // поимённо: из онкологии они при этом никуда не пропадают.
-    // Врачи отобраны по тому, что указано их специальностью в их же карточке:
-    // «гематолог» или «онкогематолог».
     docSlugs: [
-      "professor-ella-naperstka",
-      "professor-mihael-shapira",
-      "doktor-fredi-aviv",
-      "doktor-odeliya-gur",
-      "doktor-dror-levin",
-      "doktor-ronit-elhasid",
+      "doktor-maor-laav", "santo-ervin", "tamar-shalev"
     ],
-    disSlugs: ["lejkoma", "lejkoz", "limfoma-hodzhkina", "mieloma", "nehodzhkinskaya-limfoma"],
-    title: { ru: "Гематология", en: "Hematology" },
-    desc: { ru: "Лечение заболеваний крови и лимфатической системы.", en: "Treatment of blood and lymphatic diseases." },
+    disSlugs: [
+      "gastrit", "chernovik", "gastroezofagealnaya-reflyuksnaya-bolezn-gerb", "gemorroj",
+      "gryzha-pishhevodnogo-otverstiya-diafragmy", "divertikul-pishhevoda",
+      "nespeczificheskij-yazvennyj-kolit-nyak", "pankreatit", "pahovaya-gryzha", "barretts-esophagus",
+      "pupochnaya-i-drugie-abdominalnye-gryzhi", "czeliakiya", "yazva-zheludka"
+    ],
   },
-  // Разделы ниже были на старом сайте, но при сборке структуры не попали сюда.
-  // Из-за этого 13 врачей и 6 статей не открывались из меню «Направления» —
-  // до них можно было добраться только через общий список или поиск.
-  // Дописаны в конец, чтобы не менять первую семёрку: её выводит подвал.
   {
-    icon: "general-surgery",
+    slug: "gynecologists",
+    title: { ru: "Гинекология", en: "Gynecology" },
+    desc: { ru: "Женское здоровье, репродукция, онкогинекология.", en: "Women's health, reproduction, gynecologic oncology." },
+    docSlugs: [
+      "dan-grisar", "doktor-ram-ejtan", "doktor-anna-bleher", "dov-laksman", "ron-hauzer",
+      "professor-yuval-yaron", "avi-ben-harush", "ronen-gold", "anna-padua"
+    ],
+    disSlugs: [
+      "rak-matki", "rak-shejki-matki", "rak-yaichnikov", "endometrioz", "rak-vlagalishha", "adenomioz",
+      "akusherstvo-rody", "zhenskoe-besplodie", "kisty-yaichnikov", "mioma-matki"
+    ],
+  },
+  {
+    slug: "urology",
+    title: { ru: "Урология", en: "Urology" },
+    desc: { ru: "Диагностика и лечение заболеваний мочеполовой системы.", en: "Diagnosis and treatment of the urogenital system." },
+    docSlugs: [
+      "zoar-dotan", "professor-dzhek-baniel", "professor-ofer-yusipovich", "uri-gur", "eli-tavdi",
+      "professor-haim-maczkin", "professor-yuza-hen", "ilan-lejbovich", "doktor-gil-raviv",
+      "professor-nikola-mabdzhish"
+    ],
+    disSlugs: [
+      "adenoma-prostaty", "azoospermiya-2", "varikoczele-2", "gidronefroz", "gipospadiya", "impotencziya",
+      "mochekamennaya-bolezn", "muzhskoe-besplodie-mkb", "prostatit", "rak-prostaty", "rak-yaichka",
+      "rak-polovogo-chlena"
+    ],
+  },
+  {
     slug: "general-surgery",
-    docDepts: ["Хирурги", "Торакальные хирурги"],
-    disCats: ["Общая хирургия"],
     title: { ru: "Общая хирургия", en: "General surgery" },
     desc: { ru: "Плановые и срочные операции, включая малоинвазивные и торакальные.", en: "Planned and urgent operations, including minimally invasive and thoracic surgery." },
+    docSlugs: [
+      "zoar-dotan", "avi-hefecz", "professor-haim-gutman", "czvi-ram", "nissan-aviram",
+      "professor-shlomo-shnejbaum", "yakov-bikels", "doktor-ram-ejtan", "professor-moshe-pappa",
+      "doktor-riad-hadad", "yurij-goldes", "doktor-marat-hajkin-2", "david-morgenshtern", "ron-arbel",
+      "konstantin-galperin", "ilya-pekarskij", "ron-grinberg", "yair-gorchak", "professor-iosif-klauzner",
+      "doktor-dov-zippel", "doktor-anna-bleher", "professor-davidovich-shlomo", "professor-hanoh-kashtan",
+      "professor-ofer-yusipovich"
+    ],
+    disSlugs: [
+      "lechenie-bolej-v-spine", "zamena-tazobedrennogo-sustava", "artrit", "zamena-golenostopnogo-sustava",
+      "artroz", "valgusnaya-deformacziya-bolshogo-palcza-stopy", "lechenie-meniska",
+      "lechenie-pozvonochnika", "zamena-loktevogo-sustava", "zamena-plechevogo-sustava", "pupochnaya-gryzha"
+    ],
   },
   {
-    icon: "vascular-surgery",
+    slug: "neurosurgery",
+    title: { ru: "Нейрохирургия", en: "Neurosurgery" },
+    desc: { ru: "Операции на головном и спинном мозге любой сложности.", en: "Brain and spinal surgery of any complexity." },
+    docSlugs: [
+      "czvi-ram", "feliks-bokshtejn", "dvora-blyumental", "rahel-grosman", "shimon-rohkind",
+      "doktor-eli-ashkenazi"
+    ],
+    disSlugs: [
+      "adenoma-gipofiza", "astroczitoma", "glioblastoma", "glioma-zritelnogo-nerva", "medulloblastoma",
+      "menengioma", "rak-mozga"
+    ],
+  },
+  {
+    slug: "plastic-surgery",
+    title: { ru: "Пластическая хирургия", en: "Plastic surgery" },
+    desc: { ru: "Эстетическая и реконструктивная хирургия.", en: "Aesthetic and reconstructive surgery." },
+    docSlugs: [
+      "ram-silfan", "eyal-vinkler", "din-adel", "david-raderman", "doktor-yakov-bar", "doktor-ran-talisman",
+      "professor-eyal-gur", "doktor-amir-aaron", "doktor-meir-koen", "doktor-liron-eldor"
+    ],
+    disSlugs: [
+      "blefaroplastika", "fejslifting-omolozhenie-licza"
+    ],
+  },
+  {
     slug: "vascular-surgery",
-    docDepts: [],
-    disCats: ["Сосудистая хирургия"],
     title: { ru: "Сосудистая хирургия", en: "Vascular surgery" },
     desc: { ru: "Лечение варикоза и других заболеваний вен и артерий.", en: "Treatment of varicose veins and other conditions of the veins and arteries." },
+    docSlugs: [],
+    disSlugs: [
+      "varikoz-nizhnih-konechnostej"
+    ],
   },
   {
-    icon: "dermatology",
+    slug: "hematology",
+    title: { ru: "Гематология", en: "Hematology" },
+    desc: { ru: "Лечение заболеваний крови и лимфатической системы.", en: "Treatment of blood and lymphatic diseases." },
+    docSlugs: [],
+    disSlugs: [
+      "lejkoma", "lejkoz", "mieloma", "limfoma-hodzhkina", "nehodzhkinskaya-limfoma"
+    ],
+  },
+  {
+    slug: "neurology",
+    title: { ru: "Неврология", en: "Neurology" },
+    desc: { ru: "Рассеянный склероз, болезнь Паркинсона, невралгии и другие заболевания нервной системы.", en: "Multiple sclerosis, Parkinson's disease, neuralgia and other conditions of the nervous system." },
+    docSlugs: [
+      "veronika-chernuha", "nir-giladi", "vivyan-drori", "tatyana-gurevich", "gabriel-zeilig",
+      "boris-aranovich"
+    ],
+    disSlugs: [
+      "bokovoj-amiotroficheskij-skleroz", "bolezn-parkinsona", "nevralgiya", "rasseyannyj-skleroz",
+      "sindrom-deficzita-vnimaniya-i-giperaktivnosti-sdvg"
+    ],
+  },
+  {
+    slug: "orthopedic",
+    title: { ru: "Ортопедия", en: "Orthopedics" },
+    desc: { ru: "Эндопротезирование суставов и лечение позвоночника.", en: "Joint replacement and spine treatment." },
+    docSlugs: [
+      "yakov-bikels", "david-morgenshtern", "ron-arbel", "konstantin-galperin", "ilya-pekarskij",
+      "yair-gorchak", "professor-davidovich-shlomo", "czvi-koen", "aaron-menahem", "aleks-kalganov",
+      "gaj-morag", "gabriel-mozes", "igor-kazanskij", "shmuel-dekel-4", "yaron-ram",
+      "professor-ieguda-kolander"
+    ],
+    disSlugs: [
+      "lechenie-bolej-v-spine", "vakuumnoe-udalenie-diska", "vertebroplastika", "skolioz-i-kifoz",
+      "endoprotezirovanie-kolennogo-sustava", "zamena-tazobedrennogo-sustava",
+      "individualnoe-programmirovanie-sustava", "mezhpozvonochnaya-gryzha", "artrit",
+      "zamena-golenostopnogo-sustava", "artroz", "valgusnaya-deformacziya-bolshogo-palcza-stopy",
+      "lechenie-meniska", "lechenie-pozvonochnika", "onko-ortopediya", "zamena-loktevogo-sustava",
+      "zamena-plechevogo-sustava"
+    ],
+  },
+  {
+    slug: "endocrinologists",
+    title: { ru: "Эндокринология", en: "Endocrinology" },
+    desc: { ru: "Диабет, щитовидная железа, гормональные нарушения.", en: "Diabetes, thyroid, hormonal disorders." },
+    docSlugs: [
+      "evgenij-moshkovich", "galina-shenkerman", "shmuel-levit", "doktor-elena-iczhakovendokrinolog",
+      "professor-luis-shenkman", "doktor-asaf-oren", "professor-hohberg-zeev", "doktor-irena-zhitomirski",
+      "doktor-karlos-ben-bassat", "doktor-naomi-vajntrub", "professor-ilana-iczhakov",
+      "professor-naftali-shtern"
+    ],
+    disSlugs: [
+      "autoimmunnyj-tireoidit", "zob", "nesaharnyj-diabet", "ozhirenie", "saharnyj-diabet-2-tipa",
+      "saharnyj-diabet-1-tipa",
+      "sistema-nepreryvnogo-monitoringa-glyukozy-continuous-glucose-monitoring-cgm"
+    ],
+  },
+  {
     slug: "dermatology",
-    docDepts: ["Дерматологи"],
-    disCats: ["Дерматология"],
     title: { ru: "Дерматология", en: "Dermatology" },
     desc: { ru: "Диагностика и лечение заболеваний кожи, включая онкодерматологию.", en: "Diagnosis and treatment of skin conditions, including skin cancer." },
+    docSlugs: [
+      "ronen-alkalaj", "doktor-baruh-kaplan", "professor-eli-shpreher"
+    ],
+    disSlugs: [
+      "bazilioma-2", "melanoma", "gemangioma"
+    ],
   },
   {
-    icon: "rheumatology",
+    slug: "ophthalmolog",
+    title: { ru: "Офтальмология", en: "Ophthalmology" },
+    desc: { ru: "Микрохирургия глаза, катаракта, лечение сетчатки.", en: "Eye microsurgery, cataract, retinal care." },
+    docSlugs: [
+      "roni-rahmiel", "shpirer-avraam", "dov-vajnberger", "or-kajzerman-2", "professor-igal-lejbovich"
+    ],
+    disSlugs: [
+      "atrofiya-zritelnogo-nerva", "glaukoma", "katarakta", "kosoglazie", "rak-glazniczy", "blefarospazm",
+      "lagoftalm", "glioma-hiazmy-diagnostika-i-lechenie-v-izraile", "melanoma-glaza", "rak-sleznoj-zhelezy",
+      "retinoblastoma"
+    ],
+  },
+  {
     slug: "rheumatology",
-    docDepts: ["Ревматологи"],
-    disCats: ["Ревматология"],
     title: { ru: "Ревматология", en: "Rheumatology" },
     desc: { ru: "Аутоиммунные и воспалительные заболевания суставов и соединительной ткани.", en: "Autoimmune and inflammatory diseases of the joints and connective tissue." },
+    docSlugs: [
+      "professor-pnina-langevich", "marina-anuk", "professor-ilan-bank", "professor-dan-kaspi"
+    ],
+    disSlugs: [
+      "revmatoidnyj-artrit", "sistemnaya-krasnaya-volchanka-skv", "bolezn-behtereva"
+    ],
+  },
+  {
+    slug: "ivf",
+    title: { ru: "ЭКО", en: "IVF" },
+    desc: { ru: "Программы ЭКО, ведение беременности и роды.", en: "IVF programmes, pregnancy care and childbirth." },
+    docSlugs: [],
+    disSlugs: [
+      "akusherstvo-rody", "zhenskoe-besplodie"
+    ],
   },
 ];
 
@@ -304,38 +396,52 @@ export const departments = [
 
 export const deptNames = Object.fromEntries(departments.map((d) => [d.slug, d.title]));
 
-// Названия отделений и категорий в CMS («Онкологи», «Кардиология») работают
-// ключами: по ним сайт собирает врачей и статьи в разделы. Поэтому в базе они
-// не переводятся, а подпись для английской версии берётся отсюда.
-// На русской версии значение остаётся ровно таким, как его ввели в CMS.
-const cmsLabelsEn = {};
-for (const d of departments) {
-  for (const n of d.docDepts || []) cmsLabelsEn[n] = d.title.en;
-  for (const c of d.disCats || []) cmsLabelsEn[c] = d.title.en;
-}
-
-// Подпись под именем врача описывает его специальность, а не раздел, в который
-// он попал. Поэтому здесь значения точнее, чем названия разделов: торакальный
-// хирург выводится торакальным хирургом, хотя собран в «Общую хирургию».
-// Плюс специальности, для которых раздела нет вовсе (нефрологи, радиологи,
-// иммунологи) — без них на английской версии оставалась русская подпись.
-const extraLabelsEn = {
+// Подписи специальностей и категорий для английской версии. Раньше они
+// собирались из названий разделов, но разделы больше не привязаны к полям базы,
+// поэтому словарь задан явно. Подпись описывает специальность самого врача:
+// торакальный хирург так и подписан, хотя в разделах стоит в общей хирургии.
+const cmsLabelsEn = {
   // специальности врачей
-  "Дерматологи": "Dermatology",
-  "Иммунологи": "Immunology",
-  "Нефрологи": "Nephrology",
-  "Радиологи": "Radiology",
-  "Ревматологи": "Rheumatology",
+  "Онкологи": "Oncology",
+  "Кардиологи": "Cardiology",
+  "Ортопеды": "Orthopedics",
+  "Нейрохирурги": "Neurosurgery",
+  "Неврологи": "Neurology",
+  "Урологи": "Urology",
+  "Урогинекологи": "Urogynecology",
+  "Гинекологи": "Gynecology",
+  "Акушеры": "Obstetrics",
+  "Специалисты ЭКО": "IVF",
+  "Гастроэнтерологи": "Gastroenterology",
+  "Пластические хирурги": "Plastic surgery",
+  "Офтальмологи": "Ophthalmology",
+  "Эндокринологи": "Endocrinology",
+  "ЛОР-специалисты": "ENT",
+  "Гематологи": "Hematology",
   "Хирурги": "Surgery",
   "Торакальные хирурги": "Thoracic surgery",
+  "Дерматологи": "Dermatology",
+  "Ревматологи": "Rheumatology",
+  "Нефрологи": "Nephrology",
+  "Радиологи": "Radiology",
+  "Иммунологи": "Immunology",
   // категории заболеваний
+  "Онкология": "Oncology",
+  "Кардиология": "Cardiology",
+  "Ортопедия": "Orthopedics",
+  "Нейрохирургия": "Neurosurgery",
+  "Неврология": "Neurology",
+  "Урология": "Urology",
+  "Гинекология": "Gynecology",
+  "Гастроэнторология": "Gastroenterology",
+  "Пластическая хирургия": "Plastic surgery",
+  "Офтальмология": "Ophthalmology",
+  "Эндокринология": "Endocrinology",
   "Дерматология": "Dermatology",
   "Ревматология": "Rheumatology",
   "Общая хирургия": "General surgery",
   "Сосудистая хирургия": "Vascular surgery",
 };
-// Пишем поверх: эти подписи точнее тех, что получились из названий разделов.
-Object.assign(cmsLabelsEn, extraLabelsEn);
 
 export function cmsLabel(value, lang) {
   if (lang !== "en") return value || "";
