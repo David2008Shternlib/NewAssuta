@@ -41,8 +41,8 @@ export default async function Page({ params }) {
   if (!dept) return notFound();
 
   const [doctors, diseases] = await Promise.all([
-    getDoctorsByDepartments(dept.docDepts || []),
-    getDiseasesByCategories(dept.disCats || []),
+    getDoctorsByDepartments(dept.docDepts || [], dept.docSlugs || []),
+    getDiseasesByCategories(dept.disCats || [], dept.disSlugs || []),
   ]);
 
   const crumbs = breadcrumb([

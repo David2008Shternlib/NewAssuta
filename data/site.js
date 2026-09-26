@@ -229,6 +229,11 @@ export const departments = [
     slug: "ent-doctors",
     docDepts: ["ЛОР-специалисты"],
     disCats: ["ЛОР"],
+    // Статей с категорией «ЛОР» в базе нет, раздел выходил без заболеваний.
+    // Добираем опухоли головы и шеи: в самих этих статьях приём ведёт
+    // ЛОР-хирург (так написано в их же таблицах цен). Из онкологии они,
+    // как и статьи по гематологии, никуда не уходят.
+    disSlugs: ["rak-guby-2", "rak-polosti-rta", "rak-slyunnyh-zhelez-2", "rak-yazyka-2"],
     title: { ru: "ЛОР", en: "ENT" },
     desc: { ru: "Диагностика и хирургия уха, горла и носа.", en: "Diagnosis and surgery of ear, nose and throat." },
   },
@@ -237,8 +242,60 @@ export const departments = [
     slug: "hematology",
     docDepts: ["Гематологи"],
     disCats: ["Гематология"],
+    // В базе нет ни одного врача с пометкой «Гематологи» и ни одной статьи с
+    // категорией «Гематология» — раздел выходил пустым. Категория у статьи и
+    // специальность у врача только одна, а эти материалы по смыслу относятся
+    // сразу к двум разделам, как и было на старом сайте. Поэтому добираем их
+    // поимённо: из онкологии они при этом никуда не пропадают.
+    // Врачи отобраны по тому, что указано их специальностью в их же карточке:
+    // «гематолог» или «онкогематолог».
+    docSlugs: [
+      "professor-ella-naperstka",
+      "professor-mihael-shapira",
+      "doktor-fredi-aviv",
+      "doktor-odeliya-gur",
+      "doktor-dror-levin",
+      "doktor-ronit-elhasid",
+    ],
+    disSlugs: ["lejkoma", "lejkoz", "limfoma-hodzhkina", "mieloma", "nehodzhkinskaya-limfoma"],
     title: { ru: "Гематология", en: "Hematology" },
     desc: { ru: "Лечение заболеваний крови и лимфатической системы.", en: "Treatment of blood and lymphatic diseases." },
+  },
+  // Разделы ниже были на старом сайте, но при сборке структуры не попали сюда.
+  // Из-за этого 13 врачей и 6 статей не открывались из меню «Направления» —
+  // до них можно было добраться только через общий список или поиск.
+  // Дописаны в конец, чтобы не менять первую семёрку: её выводит подвал.
+  {
+    icon: "general-surgery",
+    slug: "general-surgery",
+    docDepts: ["Хирурги", "Торакальные хирурги"],
+    disCats: ["Общая хирургия"],
+    title: { ru: "Общая хирургия", en: "General surgery" },
+    desc: { ru: "Плановые и срочные операции, включая малоинвазивные и торакальные.", en: "Planned and urgent operations, including minimally invasive and thoracic surgery." },
+  },
+  {
+    icon: "vascular-surgery",
+    slug: "vascular-surgery",
+    docDepts: [],
+    disCats: ["Сосудистая хирургия"],
+    title: { ru: "Сосудистая хирургия", en: "Vascular surgery" },
+    desc: { ru: "Лечение варикоза и других заболеваний вен и артерий.", en: "Treatment of varicose veins and other conditions of the veins and arteries." },
+  },
+  {
+    icon: "dermatology",
+    slug: "dermatology",
+    docDepts: ["Дерматологи"],
+    disCats: ["Дерматология"],
+    title: { ru: "Дерматология", en: "Dermatology" },
+    desc: { ru: "Диагностика и лечение заболеваний кожи, включая онкодерматологию.", en: "Diagnosis and treatment of skin conditions, including skin cancer." },
+  },
+  {
+    icon: "rheumatology",
+    slug: "rheumatology",
+    docDepts: ["Ревматологи"],
+    disCats: ["Ревматология"],
+    title: { ru: "Ревматология", en: "Rheumatology" },
+    desc: { ru: "Аутоиммунные и воспалительные заболевания суставов и соединительной ткани.", en: "Autoimmune and inflammatory diseases of the joints and connective tissue." },
   },
 ];
 
@@ -257,10 +314,11 @@ for (const d of departments) {
   for (const c of d.disCats || []) cmsLabelsEn[c] = d.title.en;
 }
 
-// В CMS есть специальности и категории, для которых нет отдельного раздела на
-// сайте: они никуда не группируются, но стоят подписью в карточке врача и в
-// статье. Без них на английской версии оставалась русская подпись —
-// «Дерматологи» под именем Prof. Eli Sprecher и так далее.
+// Подпись под именем врача описывает его специальность, а не раздел, в который
+// он попал. Поэтому здесь значения точнее, чем названия разделов: торакальный
+// хирург выводится торакальным хирургом, хотя собран в «Общую хирургию».
+// Плюс специальности, для которых раздела нет вовсе (нефрологи, радиологи,
+// иммунологи) — без них на английской версии оставалась русская подпись.
 const extraLabelsEn = {
   // специальности врачей
   "Дерматологи": "Dermatology",
@@ -276,9 +334,8 @@ const extraLabelsEn = {
   "Общая хирургия": "General surgery",
   "Сосудистая хирургия": "Vascular surgery",
 };
-for (const [ru, en] of Object.entries(extraLabelsEn)) {
-  if (!cmsLabelsEn[ru]) cmsLabelsEn[ru] = en;
-}
+// Пишем поверх: эти подписи точнее тех, что получились из названий разделов.
+Object.assign(cmsLabelsEn, extraLabelsEn);
 
 export function cmsLabel(value, lang) {
   if (lang !== "en") return value || "";
