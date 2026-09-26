@@ -37,6 +37,8 @@ export const ui = {
   // растягивала всю строку сетки. Число подставляется в подпись кнопки.
   showMore: { ru: "Показать ещё", en: "Show more" },
   showLess: { ru: "Свернуть", en: "Show less" },
+  // Подпись на карточке новости: без неё было не видно, что карточка кликается.
+  read: { ru: "Читать", en: "Read" },
   more: { ru: "Подробнее", en: "More" },
   home: { ru: "Главная", en: "Home" },
   headerTagline: { ru: "Ведущая частная клиника Израиля", en: "Israel's leading private clinic" },

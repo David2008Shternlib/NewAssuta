@@ -192,9 +192,12 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                   <div className="h-48 overflow-hidden">
                     <img src={n.img} alt={cms(n, "title", lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
-                  <div className="p-6">
+                  <div className="flex flex-1 flex-col p-6">
                     <h3 className="mb-2 text-base font-bold leading-snug text-body">{cms(n, "title", lang)}</h3>
                     <p className="text-sm text-muted">{pick(n.excerpt, lang)}</p>
+                    <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold uppercase text-brand-green transition-colors group-hover:text-brand-blue dark:group-hover:text-accent">
+                      {t(lang, "read")}<Arrow />
+                    </span>
                   </div>
                 </Link>
               </Reveal>

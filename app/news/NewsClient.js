@@ -4,6 +4,7 @@ import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
+import Arrow from "@/components/Arrow";
 
 export default function NewsClient({ news = [] }) {
   const { lang } = useLang();
@@ -20,9 +21,14 @@ export default function NewsClient({ news = [] }) {
                     <img src={n.image} alt={cms(n, "title", lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
                 )}
-                <div className="p-6">
+                <div className="flex flex-1 flex-col p-6">
                   <h2 className="mb-2 text-base font-bold leading-snug text-body">{cms(n, "title", lang)}</h2>
                   {cms(n, "excerpt", lang) && <p className="text-sm text-muted">{cms(n, "excerpt", lang)}</p>}
+                  {/* Подпись прижата к низу карточки: заголовки разной длины,
+                      иначе кнопка прыгала бы по высоте от карточки к карточке. */}
+                  <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold uppercase text-brand-green transition-colors group-hover:text-brand-blue dark:group-hover:text-accent">
+                    {t(lang, "read")}<Arrow />
+                  </span>
                 </div>
               </Link>
             </Reveal>

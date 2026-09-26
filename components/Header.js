@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { nav, site } from "@/data/site";
@@ -58,6 +58,34 @@ export default function Header() {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = prev; };
   }, [open]);
+
+  // Высота раскрытого меню в пикселях.
+  //
+  // Раньше меню раскрывалось на max-height: calc(100dvh - 5rem) — то есть почти
+  // на весь экран, тогда как самих пунктов на треть этой высоты. Браузер гонит
+  // переход по всему заданному диапазону за одно и то же время, поэтому видимая
+  // часть доезжала за первую треть анимации, а оставшиеся две трети меню
+  // «думало»; при закрытии — наоборот, сначала ничего, потом рывок.
+  // Меряем содержимое и анимируем ровно до его высоты: и по времени честно,
+  // и кадров браузеру считать меньше.
+  const menuRef = useRef(null);
+  const [menuH, setMenuH] = useState(0);
+
+  useEffect(() => {
+    if (!open) { setMenuH(0); return; }
+    const el = menuRef.current;
+    if (!el) return;
+    // Выше экрана меню не раскрываем — дальше оно прокручивается внутри себя.
+    const measure = () => setMenuH(Math.min(el.scrollHeight, window.innerHeight - 80));
+    measure();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
+    if (ro) ro.observe(el);
+    window.addEventListener("resize", measure);
+    return () => {
+      if (ro) ro.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, [open, lang]);
 
   // переключение языка = навигация между / и /en/*
   const switchLang = (l) => {
@@ -147,8 +175,14 @@ export default function Header() {
       {/* Мобильное меню */}
       {/* Меню прокручивается внутри себя: пунктов больше, чем помещалось
           в прежние 560px, и хвост наезжал на страницу */}
-      <div className={`bg-page transition-[max-height,opacity] duration-300 ease-out xl:hidden ${open ? "max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line opacity-100" : "max-h-0 overflow-hidden opacity-0"}`}>
-        <div className="wrap flex flex-col py-4">
+      <div
+        style={{ maxHeight: menuH }}
+        className={`bg-page transition-[max-height] duration-300 ease-out xl:hidden ${open ? "overflow-y-auto border-t border-line" : "overflow-hidden"}`}
+      >
+        <div
+          ref={menuRef}
+          className={`wrap flex flex-col py-4 transition-[opacity,transform] duration-200 ease-out ${open ? "translate-y-0 opacity-100" : "-translate-y-1.5 opacity-0"}`}
+        >
           {nav.map((n) => (
             <Link key={n.href} href={lang === "en" ? `/en${n.href}` : n.href} onClick={() => setOpen(false)} className="border-b border-line/60 py-3 font-semibold text-body">
               {pick(n.label, lang)}
