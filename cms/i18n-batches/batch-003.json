@@ -1,0 +1,38 @@
+[
+  {
+    "_id": "news-minzdrav-v-iyune-v-izraile-otmenyat-karantin-dlya-zarazhennyh-koronavirusom",
+    "_type": "news",
+    "slug": "minzdrav-v-iyune-v-izraile-otmenyat-karantin-dlya-zarazhennyh-koronavirusom",
+    "fields": {
+      "title": "Ministry of Health: Israel to lift quarantine for those infected with coronavirus in June",
+      "bodyHtml": "\n<p>Israel may lift quarantine for coronavirus patients altogether in June. That forecast was given by <strong>Professor Salman Zarka</strong>, the coordinator of the campaign against coronavirus and director of the Ziv hospital in Safed, at a briefing on Tuesday 31 May. He stressed that a decision to lift quarantine could be taken closer to the end of the following month.</p>\n"
+    }
+  },
+  {
+    "_id": "news-na-skolko-effektivna-neoadyuvantnaya-himioterapiya-pri-rake-yaichnikov",
+    "_type": "news",
+    "slug": "na-skolko-effektivna-neoadyuvantnaya-himioterapiya-pri-rake-yaichnikov",
+    "fields": {
+      "title": "How effective is neoadjuvant chemotherapy in ovarian cancer?",
+      "bodyHtml": "<div class=\"wp-block-image\">\n<figure class=\"alignright size-full\"><img decoding=\"async\" src=\"https://assutaisrael.org/wp-content/uploads/2021/11/chemo_neo.jpg\" alt=\"\" class=\"wp-image-1720\"/></figure></div>\n\n\n<p>The standard programme for treating advanced ovarian cancer today consists of cytoreductive surgery and chemotherapy that includes platinum-based drugs. A number of clinical studies carried out in earlier years show, however, that overall survival among patients who received neoadjuvant chemotherapy is no lower than among those who underwent cytoreduction.</p>\n\n\n\n<p>These results considerably influenced how often neoadjuvant chemotherapy is used in hospitals in many countries. In the United States, however, the choice between neoadjuvant chemotherapy and cytoreductive surgery has always remained a matter of debate.</p>\n\n\n\n<p>To settle the question, a number of further studies were carried out weighing the advantages and drawbacks of neoadjuvant chemotherapy for patients with ovarian cancer. This time the results proved rather contradictory. The assessments show that in patients with stage 3 ovarian cancer overall survival is lower than in patients who did not undergo this form of chemotherapy.</p>\n\n\n\n<p>Studies were carried out on overall survival in patients with stage 3 and stage 4 cancer treated with neoadjuvant chemotherapy. Here favourable outcomes were seen in patients with stage 3 disease: a considerable reduction in the tumour, and no need for hospitalisation.</p>\n\n\n\n<p>From these observations it may be concluded that neoadjuvant therapy is indicated for patients whose cancer is at a less advanced stage. Before choosing treatment, however, the patient's medical history and the results of diagnostic investigations should be taken into account. Even so, the frequency with which neoadjuvant chemotherapy is given to patients with ovarian cancer has risen noticeably.</p>\n"
+    }
+  },
+  {
+    "_id": "news-novaya-metodika-vosstanovleniya-hryashhevoj-tkani",
+    "_type": "news",
+    "slug": "novaya-metodika-vosstanovleniya-hryashhevoj-tkani",
+    "fields": {
+      "title": "A new method of restoring cartilage tissue",
+      "bodyHtml": "<div class=\"wp-block-image\">\n<figure class=\"alignright size-full\"><img decoding=\"async\" src=\"https://assutaisrael.org/wp-content/uploads/2021/11/hryash.jpg\" alt=\"\" class=\"wp-image-1728\"/></figure></div>\n\n\n<p>Indian scientists are doing a great deal of work on a new method of restoring cartilage tissue and advancing regenerative medicine. The field is also developing actively in Israel.</p>\n\n\n\n<p>Over the past few years many methods have been developed, each raising the figures for effectiveness and safety, though each came with certain reservations. Scientists in different countries nevertheless continue to work on improving orthopaedics.</p>\n\n\n\n<p>One international association of engineers has developed a high-quality alternative to the ink used in three-dimensional bioprinting, making it possible to produce cartilage patches that may solve the problem of worn joints. The resulting cartilage tissue is convenient to print, consists of a single cell type and has no blood vessels.</p>\n\n\n\n<p>The new technology requires no scaffold and is produced from alginate and seaweed extract. According to the specialists, the resulting thread of cartilage tissue will serve well as a replacement for bio-ink.</p>\n"
+    }
+  },
+  {
+    "_id": "news-otkrytie-v-oblasti-lecheniya-raka-grudi",
+    "_type": "news",
+    "slug": "otkrytie-v-oblasti-lecheniya-raka-grudi",
+    "fields": {
+      "title": "A discovery in the treatment of breast cancer",
+      "bodyHtml": "<div class=\"wp-block-image is-resized\">\n<figure class=\"alignright size-full\"><img decoding=\"async\" src=\"https://assutaisrael.org/wp-content/uploads/2021/11/otkritie_r_g.jpg\" alt=\"\" class=\"wp-image-1718\"/></figure></div>\n\n\n<p>Breast cancer is a pressing problem that takes the lives of a great many women every year. A still greater number need breast reconstruction, which carries a psychological cost of its own. Cancer researchers in every country have been working to address this for many years. Their work involves deep investigation not only of the causes of the disease but also of the structure of the breast itself.</p>\n\n\n\n<p>Recently, experts at one Western university identified within the structure of the breast a particular group of bacteria that encourage malignant processes in the organ and are also capable of halting cancer. For the purposes of the research, the structure of the breast was studied in women with cancer and in healthy women. It emerged that all the women had the same micro-organisms in the breast, and that the difference lay only in their quantity.</p>\n\n\n\n<p>The findings gave rise to a number of further questions: for instance, whether these bacteria provoke cancer or begin to multiply as the malignant process develops. The question of how beneficial bacteria might halt the development of cancer also remains open.</p>\n\n\n\n<p>Despite the ambiguous results, the scientists have set out a plan for the coming few years and intend to carry out experiments that will either clarify or refute the proposed theory.</p>\n"
+    }
+  }
+]

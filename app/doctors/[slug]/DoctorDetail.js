@@ -13,7 +13,7 @@ export default function DoctorDetail({ doc }) {
   const { lang } = useLang();
   const name = docName(doc, lang);
   const dept = cmsLabel(doc.dept, lang);
-  const spec = cms(doc, "spec", lang);
+  const spec = cmsLabel(cms(doc, "spec", lang), lang);
   const bodyHtml = cms(doc, "bodyHtml", lang);
 
   return (

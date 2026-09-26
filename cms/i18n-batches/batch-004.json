@@ -1,0 +1,38 @@
+[
+  {
+    "_id": "news-otmena-pczr-testov-pri-vezde-v-izrail-vstupila-v-silu-s-21-5-2022",
+    "_type": "news",
+    "slug": "otmena-pczr-testov-pri-vezde-v-izrail-vstupila-v-silu-s-21-5-2022",
+    "fields": {
+      "title": "PCR tests on entry to Israel abolished with effect from 21 May 2022",
+      "bodyHtml": "\n<p>The Ministry of Health announces: from 21 May 2022, PCR tests on entry to Israel will be abolished for Israelis and foreign nationals alike.<br>Foreign nationals will also no longer need to take a PCR test or an antigen test before boarding a flight.</p>\n\n\n\n<p>Following the fall in coronavirus cases, from 21 May 2022 (at midnight between Friday and Saturday, Israel time) the requirement to take a PCR test on entry to Israel will be lifted, at Ben Gurion airport and at land and sea crossings, for Israelis and foreign nationals alike.</p>\n\n\n\n<p>The requirement previously placed on foreign nationals to take a PCR test or an antigen test before boarding a flight or crossing into Israel by land or sea will also be lifted, as will the requirement to be tested before a cruise departing from Israel.</p>\n\n\n\n<p>Passengers must still complete an entry declaration for Israel within the 48 hours before boarding a flight or vessel.</p>\n\n\n\n<p>The Ministry of Health will continue to update this information should the guidance change further.</p>\n"
+    }
+  },
+  {
+    "_id": "news-predrakovoe-sostoyanie-kak-lechit",
+    "_type": "news",
+    "slug": "predrakovoe-sostoyanie-kak-lechit",
+    "fields": {
+      "title": "Precancerous conditions: how they are treated",
+      "bodyHtml": "\n<p>A precancerous condition is a process in which the body's tissues change abnormally, with a high probability that they will subsequently turn into cancer cells. When the body is entirely healthy, the likelihood of cancer arising is minimal. One illness or another may, however, act as the catalyst for a malignant tumour. Healthy cells are transformed in several stages, which can be identified during examination.</p>\n\n\n\n<p>Several kinds of precancerous condition are distinguished: facultative, obligate, pre-invasive and invasive. A person diagnosed with a precancerous condition enters the group at high risk of developing cancer. With such a diagnosis the patient should remain under medical observation. It is important to note that a patient diagnosed with a precancerous condition will not necessarily go on to develop cancer. Modern treatment methods help to reduce the risk of cancer to nil.</p>\n\n\n\n<p>One of the most effective ways of dealing with a precancerous condition is a bone marrow transplant. The treatment is aimed at improving the blood counts and preventing the cells from transforming. With constant monitoring of health and timely diagnostic investigations, it is possible today to rule out the development of cancer entirely.</p>\n"
+    }
+  },
+  {
+    "_id": "news-proryv-v-lechenii-lejkoza",
+    "_type": "news",
+    "slug": "proryv-v-lechenii-lejkoza",
+    "fields": {
+      "title": "A breakthrough in the treatment of leukaemia",
+      "bodyHtml": "<div class=\"wp-block-image is-resized\">\n<figure class=\"alignright size-full\"><img decoding=\"async\" src=\"https://assutaisrael.org/wp-content/uploads/2021/11/leykoz.jpg\" alt=\"\" class=\"wp-image-1711\" style=\"width:282px;height:auto\"/></figure></div>\n\n\n<p>The Assuta medical centre hosted an international symposium on oncohaematology. It presented the results of clinical trials of innovative treatments for leukaemia, among which the discovery by the leading professor Kanti Rai stood out.</p>\n\n\n\n<p>For fifty years the professor has studied the nature of malignant blood diseases, work for which he has received honours and awards. One of his achievements is a set of highly effective long-acting biological drugs. According to the professor, drugs based on these active components make it possible to cure lymphocytic leukaemia at every stage of the disease, with no side effects.</p>\n\n\n\n<p>The discovery was indisputably a revolution in biological and targeted therapy. On the basis of the present results, Israeli specialists nevertheless plan to broaden the range of action of biological drugs and to refine the technique of targeted therapy in the treatment of oncohaematological diseases.</p>\n\n\n\n<p>According to Professor Yehoshua Shemer, specialists at the Assuta hospital continue to develop methods of treatment and diagnosis, to introduce unique treatment programmes and to improve how patients are received at the hospitals.</p>\n"
+    }
+  },
+  {
+    "_id": "news-proryv-v-lechenii-raka-novyj-pribor-v-bolnicze-assuta-unichtozhaet-opuhol-v-4-raza-bystree",
+    "_type": "news",
+    "slug": "proryv-v-lechenii-raka-novyj-pribor-v-bolnicze-assuta-unichtozhaet-opuhol-v-4-raza-bystree",
+    "fields": {
+      "title": "A breakthrough in cancer treatment: a new device at the Assuta hospital destroys tumours four times faster",
+      "bodyHtml": "\n<p>Five radiotherapy sessions instead of twenty — such is the effect of the new device</p>\n\n\n\n<p><strong>A breakthrough in the treatment of tumours of the prostate, pancreas, liver and lungs:</strong> the Assuta hospital in the Ramat HaHayal district of Tel Aviv has begun delivering focused radiotherapy using a linear accelerator combined with MRI. The new device makes it possible to irradiate diseased areas without damaging healthy tissue. &#171;We are the first oncology department in Israel where this procedure is carried out. Worldwide there are only thirty such clinics,&#187; said Professor Merav Ben-David, a radiotherapist and head of the hospital's oncology clinic. &#171;This method offers hope to many cancer patients in Israel and around the world. Medical tourists come to us from Russia, Armenia, Uzbekistan and other countries.&#187;</p>\n\n\n\n<p>The MR Linac device, made by the American company ViewRay, is an accelerator combined with MRI. It produces a guiding image during irradiation, which makes it possible to track the position of the tumour precisely. As a result, tumours can be irradiated with greater accuracy than before.</p>\n\n\n\n<p>Obtaining an MRI image while the accelerator is working makes it possible to see the movement of the organs in real time; irradiation is interrupted and resumed automatically as the tumour returns to the treated area.</p>\n"
+    }
+  }
+]
