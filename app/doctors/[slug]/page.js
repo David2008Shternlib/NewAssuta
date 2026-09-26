@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import DoctorDetail from "./DoctorDetail";
 import { getAllDoctors, getDoctor } from "@/lib/sanity";
-import { siteUrl } from "@/data/site";
+import { siteUrl, cmsLabel } from "@/data/site";
+import { currentLocale } from "@/lib/meta";
+import { cms } from "@/data/i18n";
 
 // Страховка на случай, если сигнал из CMS не дошёл: обновление раз в 5 минут.
 // Основной путь — вебхук Sanity на /api/revalidate (см. cms/README.md).
@@ -15,14 +17,20 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const doc = await getDoctor(params.slug);
   if (!doc) return {};
-  const spec = doc.spec ? ` — ${doc.spec}` : "";
-  const description = `${doc.name}${spec}, клиника Ассута (Израиль, Тель-Авив). Запись на консультацию и лечение, второе врачебное мнение.`;
+  const lang = currentLocale();
+  const name = cms(doc, "name", lang);
+  const specName = cmsLabel(cms(doc, "spec", lang), lang);
+  const spec = specName ? ` — ${specName}` : "";
+  const description =
+    lang === "en"
+      ? `${name}${spec}, Assuta clinic (Tel Aviv, Israel). Book a consultation or treatment, second medical opinion.`
+      : `${name}${spec}, клиника Ассута (Израиль, Тель-Авив). Запись на консультацию и лечение, второе врачебное мнение.`;
   return {
-    title: `${doc.name}${spec}`,
+    title: `${name}${spec}`,
     description,
     alternates: { canonical: `/doctors/${doc.slug}` },
     openGraph: {
-      title: `${doc.name}${spec} | Assuta`,
+      title: `${name}${spec} | Assuta`,
       description,
       url: `${siteUrl}/doctors/${doc.slug}`,
       images: doc.photo ? [{ url: doc.photo }] : undefined,

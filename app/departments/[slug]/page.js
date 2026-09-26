@@ -3,6 +3,7 @@ import DepartmentDetail from "./DepartmentDetail";
 import { departments, siteUrl } from "@/data/site";
 import { getDoctorsByDepartments, getDiseasesByCategories } from "@/lib/sanity";
 import { breadcrumb } from "@/lib/schema";
+import { currentLocale } from "@/lib/meta";
 
 // Страховка на случай, если сигнал из CMS не дошёл: обновление раз в 5 минут.
 // Основной путь — вебхук Sanity на /api/revalidate (см. cms/README.md).
@@ -15,14 +16,21 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const dept = departments.find((d) => d.slug === params.slug);
   if (!dept) return {};
-  const name = dept.title.ru;
+  const lang = currentLocale();
+  const en = lang === "en";
+  const name = en ? dept.title.en : dept.title.ru;
+  const desc = en ? dept.desc.en : dept.desc.ru;
+  const title = en ? `${name} in Israel — Assuta Clinic` : `${name} в Израиле — клиника Ассута`;
+  const description = en
+    ? `${name} at the Assuta clinic (Tel Aviv): ${desc.charAt(0).toLowerCase()}${desc.slice(1)} Doctors, conditions treated and a costed treatment programme.`
+    : `${name} в клинике Ассута (Тель-Авив): ${desc.toLowerCase()} Врачи направления, заболевания и расчёт стоимости программы лечения.`;
   return {
-    title: `${name} в Израиле — клиника Ассута`,
-    description: `${name} в клинике Ассута (Тель-Авив): ${dept.desc.ru.toLowerCase()} Врачи направления, заболевания и расчёт стоимости программы лечения.`,
+    title,
+    description,
     alternates: { canonical: `/departments/${dept.slug}` },
     openGraph: {
-      title: `${name} в Израиле — клиника Ассута | Assuta`,
-      description: dept.desc.ru,
+      title: `${title} | Assuta`,
+      description: desc,
       url: `${siteUrl}/departments/${dept.slug}`,
     },
   };

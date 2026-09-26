@@ -3,6 +3,8 @@ import NewsDetail from "./NewsDetail";
 import { getAllNews, getNews } from "@/lib/sanity";
 import { siteUrl } from "@/data/site";
 import { breadcrumb } from "@/lib/schema";
+import { currentLocale } from "@/lib/meta";
+import { cms } from "@/data/i18n";
 
 // Страховка на случай, если сигнал из CMS не дошёл: обновление раз в 5 минут.
 // Основной путь — вебхук Sanity на /api/revalidate (см. cms/README.md).
@@ -15,12 +17,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const n = await getNews(params.slug);
   if (!n) return {};
-  const description = (n.excerpt || n.title || "").slice(0, 180);
+  const lang = currentLocale();
+  const title = cms(n, "title", lang);
+  const description = (cms(n, "excerpt", lang) || title || "").slice(0, 180);
   return {
-    title: n.title,
+    title,
     description,
     alternates: { canonical: `/news/${n.slug}` },
-    openGraph: { title: `${n.title} | Assuta`, description, url: `${siteUrl}/news/${n.slug}`, images: n.image ? [{ url: n.image }] : undefined },
+    openGraph: { title: `${title} | Assuta`, description, url: `${siteUrl}/news/${n.slug}`, images: n.image ? [{ url: n.image }] : undefined },
   };
 }
 export default async function Page({ params }) {

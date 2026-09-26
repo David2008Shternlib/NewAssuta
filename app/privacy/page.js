@@ -1,19 +1,20 @@
 import PrivacyClient from "./PrivacyClient";
 import { siteUrl, operator } from "@/data/site";
 import { breadcrumb } from "@/lib/schema";
+import { pageMeta } from "@/lib/meta";
 
-export const metadata = {
+const ruMeta = {
   title: "Политика конфиденциальности",
-  description:
-    "Как мы обрабатываем персональные данные, отправленные через формы сайта: какие данные собираем, зачем, кому передаём, сколько храним и как их удалить.",
-  alternates: { canonical: "/privacy" },
-  robots: { index: true, follow: true },
-  openGraph: {
-    title: "Политика конфиденциальности | Assuta",
-    description: "Какие данные собираем через формы сайта, зачем, кому передаём, сколько храним и как их удалить.",
-    url: `${siteUrl}/privacy`,
-  },
+  description: "Как мы обрабатываем персональные данные, отправленные через формы сайта: какие данные собираем, зачем, кому передаём, сколько храним и как их удалить.",
 };
+const enMeta = {
+  title: "Privacy policy",
+  description: "How we process the personal data submitted through the forms on this site: what we collect, why, who we share it with, how long we keep it and how to have it deleted.",
+};
+
+export function generateMetadata() {
+  return pageMeta({ path: "/privacy", ru: ruMeta, en: enMeta, extra: { robots: { index: true, follow: true } } });
+}
 
 export default function Page() {
   const crumbs = breadcrumb([

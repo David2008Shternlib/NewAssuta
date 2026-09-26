@@ -1,18 +1,25 @@
 import Client from "./DepartmentsClient";
 import { breadcrumb, webPage } from "@/lib/schema";
+import { pageMeta } from "@/lib/meta";
 
-export const metadata = {
+const ruMeta = {
   title: "Направления лечения — клиника Ассута",
   description: "Более 20 медицинских направлений в клинике Ассута (Израиль): онкология, кардиология, ортопедия, нейрохирургия, урология и другие.",
-  alternates: { canonical: "/departments" },
-  openGraph: { title: "Направления лечения — клиника Ассута | Assuta", description: "Более 20 медицинских направлений в клинике Ассута (Израиль): онкология, кардиология, ортопедия, нейрохирургия, урология и другие.", url: "/departments" },
 };
+const enMeta = {
+  title: "Areas of treatment — Assuta Clinic",
+  description: "More than 20 medical specialities at the Assuta clinic in Israel: oncology, cardiology, orthopaedics, neurosurgery, urology and others.",
+};
+
+export function generateMetadata() {
+  return pageMeta({ path: "/departments", ru: ruMeta, en: enMeta });
+}
 
 const __crumbs = breadcrumb([
   { name: "Главная", path: "" },
   { name: "Направления лечения", path: "/departments" },
 ]);
-const __page = webPage({ name: metadata.title, path: "/departments", description: metadata.description });
+const __page = webPage({ name: ruMeta.title, path: "/departments", description: ruMeta.description });
 
 export default function Page() {
   return (

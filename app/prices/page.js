@@ -1,18 +1,25 @@
 import Client from "./PricesClient";
 import { breadcrumb, webPage, offerCatalog, faqPage } from "@/lib/schema";
+import { pageMeta } from "@/lib/meta";
 
-export const metadata = {
+const ruMeta = {
   title: "Цены на лечение и диагностику — клиника Ассута",
   description: "Ориентировочные цены на консультации, диагностику, онкологию и хирургию в клинике Ассута (Израиль). Точную стоимость рассчитает координатор.",
-  alternates: { canonical: "/prices" },
-  openGraph: { title: "Цены на лечение и диагностику — клиника Ассута | Assuta", description: "Ориентировочные цены на консультации, диагностику, онкологию и хирургию в клинике Ассута (Израиль). Точную стоимость рассчитает координатор.", url: "/prices" },
 };
+const enMeta = {
+  title: "Prices for treatment and diagnosis — Assuta Clinic",
+  description: "Indicative prices for consultations, diagnosis, oncology and surgery at the Assuta clinic in Israel. A coordinator will calculate the exact cost.",
+};
+
+export function generateMetadata() {
+  return pageMeta({ path: "/prices", ru: ruMeta, en: enMeta });
+}
 
 const __crumbs = breadcrumb([
   { name: "Главная", path: "" },
   { name: "Цены", path: "/prices" },
 ]);
-const __page = webPage({ name: metadata.title, path: "/prices", description: metadata.description });
+const __page = webPage({ name: ruMeta.title, path: "/prices", description: ruMeta.description });
 
 // Аудит отмечает открытые цены как сильную сторону сайта — размечаем их,
 // чтобы поисковики и ИИ-ассистенты могли их процитировать.

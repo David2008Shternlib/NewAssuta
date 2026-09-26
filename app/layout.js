@@ -10,23 +10,36 @@ import { site, siteUrl, operator } from "@/data/site";
 
 const DESC =
   "Организуем диагностику и лечение в клинике Ассута (Тель-Авив): онкология, кардиология, ортопедия, нейрохирургия. Подбор врача, расчёт стоимости, сопровождение.";
+const DESC_EN =
+  "We arrange diagnosis and treatment at the Assuta clinic in Tel Aviv: oncology, cardiology, orthopaedics, neurosurgery. Choosing a doctor, costing the programme, support throughout.";
 
-export const metadata = {
-  metadataBase: new URL(siteUrl),
-  title: { default: "Лечение в Израиле — клиника Ассута: врачи, цены, диагностика", template: "%s | Assuta" },
-  description: DESC,
-  // hreflang намеренно не указываем: английская версия пока не полноценный
-  // перевод (статьи остаются на русском), и она закрыта от индексации.
-  // Вернуть languages { ru, en, x-default } после перевода контента.
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website", siteName: "Assuta", url: siteUrl,
-    title: "Лечение в Израиле — клиника Ассута", description: DESC, locale: "ru_RU",
-    images: [{ url: site.logo, width: 512, height: 512, alt: "Assuta" }],
-  },
-  twitter: { card: "summary_large_image", title: "Лечение в Израиле — клиника Ассута", description: DESC },
-  robots: { index: true, follow: true, "max-image-preview": "large" },
-};
+const TITLE = "Лечение в Израиле — клиника Ассута: врачи, цены, диагностика";
+const TITLE_EN = "Treatment in Israel — Assuta Clinic: doctors, prices, diagnostics";
+
+// Заголовок и описание зависят от языка запроса, поэтому собираются на каждый
+// запрос, а не лежат статической константой: иначе на /en/* во вкладке
+// браузера и в превью ссылки оставался русский текст.
+export function generateMetadata() {
+  const en = headers().get("x-locale") === "en";
+  const title = en ? TITLE_EN : TITLE;
+  const description = en ? DESC_EN : DESC;
+  return {
+    metadataBase: new URL(siteUrl),
+    title: { default: title, template: "%s | Assuta" },
+    description,
+    // hreflang намеренно не указываем: английская версия закрыта от индексации
+    // (X-Robots-Tag в middleware). Вернуть languages { ru, en, x-default },
+    // когда её решат открыть поисковикам.
+    alternates: { canonical: "/" },
+    openGraph: {
+      type: "website", siteName: "Assuta", url: siteUrl,
+      title, description, locale: en ? "en_US" : "ru_RU",
+      images: [{ url: site.logo, width: 512, height: 512, alt: "Assuta" }],
+    },
+    twitter: { card: "summary_large_image", title, description },
+    robots: { index: true, follow: true, "max-image-preview": "large" },
+  };
+}
 
 // Организация — это ОПЕРАТОР, а не больница. Раньше разметка описывала
 // саму Ассуту, из-за чего сайт машинно представлялся больницей.

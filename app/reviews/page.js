@@ -2,22 +2,29 @@ import ReviewsClient from "./ReviewsClient";
 import { getReviews } from "@/lib/sanity";
 import { breadcrumb, webPage } from "@/lib/schema";
 import { siteUrl, operator } from "@/data/site";
+import { pageMeta } from "@/lib/meta";
 
 // Страховка на случай, если сигнал из CMS не дошёл: обновление раз в 5 минут.
 // Основной путь — вебхук Sanity на /api/revalidate (см. cms/README.md).
 export const revalidate = 300;
-export const metadata = {
+const ruMeta = {
   title: "Отзывы пациентов — клиника Ассута",
   description: "Истории пациентов, прошедших диагностику и лечение в клинике Ассута: онкология, ортопедия, кардиология. Как проходит организация поездки и сопровождение.",
-  alternates: { canonical: "/reviews" },
-  openGraph: { title: "Отзывы пациентов | Assuta", description: "Реальные истории пациентов клиники Ассута.", url: "/reviews" },
 };
+const enMeta = {
+  title: "Patient reviews — Assuta Clinic",
+  description: "Stories from patients who had diagnosis and treatment at the Assuta clinic: oncology, orthopaedics, cardiology. How the trip and the support are arranged.",
+};
+
+export function generateMetadata() {
+  return pageMeta({ path: "/reviews", ru: ruMeta, en: enMeta });
+}
 
 const __crumbs = breadcrumb([
   { name: "Главная", path: "" },
   { name: "Отзывы пациентов", path: "/reviews" },
 ]);
-const __page = webPage({ name: metadata.title, path: "/reviews", description: metadata.description });
+const __page = webPage({ name: ruMeta.title, path: "/reviews", description: ruMeta.description });
 
 export default async function Page() {
   const reviews = await getReviews();

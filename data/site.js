@@ -257,6 +257,29 @@ for (const d of departments) {
   for (const c of d.disCats || []) cmsLabelsEn[c] = d.title.en;
 }
 
+// В CMS есть специальности и категории, для которых нет отдельного раздела на
+// сайте: они никуда не группируются, но стоят подписью в карточке врача и в
+// статье. Без них на английской версии оставалась русская подпись —
+// «Дерматологи» под именем Prof. Eli Sprecher и так далее.
+const extraLabelsEn = {
+  // специальности врачей
+  "Дерматологи": "Dermatology",
+  "Иммунологи": "Immunology",
+  "Нефрологи": "Nephrology",
+  "Радиологи": "Radiology",
+  "Ревматологи": "Rheumatology",
+  "Хирурги": "Surgery",
+  "Торакальные хирурги": "Thoracic surgery",
+  // категории заболеваний
+  "Дерматология": "Dermatology",
+  "Ревматология": "Rheumatology",
+  "Общая хирургия": "General surgery",
+  "Сосудистая хирургия": "Vascular surgery",
+};
+for (const [ru, en] of Object.entries(extraLabelsEn)) {
+  if (!cmsLabelsEn[ru]) cmsLabelsEn[ru] = en;
+}
+
 export function cmsLabel(value, lang) {
   if (lang !== "en") return value || "";
   return cmsLabelsEn[value] || value || "";
