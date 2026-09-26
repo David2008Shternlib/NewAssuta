@@ -14,7 +14,7 @@ export default function NewsClient({ news = [] }) {
         <div className="wrap grid items-stretch gap-6 md:grid-cols-3">
           {news.map((n, i) => (
             <Reveal key={n.slug} delay={(i % 3) * 0.06} className="h-full">
-              <Link href={`/news/${n.slug}`} className="card card-hover group h-full overflow-hidden">
+              <Link href={`/news/${n.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
                 {n.image && (
                   <div className="h-48 overflow-hidden">
                     <img src={n.image} alt={cms(n, "title", lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />

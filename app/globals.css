@@ -53,8 +53,13 @@ body {
     text-brand-blue transition-all duration-300 hover:bg-brand-green hover:text-white dark:text-accent dark:bg-white/10;
   }
 
+  /* block обязателен: карточкой бывает не только div, но и ссылка, а ссылка по
+     умолчанию строчная. Строчный элемент с блочным содержимым внутри рисует
+     собственную строку высотой в межстрочный интервал — она вылезала тонкой
+     полоской с фоном и боковыми границами над картинкой и под текстом.
+     Карточки с утилитой flex не затрагиваются: утилиты перебивают компоненты. */
   .card {
-    @apply rounded-card border border-line bg-surface transition-all duration-300;
+    @apply block rounded-card border border-line bg-surface transition-all duration-300;
   }
   .card-hover:hover { @apply border-brand-green/60 shadow-card -translate-y-1; }
 
