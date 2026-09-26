@@ -441,6 +441,8 @@ const cmsLabelsEn = {
   "Ревматология": "Rheumatology",
   "Общая хирургия": "General surgery",
   "Сосудистая хирургия": "Vascular surgery",
+  // Подпись для статей, у которых категория в базе не заполнена.
+  "Другое": "Other",
 };
 
 export function cmsLabel(value, lang) {

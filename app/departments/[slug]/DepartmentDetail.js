@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Link from "@/components/LocaleLink";
 import PageHero from "@/components/PageHero";
 import RequestForm from "@/components/RequestForm";
@@ -9,9 +10,18 @@ import MedicalDisclaimer from "@/components/MedicalDisclaimer";
 import { pick, t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
+// В онкологии 52 заболевания — списком в два столбца это 26 строк, из-за
+// которых форма заявки и врачи уезжают далеко вниз. Показываем первую дюжину.
+const COLLAPSED = 12;
+// Ради одного-двух скрытых пунктов кнопку не показываем.
+const MIN_HIDDEN = 3;
+
 export default function DepartmentDetail({ dept, doctors = [], diseases = [] }) {
   const { lang } = useLang();
   const title = pick(dept.title, lang);
+  const [openDis, setOpenDis] = useState(false);
+  const disCollapsible = diseases.length >= COLLAPSED + MIN_HIDDEN;
+  const shownDiseases = openDis || !disCollapsible ? diseases : diseases.slice(0, COLLAPSED);
 
   return (
     <>
@@ -48,12 +58,23 @@ export default function DepartmentDetail({ dept, doctors = [], diseases = [] }) 
                     <span className="ml-2 text-base font-normal text-muted">{diseases.length}</span>
                   </h2>
                   <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
-                    {diseases.map((d) => (
+                    {shownDiseases.map((d) => (
                       <li key={d.slug}>
                         <Link href={`/diseases/${d.slug}`} className="link-underline text-sm">{cms(d, "title", lang)}</Link>
                       </li>
                     ))}
                   </ul>
+                  {disCollapsible && (
+                    <button
+                      type="button"
+                      onClick={() => setOpenDis((v) => !v)}
+                      aria-expanded={openDis}
+                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold uppercase text-brand-green transition-colors hover:text-brand-blue dark:hover:text-accent"
+                    >
+                      {openDis ? t(lang, "showLess") : `${t(lang, "showMore")} ${diseases.length - COLLAPSED}`}
+                      <Arrow dir="chevron" className={`transition-transform ${openDis ? "-rotate-90" : "rotate-90"}`} />
+                    </button>
+                  )}
                 </div>
               </Reveal>
             )}

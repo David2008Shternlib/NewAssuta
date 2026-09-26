@@ -33,6 +33,10 @@ export const ui = {
   allDoctors: { ru: "Все врачи", en: "All doctors" },
   allDiseases: { ru: "Все заболевания", en: "All conditions" },
   learnMore: { ru: "Узнать больше", en: "Learn more" },
+  // Длинные списки заболеваний свёрнуты: в онкологии их 47, карточка иначе
+  // растягивала всю строку сетки. Число подставляется в подпись кнопки.
+  showMore: { ru: "Показать ещё", en: "Show more" },
+  showLess: { ru: "Свернуть", en: "Show less" },
   more: { ru: "Подробнее", en: "More" },
   home: { ru: "Главная", en: "Home" },
   headerTagline: { ru: "Ведущая частная клиника Израиля", en: "Israel's leading private clinic" },
