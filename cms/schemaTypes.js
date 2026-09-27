@@ -84,4 +84,44 @@ export const page = {
   preview: { select: { title: "title" } },
 };
 
-export const schemaTypes = [doctor, disease, review, news, page];
+// Заявка с формы сайта. Пишется сервером, руками её не создают — поэтому
+// поля только для чтения: координатор ведёт статус и комментарий, а данные
+// посетителя остаются такими, какими он их оставил.
+//
+// Здесь персональные данные. Доступ к разделу есть у всех, кого пригласили
+// в Studio, — приглашайте только тех, кому заявки положены по работе.
+export const lead = {
+  name: "lead", title: "Заявка с сайта", type: "document",
+  fields: [
+    { name: "name", title: "Имя", type: "string", readOnly: true },
+    { name: "phone", title: "Телефон", type: "string", readOnly: true },
+    { name: "country", title: "Страна", type: "string", readOnly: true },
+    { name: "comment", title: "Комментарий", type: "text", rows: 3, readOnly: true },
+    { name: "source", title: "Страница, с которой отправлена", type: "string", readOnly: true },
+    { name: "consentAt", title: "Согласие на обработку данных", type: "datetime", readOnly: true },
+    { name: "createdAt", title: "Получена", type: "datetime", readOnly: true },
+    {
+      name: "status", title: "Статус", type: "string",
+      options: { list: [
+        { title: "Новая", value: "new" },
+        { title: "В работе", value: "in_progress" },
+        { title: "Обработана", value: "done" },
+      ] },
+      initialValue: "new",
+    },
+    { name: "note", title: "Заметка координатора", type: "text", rows: 3 },
+  ],
+  orderings: [
+    { name: "newest", title: "Сначала новые", by: [{ field: "createdAt", direction: "desc" }] },
+  ],
+  preview: {
+    select: { title: "name", phone: "phone", createdAt: "createdAt", status: "status" },
+    prepare({ title, phone, createdAt, status }) {
+      const mark = status === "done" ? "✓" : status === "in_progress" ? "•" : "!";
+      const when = createdAt ? new Date(createdAt).toLocaleString("ru-RU") : "";
+      return { title: `${mark} ${title || "Без имени"}`, subtitle: [phone, when].filter(Boolean).join(" · ") };
+    },
+  },
+};
+
+export const schemaTypes = [doctor, disease, review, news, page, lead];
