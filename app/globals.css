@@ -4,14 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Светлая тема — основная. Фон страницы с лёгким голубым оттенком, карточки
+   белые: именно этот контраст держит всю раскладку, иначе карточка на белом
+   фоне теряется и её приходится обводить жирной рамкой. */
 :root {
-  --page: 255 255 255;
+  --page: 239 244 250;
   --surface: 255 255 255;
-  --surface2: 244 245 249;
-  --text: 51 51 51;
-  --muted: 84 90 107;
-  --line: 224 227 238;
-  --title: 40 56 144;
+  --surface2: 230 238 248;
+  --text: 28 37 54;
+  --muted: 99 110 132;
+  --line: 217 227 241;
+  --title: 19 48 107;
   --accent: 134 190 86;
 }
 
@@ -40,17 +43,20 @@ body {
 @layer components {
   .wrap { @apply mx-auto w-full max-w-wrap px-5 md:px-8; }
 
+  /* Кнопки — прямоугольные со скруглением, как в макете, а не «таблетки».
+     При наведении темнеет заливка, а не выворачивается наизнанку: инверсия
+     на светлом фоне читалась как «кнопка пропала». */
   .btn-blue {
-    @apply inline-flex items-center justify-center rounded-pill bg-brand-blue px-7 py-3.5 text-sm font-bold text-white
-    border border-brand-blue transition-all duration-300 hover:bg-transparent hover:text-brand-blue dark:hover:text-white;
+    @apply inline-flex items-center justify-center rounded-btn bg-brand-blue px-7 py-3.5 text-sm font-bold text-white
+    shadow-btn transition-all duration-200 hover:bg-brand-dark;
   }
   .btn-green {
-    @apply inline-flex items-center justify-center rounded-pill bg-brand-green px-7 py-3.5 text-sm font-bold text-white
-    border border-brand-green transition-all duration-300 hover:bg-transparent hover:text-brand-green;
+    @apply inline-flex items-center justify-center rounded-btn bg-brand-green px-7 py-3.5 text-sm font-bold text-white
+    shadow-btn transition-all duration-200 hover:bg-brand-greenDark;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-pill bg-brand-blue/10 px-5 py-2.5 text-sm font-bold uppercase
-    text-brand-blue transition-all duration-300 hover:bg-brand-green hover:text-white dark:text-accent dark:bg-white/10;
+    @apply inline-flex items-center justify-center rounded-btn bg-brand-blue/10 px-5 py-2.5 text-sm font-bold
+    text-brand-blue transition-all duration-200 hover:bg-brand-blue/20 dark:bg-white/10 dark:text-accent;
   }
 
   /* block обязателен: карточкой бывает не только div, но и ссылка, а ссылка по
@@ -61,12 +67,14 @@ body {
   .card {
     @apply block rounded-card border border-line bg-surface transition-all duration-300;
   }
-  .card-hover:hover { @apply border-brand-green/60 shadow-card -translate-y-1; }
+  .card-hover:hover { @apply border-brand-blue/30 shadow-soft -translate-y-0.5; }
 
   .eyebrow { @apply text-sm font-semibold uppercase tracking-wide text-brand-green; }
 
+  /* Без uppercase: в макете заголовки набраны обычным регистром, и длинные
+     русские фразы в капсе занимали лишнюю строку на телефоне. */
   .section-title {
-    @apply text-title font-bold uppercase leading-tight;
+    @apply text-title font-bold leading-tight tracking-tight;
   }
 }
 

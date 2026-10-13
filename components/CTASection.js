@@ -8,7 +8,7 @@ import { useLang } from "./LangProvider";
 export default function CTASection() {
   const { lang } = useLang();
   return (
-    <section id="request" className="scroll-mt-24 bg-surface2 py-20">
+    <section id="request" className="scroll-mt-24 bg-surface py-20">
       <div className="wrap grid items-center gap-12 md:grid-cols-2">
         <Reveal>
           <div className="eyebrow mb-3">{t(lang, "ctaEyebrow")}</div>

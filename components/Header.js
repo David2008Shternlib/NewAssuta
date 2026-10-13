@@ -109,7 +109,7 @@ export default function Header() {
   const homeHref = lang === "en" ? "/en" : "/";
 
   return (
-    <header className="sticky top-0 z-50 bg-page/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-line/70 bg-surface/95 backdrop-blur">
       {/* Верхняя полоса — сворачивается при скролле */}
       <div className={`overflow-hidden border-line bg-surface2 transition-all duration-300 hidden md:block ${scrolled ? "max-h-0 border-b-0 opacity-0" : "max-h-16 border-b opacity-100"}`}>
         <div className="wrap flex items-center justify-between py-2 text-xs">
@@ -155,7 +155,7 @@ export default function Header() {
           >
             <PhoneIcon />
           </a>
-          <a href="#request" className="btn-green whitespace-nowrap !px-4 !py-3 !text-xs">{t(lang, "freeConsult")}</a>
+          <a href="#request" className="btn-blue whitespace-nowrap !px-4 !py-3 !text-xs">{t(lang, "freeConsult")}</a>
         </div>
 
         <div className="flex items-center gap-2 xl:hidden">
@@ -188,7 +188,7 @@ export default function Header() {
               {pick(n.label, lang)}
             </Link>
           ))}
-          <a href="#request" onClick={() => setOpen(false)} className="btn-green mt-4">{t(lang, "freeConsult")}</a>
+          <a href="#request" onClick={() => setOpen(false)} className="btn-blue mt-4">{t(lang, "freeConsult")}</a>
           <div className="mt-4 flex items-center justify-between">
             <div className="flex flex-col gap-1 text-sm">
               {site.phones.map((p) => (

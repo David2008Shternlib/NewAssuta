@@ -7,6 +7,7 @@ import CTASection from "@/components/CTASection";
 import { departments } from "@/data/site";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
+import DeptIcon from "@/components/DeptIcon";
 
 export default function DepartmentsPage() {
   const { lang } = useLang();
@@ -18,7 +19,7 @@ export default function DepartmentsPage() {
           {departments.map((d, i) => (
             <Reveal key={d.slug} delay={(i % 3) * 0.06} className="h-full">
               <Link href={`/departments/${d.slug}`} className="card card-hover group flex h-full items-center gap-4 p-5 sm:flex-col sm:items-start sm:gap-0 sm:p-7">
-                <div className="flex-none text-5xl sm:mb-4"></div>
+                <DeptIcon slug={d.slug} className="sm:mb-5" />
                 <div className="min-w-0 flex-1">
                   <h2 className="mb-1 text-xl font-bold text-body sm:mb-2">{pick(d.title, lang)}</h2>
                   <p className="text-sm text-muted">{pick(d.desc, lang)}</p>

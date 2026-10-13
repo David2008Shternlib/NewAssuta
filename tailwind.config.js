@@ -20,10 +20,15 @@ module.exports = {
         accent: "rgb(var(--accent) / <alpha-value>)",
       },
       fontFamily: { sans: ["Montserrat", "system-ui", "sans-serif"] },
-      borderRadius: { pill: "60px", card: "16px", xl2: "24px" },
+      // btn — скругление кнопок и плиток из макета; pill оставлен для мелких
+      // чипов вроде кода страны и переключателя языка.
+      borderRadius: { pill: "60px", btn: "12px", card: "14px", xl2: "20px" },
+      // Тени мягче и холоднее прежних: на светлом фоне прежние давали грязный
+      // серый ореол под каждой карточкой.
       boxShadow: {
-        soft: "0 10px 40px -12px rgba(40,56,144,0.18)",
-        card: "0 4px 24px -8px rgba(40,56,144,0.12)",
+        soft: "0 18px 50px -24px rgba(19,48,107,0.22)",
+        card: "0 2px 14px -6px rgba(19,48,107,0.14)",
+        btn: "0 6px 18px -8px rgba(19,48,107,0.45)",
       },
       maxWidth: { wrap: "1330px" },
     },

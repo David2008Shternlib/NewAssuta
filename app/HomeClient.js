@@ -10,6 +10,7 @@ import CTASection from "@/components/CTASection";
 import { site, stats, offers, departments, cmsLabel } from "@/data/site";
 import { pick, t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
+import DeptIcon from "@/components/DeptIcon";
 
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
@@ -24,8 +25,8 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
       {/* HERO */}
       <section className="relative overflow-hidden">
         <img src={site.heroBg} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/90 via-brand-blue/75 to-brand-blue/40" />
-        <div className="wrap relative flex min-h-[560px] flex-col justify-center py-20">
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-dark/85 via-brand-dark/65 to-brand-blue/25" />
+        <div className="wrap relative flex min-h-[460px] flex-col justify-center py-16">
           <Reveal>
             <span className="inline-block rounded-pill bg-white/15 px-4 py-1.5 text-sm font-semibold text-white backdrop-blur">
               {t(lang, "headerTagline")}
@@ -45,7 +46,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           </Reveal>
           <Reveal delay={0.28}>
             <div className="mt-9 flex flex-wrap gap-4">
-              <a href="#request" className="btn-green !px-8 !py-4 text-base">{t(lang, "freeConsult")}</a>
+              <a href="#request" className="btn-blue !px-8 !py-4 text-base">{t(lang, "freeConsult")}</a>
               <Link href="/doctors" className="inline-flex items-center justify-center rounded-pill border border-white/60 px-8 py-4 text-base font-bold text-white transition-all hover:bg-white hover:text-brand-blue">
                 {t(lang, "ourDoctors")}
               </Link>
@@ -61,7 +62,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             {stats.map((s, i) => (
               <Reveal key={i} delay={i * 0.1} className="h-full lg:border-l lg:border-line lg:first:border-l-0">
                 <div className="flex h-full flex-col items-center justify-center px-6 text-center">
-                  <div className="text-5xl font-extrabold text-brand-green">
+                  <div className="text-5xl font-extrabold text-title">
                     <Counter value={s.num} />{s.unit ? <span className="text-3xl font-bold"> {pick(s.unit, lang)}</span> : null}
                   </div>
                   <div className="mt-5 text-sm font-medium text-muted">{pick(s.label, lang)}</div>
@@ -115,12 +116,13 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {departments.map((d, i) => (
               <Reveal key={d.slug} delay={(i % 4) * 0.06} className="h-full">
-                <Link href={`/departments/${d.slug}`} className="card card-hover group flex h-full items-center gap-4 p-5 sm:flex-col sm:items-start sm:gap-0 sm:p-6">
+                <Link href={`/departments/${d.slug}`} className="card card-hover group flex h-full items-center gap-4 p-5">
+                  <DeptIcon slug={d.slug} size="sm" />
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 text-lg font-bold text-body sm:mb-2">{pick(d.title, lang)}</h3>
-                    <p className="text-sm text-muted">{pick(d.desc, lang)}</p>
+                    <h3 className="mb-0.5 text-base font-bold text-body">{pick(d.title, lang)}</h3>
+                    <p className="line-clamp-2 text-sm text-muted">{pick(d.desc, lang)}</p>
                   </div>
-                  <Arrow dir="chevron" className="flex-none text-muted sm:hidden" />
+                  <Arrow dir="chevron" className="flex-none text-muted/60" />
                 </Link>
               </Reveal>
             ))}
