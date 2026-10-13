@@ -13,6 +13,94 @@ const PhoneIcon = ({ className = "" }) => (
   </svg>
 );
 
+// Кнопка меню: три полоски, превращающиеся в крестик.
+// Вынесена наружу по той же причине, что и LangSwitch (см. ниже).
+function MenuButton({ open, onClick, compact = false, label = "Меню" }) {
+  const bar = "block h-0.5 w-6 rounded bg-current transition-all duration-300";
+  return (
+    <button
+      type="button"
+      aria-label="Menu"
+      aria-expanded={open}
+      onClick={onClick}
+      className={
+        compact
+          ? "flex h-11 w-11 flex-none items-center justify-center text-brand-blue dark:text-accent"
+          : "flex flex-none items-center gap-2 rounded-btn bg-brand-blue px-4 py-3 text-xs font-bold text-white shadow-btn transition-colors hover:bg-brand-blue/90"
+      }
+    >
+      <span className="flex flex-col gap-1.5">
+        <span className={`${bar} ${open ? "translate-y-2 rotate-45" : ""}`} />
+        <span className={`${bar} ${open ? "opacity-0" : ""}`} />
+        <span className={`${bar} ${open ? "-translate-y-2 -rotate-45" : ""}`} />
+      </span>
+      {!compact && <span className="uppercase tracking-wide">{label}</span>}
+    </button>
+  );
+}
+
+const GlobeIcon = () => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"
+       strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18M12 3c-2.5 2.6-2.5 15.4 0 18" />
+  </svg>
+);
+
+// Переключатель языка вынесен НАРУЖУ намеренно.
+//
+// Раньше он объявлялся внутри Header. Компонент, объявленный внутри другого,
+// пересоздаётся при каждой перерисовке: React считает его новым типом и
+// разрушает старое дерево вместе с обработчиками. А у шапки есть слушатель
+// прокрутки, который перерисовывает её постоянно, — поэтому клик по кнопке
+// часто приходился на момент пересоздания и просто терялся. Отсюда и
+// «переключатель языка не работает».
+function LangSwitch({ lang, onSwitch, className = "" }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const close = () => setOpen(false);
+    document.addEventListener("click", close);
+    return () => document.removeEventListener("click", close);
+  }, [open]);
+
+  return (
+    <div className={`relative flex-none ${className}`}>
+      <button
+        type="button"
+        aria-label="Язык сайта"
+        aria-expanded={open}
+        onClick={(e) => { e.stopPropagation(); setOpen((v) => !v); }}
+        className="flex items-center gap-1.5 rounded-pill border border-line bg-surface px-3 py-1.5 text-xs font-bold uppercase text-body shadow-sm transition-colors hover:border-brand-blue/40"
+      >
+        <GlobeIcon />
+        {lang}
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+             strokeLinecap="round" className={`transition-transform ${open ? "rotate-180" : ""}`} aria-hidden="true">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+
+      {open && (
+        <div className="absolute right-0 top-full z-50 mt-1.5 w-24 overflow-hidden rounded-btn border border-line bg-surface py-1 shadow-soft">
+          {["ru", "en"].map((l) => (
+            <button
+              key={l}
+              type="button"
+              onClick={(e) => { e.stopPropagation(); setOpen(false); onSwitch(l); }}
+              className={`block w-full px-3 py-1.5 text-left text-xs font-bold uppercase transition-colors ${
+                lang === l ? "bg-brand-blue/10 text-brand-blue dark:bg-white/10 dark:text-accent" : "text-body hover:bg-surface2"
+              }`}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Header() {
   const { lang, setLang } = useLang();
   const pathname = usePathname();
@@ -95,17 +183,6 @@ export default function Header() {
     router.push(target);
   };
 
-  const LangSwitch = ({ className = "" }) => (
-    <div className={`flex flex-none items-center rounded-pill border border-line p-0.5 text-xs font-bold ${className}`}>
-      {["ru", "en"].map((l) => (
-        <button key={l} onClick={() => switchLang(l)}
-          className={`rounded-pill px-2.5 py-1 uppercase transition-colors ${lang === l ? "bg-brand-blue text-white" : "text-muted hover:text-brand-blue"}`}>
-          {l}
-        </button>
-      ))}
-    </div>
-  );
-
   const homeHref = lang === "en" ? "/en" : "/";
 
   return (
@@ -124,7 +201,7 @@ export default function Header() {
               </a>
             ))}
             <ThemeToggle />
-            <LangSwitch />
+            <LangSwitch lang={lang} onSwitch={switchLang} />
           </div>
         </div>
       </div>
@@ -155,20 +232,17 @@ export default function Header() {
           >
             <PhoneIcon />
           </a>
-          <a href="#request" className="btn-blue whitespace-nowrap !px-4 !py-3 !text-xs">{t(lang, "freeConsult")}</a>
+          {/* На месте бывшей «Бесплатной консультации» — кнопка меню.
+              Консультации у клиники больше нет, а меню теперь открывается
+              на любой ширине экрана, не только на мобильной. */}
+          <MenuButton open={open} onClick={() => setOpen((v) => !v)} label={t(lang, "menu")} />
         </div>
 
         <div className="flex items-center gap-2 xl:hidden">
           <a href={site.phones[0].href} aria-label="Call" className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-green text-white shadow-sm">
             <PhoneIcon />
           </a>
-          <button aria-label="Menu" aria-expanded={open} onClick={() => setOpen((v) => !v)} className="flex h-11 w-11 items-center justify-center">
-            <div className="space-y-1.5">
-              <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "translate-y-2 rotate-45" : ""}`} />
-              <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "opacity-0" : ""}`} />
-              <span className={`block h-0.5 w-7 bg-brand-blue transition-all duration-300 dark:bg-accent ${open ? "-translate-y-2 -rotate-45" : ""}`} />
-            </div>
-          </button>
+          <MenuButton open={open} onClick={() => setOpen((v) => !v)} compact />
         </div>
       </div>
 
@@ -177,7 +251,7 @@ export default function Header() {
           в прежние 560px, и хвост наезжал на страницу */}
       <div
         style={{ maxHeight: menuH }}
-        className={`bg-page transition-[max-height] duration-300 ease-out xl:hidden ${open ? "overflow-y-auto border-t border-line" : "overflow-hidden"}`}
+        className={`bg-page transition-[max-height] duration-300 ease-out ${open ? "overflow-y-auto border-t border-line" : "overflow-hidden"}`}
       >
         <div
           ref={menuRef}
@@ -188,14 +262,13 @@ export default function Header() {
               {pick(n.label, lang)}
             </Link>
           ))}
-          <a href="#request" onClick={() => setOpen(false)} className="btn-blue mt-4">{t(lang, "freeConsult")}</a>
           <div className="mt-4 flex items-center justify-between">
             <div className="flex flex-col gap-1 text-sm">
               {site.phones.map((p) => (
                 <a key={p.value} href={p.href} className="font-semibold text-brand-blue dark:text-accent"><span className="rounded bg-line/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">{p.code}</span> {p.value}</a>
               ))}
             </div>
-            <div className="flex items-center gap-2"><ThemeToggle /><LangSwitch /></div>
+            <div className="flex items-center gap-2"><ThemeToggle /><LangSwitch lang={lang} onSwitch={switchLang} /></div>
           </div>
         </div>
       </div>

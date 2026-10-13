@@ -394,6 +394,64 @@ export const departments = [
 // Старые статические списки врачей/заболеваний/отзывов/новостей удалены:
 // всё это теперь приходит из CMS (Sanity). Они же тянули картинки со старого сайта.
 
+/* ─── Плитки «С чем вам помочь?» на главной ───
+   Состав и подписи взяты с макета клиента. `img` — место под фотографию:
+   положить файл в public/images и вписать сюда путь. Пока пусто, плитка
+   показывает иконку на цветной подложке и выглядит законченной.
+   `icon` указывает, какую иконку взять из components/DeptIcon.js. */
+export const homeTiles = [
+  { icon: "oncology", href: "/departments/oncology", img: "",
+    title: { ru: "Онкология", en: "Oncology" },
+    desc: { ru: "Диагностика и лечение рака", en: "Cancer diagnosis and treatment" } },
+  { icon: "neurosurgery", href: "/departments/neurosurgery", img: "",
+    title: { ru: "Нейрохирургия", en: "Neurosurgery" },
+    desc: { ru: "Заболевания головного мозга", en: "Conditions of the brain" } },
+  { icon: "cardiology", href: "/departments/cardiology", img: "",
+    title: { ru: "Кардиология", en: "Cardiology" },
+    desc: { ru: "Сердце и сосуды", en: "Heart and blood vessels" } },
+  { icon: "orthopedic", href: "/departments/orthopedic", img: "",
+    title: { ru: "Ортопедия", en: "Orthopedics" },
+    desc: { ru: "Суставы, позвоночник", en: "Joints and spine" } },
+  { icon: "urology", href: "/departments/urology", img: "",
+    title: { ru: "Урология", en: "Urology" },
+    desc: { ru: "Мочеполовая система", en: "The urogenital system" } },
+  { icon: "gynecologists", href: "/departments/gynecologists", img: "",
+    title: { ru: "Гинекология", en: "Gynecology" },
+    desc: { ru: "Женское здоровье", en: "Women's health" } },
+  { icon: "diagnostics", href: "/diagnostics", img: "",
+    title: { ru: "Диагностика", en: "Diagnostics" },
+    desc: { ru: "ПЭТ-КТ, МРТ, комплексные чек-апы", en: "PET-CT, MRI, full check-ups" } },
+  { icon: "other", href: "/departments", img: "",
+    title: { ru: "Другие направления", en: "Other areas" },
+    desc: { ru: "Все медицинские услуги", en: "All medical services" } },
+];
+
+/* Цифры первого экрана — с макета клиента, дословно. */
+export const homeStats = [
+  { value: "1 000 000+", key: "hpStat1" },
+  { value: "100 000+", key: "hpStat2" },
+  { value: "1 500", key: "hpStat3" },
+  { value: "", key: "hpStat4" },
+];
+
+/* Короткий прайс на главной — позиции и суммы с макета.
+   Полный прайс остаётся на странице «Цены». */
+export const homePrices = [
+  { price: "от $490", title: { ru: "Онкологический консульт (онколог), второе мнение", en: "Oncology consultation, second opinion" } },
+  { price: "от $750", title: { ru: "Ревизия гистологии (пересмотр патологического материала)", en: "Histology review (re-examination of pathology material)" } },
+  { price: "от $2 000", title: { ru: "ПЭТ-КТ", en: "PET-CT" } },
+  { price: "от $1 200", title: { ru: "МРТ (с контрастом, все зоны)", en: "MRI (with contrast, all areas)" } },
+  { price: "", title: { ru: "Комплексная диагностика", en: "Full diagnostic work-up" } },
+  { price: "", title: { ru: "Хирургическое лечение", en: "Surgical treatment" } },
+];
+
+/* Фотографии, которые пришлёт клиент. Пустое значение — блок рисуется
+   без снимка и ничего не ломается. */
+export const homeImages = {
+  hero: "",        // здание клиники на первом экране
+  secondOpinion: "", // снимок в баннере «Второе мнение»
+};
+
 export const deptNames = Object.fromEntries(departments.map((d) => [d.slug, d.title]));
 
 // Подписи специальностей и категорий для английской версии. Раньше они

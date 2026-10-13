@@ -35,6 +35,7 @@ export const ui = {
   learnMore: { ru: "Узнать больше", en: "Learn more" },
   // Длинные списки заболеваний свёрнуты: в онкологии их 47, карточка иначе
   // растягивала всю строку сетки. Число подставляется в подпись кнопки.
+  menu: { ru: "Меню", en: "Menu" },
   showMore: { ru: "Показать ещё", en: "Show more" },
   showLess: { ru: "Свернуть", en: "Show less" },
   // Подпись на карточке новости: без неё было не видно, что карточка кликается.
@@ -135,6 +136,60 @@ export const ui = {
     ru: "* Цены ориентировочные, действительны на 2026 год и не являются публичной офертой. Точную стоимость программы координатор рассчитывает после изучения медицинских документов.",
     en: "* Prices are indicative, valid for 2026 and do not constitute a public offer. The exact programme cost is calculated by a coordinator after reviewing your medical records.",
   },
+
+  /* ─── Главная страница: тексты с макета клиента ───
+     Русские формулировки перенесены с макета дословно, английские — перевод.
+     Менять их можно прямо здесь, вёрстку трогать не нужно. */
+  hpEyebrow: { ru: "Лечение и диагностика в Израиле", en: "Treatment and diagnostics in Israel" },
+  hpTitle: { ru: "Ведущий частный медицинский центр Израиля", en: "Israel's leading private medical centre" },
+  hpLead: {
+    ru: "Более 1 000 000 пациентов в год. Один из крупнейших хирургических центров страны. Ведущие израильские специалисты, современная диагностика и лечение сложных случаев.",
+    en: "More than 1,000,000 patients a year. One of the country's largest surgical centres. Leading Israeli specialists, modern diagnostics and treatment of complex cases.",
+  },
+  hpCta1: { ru: "Получить программу лечения", en: "Get a treatment programme" },
+  hpCta1Sub: { ru: "Предварительная оценка и план", en: "Preliminary assessment and plan" },
+  hpCta2: { ru: "Написать координатору в WhatsApp", en: "Message a coordinator on WhatsApp" },
+  hpCta2Sub: { ru: "Живой человек. Ответим на русском", en: "A real person. We answer in Russian" },
+
+  hpHelpTitle: { ru: "С чем вам помочь?", en: "How can we help?" },
+  hpHelpSub: {
+    ru: "Выберите направление, чтобы получить соответствующую информацию",
+    en: "Choose an area to see the relevant information",
+  },
+
+  hpPromise1: { ru: "Живой координатор", en: "A real coordinator" },
+  hpPromise1Sub: { ru: "На связи 24/7", en: "Available 24/7" },
+  hpPromise2: { ru: "Подбор врача по вашему диагнозу", en: "A doctor matched to your diagnosis" },
+  hpPromise2Sub: { ru: "Индивидуальный подход", en: "An individual approach" },
+  hpPromise3: { ru: "Программа и стоимость до приезда", en: "Programme and cost before you arrive" },
+  hpPromise3Sub: { ru: "Расчет стоимости в течение 24 часов", en: "Costing within 24 hours" },
+  hpPromise4: { ru: "Сопровождение на всех этапах", en: "Support at every stage" },
+  hpPromise4Sub: { ru: "Диагностика, лечение, логистика", en: "Diagnostics, treatment, logistics" },
+
+  hpStat1: { ru: "пациентов в год", en: "patients a year" },
+  hpStat2: { ru: "операций в год", en: "operations a year" },
+  hpStat3: { ru: "хирургов и врачей", en: "surgeons and doctors" },
+  hpStat4: { ru: "Международные стандарты качества", en: "International quality standards" },
+
+  hpSecondTitle: { ru: "Второе мнение от ведущего специалиста", en: "A second opinion from a leading specialist" },
+  hpSecondSub: {
+    ru: "Получите независимую оценку вашего диагноза и вариантов лечения.",
+    en: "Get an independent assessment of your diagnosis and treatment options.",
+  },
+  hpSecondLink: { ru: "Узнать больше", en: "Learn more" },
+
+  hpDoctorsTitle: { ru: "Ведущие специалисты", en: "Leading specialists" },
+  hpStoriesTitle: { ru: "Истории пациентов", en: "Patient stories" },
+  hpStoriesAll: { ru: "Все истории", en: "All stories" },
+  hpPricesTitle: { ru: "Популярные услуги и цены", en: "Popular services and prices" },
+  hpPricesAll: { ru: "Все цены", en: "All prices" },
+  byRequest: { ru: "по запросу", en: "on request" },
+
+  hpStepsTitle: { ru: "Как начать лечение?", en: "How to start treatment" },
+  hpStep1: { ru: "Отправляете заявку", en: "You send a request" },
+  hpStep2: { ru: "Мы подберем специалистов", en: "We select the specialists" },
+  hpStep3: { ru: "Получаете план лечения и стоимость", en: "You receive a treatment plan and costing" },
+  hpStep4: { ru: "Организуем поездку и лечение", en: "We arrange the trip and the treatment" },
 };
 
 export function t(lang, key) {
