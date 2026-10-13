@@ -3,6 +3,7 @@ import Link from "@/components/LocaleLink";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import VideoEmbed from "@/components/VideoEmbed";
+import ReviewText from "@/components/ReviewText";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
@@ -56,7 +57,15 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
               className="h-full w-full object-cover"
               style={{ maskImage: HERO_FADE, WebkitMaskImage: HERO_FADE }}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/85 to-surface/15" />
+            {/* Заливка поверх фото, чтобы текст читался.
+                На широком экране текст занимает левую половину, поэтому
+                заливка идёт слева направо и справа открывает снимок.
+                На телефоне текст идёт во всю ширину — там боковой градиент
+                оставлял строки лежать прямо на светлых местах кадра, и они
+                терялись. Поэтому на узких экранах фото уходит под плотную
+                вуаль и работает только как фактура. */}
+            <div className="absolute inset-0 bg-surface/90 md:hidden" />
+            <div className="absolute inset-0 hidden bg-gradient-to-r from-surface via-surface/85 to-surface/15 md:block" />
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-surface to-transparent" />
           </div>
         ) : (
@@ -124,8 +133,12 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                     <DeptIcon slug={tile.icon} size="sm" />
                   )}
                   <div className="min-w-0 flex-1">
-                    <h3 className="mb-0.5 flex min-h-[1.5rem] items-start text-base font-bold leading-snug text-body">{pick(tile.title, lang)}</h3>
-                    <p className="min-h-[2.5rem] text-sm leading-snug text-muted">{pick(tile.desc, lang)}</p>
+                    {/* Запас высоты под вторую строку нужен только там, где
+                        плитки стоят рядом и их подписи должны держать одну
+                        линию. На телефоне колонка одна — запас превращался
+                        в пустоту под каждой карточкой, поэтому он с sm:. */}
+                    <h3 className="mb-0.5 flex items-start text-base font-bold leading-snug text-body sm:min-h-[1.5rem]">{pick(tile.title, lang)}</h3>
+                    <p className="text-sm leading-snug text-muted sm:min-h-[2.5rem]">{pick(tile.desc, lang)}</p>
                   </div>
                   <Arrow dir="chevron" className="mt-3.5 flex-none text-muted/60" />
                 </Link>
@@ -146,8 +159,9 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                 </span>
                 <div className="min-w-0">
                   {/* Две строки под заголовок: иначе у соседей в ряду подписи
-                      стоят на разной высоте. */}
-                  <div className="flex min-h-[2.25rem] items-start text-sm font-bold leading-snug text-body">{t(lang, p.key)}</div>
+                      стоят на разной высоте. На телефоне соседей нет — запас
+                      не нужен, поэтому с sm:. */}
+                  <div className="flex items-start text-sm font-bold leading-snug text-body sm:min-h-[2.25rem]">{t(lang, p.key)}</div>
                   <div className="mt-0.5 text-xs text-muted">{t(lang, `${p.key}Sub`)}</div>
                 </div>
               </div>
@@ -172,11 +186,11 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                       пробелам внутри числа. */}
                   {s.value ? (
                     <>
-                      <div className="flex min-h-[2.75rem] items-center whitespace-nowrap text-3xl font-extrabold leading-none text-title sm:text-4xl">{s.value}</div>
+                      <div className="flex items-center whitespace-nowrap text-3xl font-extrabold leading-none text-title sm:min-h-[2.75rem] sm:text-4xl">{s.value}</div>
                       <div className="mt-2 text-sm font-medium leading-snug text-muted">{t(lang, s.key)}</div>
                     </>
                   ) : (
-                    <div className="flex min-h-[2.75rem] items-center text-base font-bold leading-snug text-title sm:text-lg">{t(lang, s.key)}</div>
+                    <div className="flex items-center text-base font-bold leading-snug text-title sm:min-h-[2.75rem] sm:text-lg">{t(lang, s.key)}</div>
                   )}
                 </div>
               </Reveal>
@@ -238,7 +252,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
               {reviews.slice(0, 2).map((r, i) => (
                 <Reveal key={i} delay={i * 0.06}>
                   <div className="card p-6">
-                    <p className="italic leading-relaxed text-body/85">«{pick(r.text, lang)}»</p>
+                    <ReviewText text={pick(r.text, lang)} lines={8} className="whitespace-pre-line italic leading-relaxed text-body/85" />
                     <div className="mt-4 text-sm font-bold text-body">{r.author}</div>
                     <div className="text-xs text-muted">{pick(r.country, lang)}</div>
                   </div>

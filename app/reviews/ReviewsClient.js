@@ -2,6 +2,7 @@
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import CTASection from "@/components/CTASection";
+import ReviewText from "@/components/ReviewText";
 import { t } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
@@ -16,8 +17,8 @@ export default function ReviewsClient({ reviews = [] }) {
             <Reveal key={r.id || i} delay={(i % 2) * 0.05} className="h-full">
               <div className="card h-full p-7">
                 <div className="mb-3 text-sm font-bold text-brand-green">{r.rating || 5} из 5</div>
-                <p className="mb-5 whitespace-pre-line italic text-body/80">«{r.text}»</p>
-                <div className="text-sm font-bold text-body">{r.author}</div>
+                <ReviewText text={r.text} lines={10} className="whitespace-pre-line italic text-body/80" />
+                <div className="mt-5 text-sm font-bold text-body">{r.author}</div>
                 {r.country && <div className="text-xs text-muted">{r.country}</div>}
               </div>
             </Reveal>
