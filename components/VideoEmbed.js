@@ -15,12 +15,17 @@ import { useLang } from "./LangProvider";
  *
  * Домен youtube-nocookie.com: до клика YouTube не ставит куки.
  */
+// Обложки YouTube: у части роликов крупной версии просто нет, и вместо неё
+// отдаётся серая заглушка. Поэтому идём по лестнице размеров сверху вниз.
+const COVER_SIZES = ["maxresdefault", "sddefault", "hqdefault", "mqdefault"];
+
 export default function VideoEmbed({ id, title, poster }) {
   const [playing, setPlaying] = useState(false);
+  const [sizeIdx, setSizeIdx] = useState(0);
   const { lang } = useLang();
 
   const caption = title || (lang === "en" ? "Video about the clinic" : "Видео о клинике");
-  const cover = poster || `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+  const cover = poster || (id ? `https://i.ytimg.com/vi/${id}/${COVER_SIZES[sizeIdx]}.jpg` : "");
 
   if (playing) {
     return (
@@ -43,12 +48,15 @@ export default function VideoEmbed({ id, title, poster }) {
       aria-label={lang === "en" ? `Play: ${caption}` : `Смотреть: ${caption}`}
       className="group relative block aspect-video w-full overflow-hidden rounded-xl2 bg-brand-dark shadow-soft"
     >
-      <img
-        src={cover}
-        alt={caption}
-        loading="lazy"
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-      />
+      {cover && (
+        <img
+          src={cover}
+          alt={caption}
+          loading="lazy"
+          onError={() => setSizeIdx((i) => Math.min(i + 1, COVER_SIZES.length - 1))}
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      )}
       <span className="absolute inset-0 bg-brand-dark/25 transition-colors group-hover:bg-brand-dark/10" />
 
       <span className="absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-green shadow-soft transition-transform duration-300 group-hover:scale-110">

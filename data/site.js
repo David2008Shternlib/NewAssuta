@@ -37,6 +37,9 @@ export const operator = {
 };
 
 // Билингвальные данные (RU/EN), собранные с assuta.org, для превью.
+// Ролик о клинике — тот же, что стоит на действующем assuta.org.
+export const videoId = "uSyaf-gHzyo";
+
 export const site = {
   name: "Assuta",
   founded: 1935,

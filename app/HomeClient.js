@@ -7,7 +7,7 @@ import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
 import DeptIcon from "@/components/DeptIcon";
-import { site, homeTiles, homeStats, homePrices, homeImages, cmsLabel } from "@/data/site";
+import { site, videoId, homeTiles, homeStats, homePrices, homeImages, cmsLabel } from "@/data/site";
 import { pick, t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 
@@ -295,7 +295,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
       <section className="py-14 md:py-20">
         <div className="wrap">
           <SectionTitle eyebrow={t(lang, "disEyebrow")} title={t(lang, "videoTitle")} />
-          <VideoEmbed />
+          <VideoEmbed id={videoId} />
         </div>
       </section>
 
