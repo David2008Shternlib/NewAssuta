@@ -28,6 +28,7 @@ const PROMISES = [
 ];
 
 const STEPS = ["hpStep1", "hpStep2", "hpStep3", "hpStep4"];
+const STEP_ICONS = ["stepRequest", "stepDoctors", "stepPlan", "stepTrip"];
 
 // Растушёвка краёв фотографии в первом экране: к краям кадра прозрачность
 // нарастает, поэтому снимок переходит в фон без видимой границы.
@@ -161,11 +162,13 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           <div className="grid gap-y-8 rounded-xl2 bg-surface p-8 shadow-soft sm:grid-cols-2 lg:grid-cols-4">
             {homeStats.map((s, i) => (
               <Reveal key={s.key} delay={(i % 4) * 0.06} className="h-full">
-                <div className="flex h-full flex-col items-center justify-center border-line px-4 text-center lg:border-l lg:first:border-l-0">
-                  {s.value && <div className="text-4xl font-extrabold leading-none text-title md:text-5xl">{s.value}</div>}
-                  <div className={`text-sm font-medium text-muted ${s.value ? "mt-3" : "text-base font-bold text-body"}`}>
-                    {t(lang, s.key)}
-                  </div>
+                <div className="flex h-full flex-col items-center justify-start border-line px-4 text-center lg:border-l lg:first:border-l-0">
+                  <DeptIcon slug={s.icon} size="sm" className="mb-3" />
+                  {/* whitespace-nowrap: «1 000 000+» иначе разрывается по пробелам
+                      внутри числа. Размер снижен на узких экранах, чтобы
+                      самое длинное число помещалось в колонку целиком. */}
+                  <div className="min-h-[2.75rem] whitespace-nowrap text-3xl font-extrabold leading-none text-title sm:text-4xl">{s.value}</div>
+                  <div className="mt-2 text-sm font-medium leading-snug text-muted">{t(lang, s.key)}</div>
                 </div>
               </Reveal>
             ))}
@@ -263,11 +266,14 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {STEPS.map((key, i) => (
               <Reveal key={key} delay={(i % 4) * 0.06}>
-                <div className="flex gap-4">
-                  <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-blue text-sm font-bold text-white">
-                    {i + 1}
-                  </span>
-                  <p className="pt-1.5 text-sm font-semibold leading-snug text-body">{t(lang, key)}</p>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center gap-3">
+                    <DeptIcon slug={STEP_ICONS[i]} size="sm" />
+                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-blue text-xs font-bold text-white">
+                      {i + 1}
+                    </span>
+                  </div>
+                  <p className="text-sm font-semibold leading-snug text-body">{t(lang, key)}</p>
                 </div>
               </Reveal>
             ))}

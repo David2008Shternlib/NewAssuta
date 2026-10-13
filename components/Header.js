@@ -200,8 +200,6 @@ export default function Header() {
                 <span className="rounded bg-line/60 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted">{p.code}</span>{p.value}
               </a>
             ))}
-            <ThemeToggle />
-            <LangSwitch lang={lang} onSwitch={switchLang} />
           </div>
         </div>
       </div>
@@ -235,6 +233,8 @@ export default function Header() {
           {/* На месте бывшей «Бесплатной консультации» — кнопка меню.
               Консультации у клиники больше нет, а меню теперь открывается
               на любой ширине экрана, не только на мобильной. */}
+          <ThemeToggle />
+          <LangSwitch lang={lang} onSwitch={switchLang} />
           <MenuButton open={open} onClick={() => setOpen((v) => !v)} label={t(lang, "menu")} />
         </div>
 

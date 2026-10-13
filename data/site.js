@@ -428,10 +428,10 @@ export const homeTiles = [
 
 /* Цифры первого экрана — с макета клиента, дословно. */
 export const homeStats = [
-  { value: "1 000 000+", key: "hpStat1" },
-  { value: "100 000+", key: "hpStat2" },
-  { value: "1 500", key: "hpStat3" },
-  { value: "", key: "hpStat4" },
+  { value: "1 000 000+", key: "hpStat1", icon: "patients" },
+  { value: "100 000+", key: "hpStat2", icon: "operations" },
+  { value: "1 500", key: "hpStat3", icon: "staff" },
+  { value: "", key: "hpStat4", icon: "quality" },
 ];
 
 /* Короткий прайс на главной — позиции и суммы с макета.
@@ -447,9 +447,12 @@ export const homePrices = [
 
 /* Фотографии, которые пришлёт клиент. Пустое значение — блок рисуется
    без снимка и ничего не ломается. */
+// Снимки взяты с действующего assuta.org — это материалы самого клиента,
+// поэтому с правами вопросов нет. Пути пустые, если файла нет: первый экран
+// тогда показывает мягкую заливку и остаётся целым, а не ломается.
 export const homeImages = {
-  hero: "",        // здание клиники на первом экране
-  secondOpinion: "", // снимок в баннере «Второе мнение»
+  hero: "/images/hero.webp",                  // первый экран
+  secondOpinion: "/images/second-opinion.webp", // баннер «Второе мнение»
 };
 
 export const deptNames = Object.fromEntries(departments.map((d) => [d.slug, d.title]));

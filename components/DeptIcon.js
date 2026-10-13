@@ -67,33 +67,57 @@ const ICONS = {
   diagnostics: [["circle", "10.5", "10.5", "6.5"], ["path", "M15.2 15.2 21 21"], ["path", "M7.5 10.5h1.8l1.2-2.2 1.3 4 1-1.8h1.2"]],
   // прочее — медицинский крест
   other: [["path", "M9.5 3.5h5v6h6v5h-6v6h-5v-6h-6v-5h6z"]],
+
+  // Общие иконки главной: цифры и шаги лечения.
+  // пациенты — группа людей
+  patients: [["circle", "9", "8", "3.2"], ["path", "M3 20c0-3.3 2.7-5.4 6-5.4s6 2.1 6 5.4"],
+             ["path", "M16 5.6a3.2 3.2 0 0 1 0 6.1M17.5 15.1c2.1.6 3.5 2.4 3.5 4.9"]],
+  // операции — скальпель с плюсом
+  operations: [["path", "M3 21 9.5 14.5"], ["path", "M9.5 14.5 18 6l-.3 3.4c-.1 1.2-.6 2.3-1.5 3.1l-2.8 2.6a1.9 1.9 0 0 1-2.6 0l-1.3-1.3z"],
+               ["path", "M18.5 17.5h4M20.5 15.5v4"]],
+  // врачи — силуэт в халате
+  staff: [["circle", "12", "7", "3.4"], ["path", "M5 21c0-3.9 3.1-6.4 7-6.4s7 2.5 7 6.4"],
+          ["path", "M12 16.4v3M10.5 17.9h3"]],
+  // стандарты качества — щит с галочкой
+  quality: [["path", "M12 2.8 20 6v6c0 4.4-3.2 7.9-8 9.2-4.8-1.3-8-4.8-8-9.2V6z"],
+            ["path", "M8.6 11.9 11 14.4l4.4-4.6"]],
+  // шаг 1 — заявка
+  stepRequest: [["path", "M4 5.5h16v10.5H9.5L5.5 19.5V16H4z"], ["path", "M8 9.2h8M8 12.2h5"]],
+  // шаг 2 — подбор специалистов
+  stepDoctors: [["circle", "10", "8.2", "3.4"], ["path", "M3.5 20c0-3.6 2.9-5.9 6.5-5.9 1.2 0 2.3.3 3.2.7"],
+                ["circle", "17.5", "16.5", "3.5"], ["path", "M20.2 19.2 22.5 21.5"]],
+  // шаг 3 — план лечения и стоимость
+  stepPlan: [["path", "M6 3h8.5L19 7.4V21H6z"], ["path", "M14.2 3v4.6H19"],
+             ["path", "M9.2 12.5h6M9.2 16h4"]],
+  // шаг 4 — поездка
+  stepTrip: [["path", "M3 13.5 20.4 5.2a1.9 1.9 0 0 1 1.6 3.4l-5.3 3.1-5.4 8.6-2.4 1 1.1-5.7-3.5 1.9-3.1-1.6z"]],
 };
 
 // Подложка и цвет линии. Пары подобраны так, чтобы соседние плитки
 // не сливались и ни одна не кричала громче остальных.
 const TONES = {
-  oncology: "bg-rose-50 text-rose-500 dark:bg-rose-500/10 dark:text-rose-300",
-  cardiology: "bg-red-50 text-red-500 dark:bg-red-500/10 dark:text-red-300",
-  gastroenterology: "bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-300",
-  gynecologists: "bg-fuchsia-50 text-fuchsia-500 dark:bg-fuchsia-500/10 dark:text-fuchsia-300",
-  urology: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-300",
-  "general-surgery": "bg-slate-100 text-slate-600 dark:bg-slate-400/10 dark:text-slate-300",
-  neurosurgery: "bg-indigo-50 text-indigo-500 dark:bg-indigo-500/10 dark:text-indigo-300",
-  "plastic-surgery": "bg-pink-50 text-pink-500 dark:bg-pink-500/10 dark:text-pink-300",
-  "vascular-surgery": "bg-cyan-50 text-cyan-600 dark:bg-cyan-500/10 dark:text-cyan-300",
-  hematology: "bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-300",
-  neurology: "bg-violet-50 text-violet-500 dark:bg-violet-500/10 dark:text-violet-300",
-  orthopedic: "bg-orange-50 text-orange-500 dark:bg-orange-500/10 dark:text-orange-300",
-  endocrinologists: "bg-teal-50 text-teal-600 dark:bg-teal-500/10 dark:text-teal-300",
-  dermatology: "bg-lime-50 text-lime-600 dark:bg-lime-500/10 dark:text-lime-300",
-  ophthalmolog: "bg-blue-50 text-blue-500 dark:bg-blue-500/10 dark:text-blue-300",
-  rheumatology: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-300",
-  ivf: "bg-purple-50 text-purple-500 dark:bg-purple-500/10 dark:text-purple-300",
-  diagnostics: "bg-slate-100 text-slate-600 dark:bg-slate-400/10 dark:text-slate-300",
-  other: "bg-blue-50 text-brand-blue dark:bg-blue-500/10 dark:text-blue-300",
+  oncology: "text-rose-500 dark:text-rose-300",
+  cardiology: "text-red-500 dark:text-red-300",
+  gastroenterology: "text-amber-600 dark:text-amber-300",
+  gynecologists: "text-fuchsia-500 dark:text-fuchsia-300",
+  urology: "text-sky-600 dark:text-sky-300",
+  "general-surgery": "text-slate-600 dark:text-slate-300",
+  neurosurgery: "text-indigo-500 dark:text-indigo-300",
+  "plastic-surgery": "text-pink-500 dark:text-pink-300",
+  "vascular-surgery": "text-cyan-600 dark:text-cyan-300",
+  hematology: "text-red-600 dark:text-red-300",
+  neurology: "text-violet-500 dark:text-violet-300",
+  orthopedic: "text-orange-500 dark:text-orange-300",
+  endocrinologists: "text-teal-600 dark:text-teal-300",
+  dermatology: "text-lime-600 dark:text-lime-300",
+  ophthalmolog: "text-blue-500 dark:text-blue-300",
+  rheumatology: "text-emerald-600 dark:text-emerald-300",
+  ivf: "text-purple-500 dark:text-purple-300",
+  diagnostics: "text-slate-600 dark:text-slate-300",
+  other: "text-brand-blue dark:text-blue-300",
 };
 
-const FALLBACK = "bg-surface2 text-brand-blue dark:text-accent";
+const FALLBACK = "text-brand-blue dark:text-accent";
 
 // Сама графика без подложки — пригодится там, где фон свой
 // (например, в синей плашке или в строке списка).
@@ -114,16 +138,19 @@ export function DeptGlyph({ slug, size = 26, strokeWidth = 1.6, className = "" }
   );
 }
 
+// Подложки под иконкой нет намеренно: в макете значок лежит прямо на фоне
+// карточки, а цветной квадрат под ним делал сетку пёстрой. Цвет линии
+// остаётся «свой» у каждого направления — он и различает плитки.
 export default function DeptIcon({ slug, size = "md", className = "" }) {
-  const box = size === "sm" ? "h-11 w-11" : "h-14 w-14";
-  const glyph = size === "sm" ? 20 : 26;
+  const box = size === "sm" ? "h-12 w-12" : "h-14 w-14";
+  const glyph = size === "sm" ? 38 : 46;
 
   return (
     <span
       aria-hidden="true"
-      className={`flex flex-none items-center justify-center rounded-btn ${box} ${TONES[slug] || FALLBACK} ${className}`}
+      className={`flex flex-none items-center justify-center ${box} ${TONES[slug] || FALLBACK} ${className}`}
     >
-      <DeptGlyph slug={slug} size={glyph} />
+      <DeptGlyph slug={slug} size={glyph} strokeWidth={1.5} />
     </span>
   );
 }
