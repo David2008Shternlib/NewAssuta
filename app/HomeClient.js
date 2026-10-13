@@ -164,11 +164,20 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
               <Reveal key={s.key} delay={(i % 4) * 0.06} className="h-full">
                 <div className="flex h-full flex-col items-center justify-start border-line px-4 text-center lg:border-l lg:first:border-l-0">
                   <DeptIcon slug={s.icon} size="sm" className="mb-3" />
-                  {/* whitespace-nowrap: «1 000 000+» иначе разрывается по пробелам
-                      внутри числа. Размер снижен на узких экранах, чтобы
-                      самое длинное число помещалось в колонку целиком. */}
-                  <div className="min-h-[2.75rem] whitespace-nowrap text-3xl font-extrabold leading-none text-title sm:text-4xl">{s.value}</div>
-                  <div className="mt-2 text-sm font-medium leading-snug text-muted">{t(lang, s.key)}</div>
+                  {/* У четвёртой колонки числа нет — подпись занимает его место
+                      и набрана так же крупно, как в макете. Поэтому высота
+                      блока с числом фиксирована: иначе подписи соседних
+                      колонок стояли бы на разной высоте.
+                      whitespace-nowrap: «1 000 000+» иначе разрывается по
+                      пробелам внутри числа. */}
+                  {s.value ? (
+                    <>
+                      <div className="flex min-h-[2.75rem] items-center whitespace-nowrap text-3xl font-extrabold leading-none text-title sm:text-4xl">{s.value}</div>
+                      <div className="mt-2 text-sm font-medium leading-snug text-muted">{t(lang, s.key)}</div>
+                    </>
+                  ) : (
+                    <div className="flex min-h-[2.75rem] items-center text-base font-bold leading-snug text-title sm:text-lg">{t(lang, s.key)}</div>
+                  )}
                 </div>
               </Reveal>
             ))}
