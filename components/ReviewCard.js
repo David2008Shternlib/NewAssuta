@@ -2,6 +2,7 @@
 import ReviewText from "./ReviewText";
 import { cms } from "@/data/i18n";
 import { useLang } from "./LangProvider";
+import { cdnImage2x } from "@/lib/img";
 
 /**
  * Карточка отзыва: портрет слева, цитата справа, под ней имя, возраст
@@ -18,7 +19,7 @@ function Avatar({ name, photo }) {
   if (photo) {
     return (
       <img
-        src={photo}
+        src={cdnImage2x(photo, 80, 80)}
         alt={name || ""}
         loading="lazy"
         className="h-16 w-16 flex-none rounded-full border border-line object-cover sm:h-20 sm:w-20"

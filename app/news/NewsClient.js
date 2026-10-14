@@ -5,6 +5,7 @@ import Reveal from "@/components/Reveal";
 import { t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
 import Arrow from "@/components/Arrow";
+import { cdnImage } from "@/lib/img";
 
 export default function NewsClient({ news = [] }) {
   const { lang } = useLang();
@@ -18,7 +19,7 @@ export default function NewsClient({ news = [] }) {
               <Link href={`/news/${n.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
                 {n.image && (
                   <div className="h-48 overflow-hidden">
-                    <img src={n.image} alt={cms(n, "title", lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={cdnImage(n.image, 640)} alt={cms(n, "title", lang)} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
                 )}
                 <div className="flex flex-1 flex-col p-6">

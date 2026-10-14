@@ -8,6 +8,7 @@ import MedicalDisclaimer from "@/components/MedicalDisclaimer";
 import { docName, t, cms } from "@/data/i18n";
 import { cmsLabel } from "@/data/site";
 import { useLang } from "@/components/LangProvider";
+import { cdnImage2x } from "@/lib/img";
 
 export default function DoctorDetail({ doc }) {
   const { lang } = useLang();
@@ -26,7 +27,7 @@ export default function DoctorDetail({ doc }) {
               <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-start">
                 <div className="flex h-48 w-48 flex-none items-center justify-center overflow-hidden rounded-full border border-line bg-surface2">
                   {doc.photo ? (
-                    <img src={doc.photo} alt={name} className="h-full w-full scale-105 object-cover" />
+                    <img src={cdnImage2x(doc.photo, 240, 240)} alt={name} decoding="async" className="h-full w-full scale-105 object-cover" />
                   ) : (
                     <span className="text-6xl font-bold text-brand-blue/25">{name.split(" ").slice(-1)[0]?.[0]}</span>
                   )}

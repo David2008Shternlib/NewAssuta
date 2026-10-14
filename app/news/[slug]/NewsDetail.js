@@ -6,6 +6,7 @@ import Arrow from "@/components/Arrow";
 import CTASection from "@/components/CTASection";
 import { t, cms } from "@/data/i18n";
 import { useLang } from "@/components/LangProvider";
+import { cdnImage } from "@/lib/img";
 
 export default function NewsDetail({ item }) {
   const { lang } = useLang();
@@ -19,7 +20,7 @@ export default function NewsDetail({ item }) {
       <section className="py-16">
         <div className="wrap max-w-3xl">
           {item.image && (
-            <Reveal><img src={item.image} alt={title} className="mb-8 w-full rounded-xl2" /></Reveal>
+            <Reveal><img src={cdnImage(item.image, 1200)} alt={title} decoding="async" className="mb-8 w-full rounded-xl2" /></Reveal>
           )}
           {bodyHtml ? (
             <Reveal><div className="cms-body leading-relaxed text-body/85" dangerouslySetInnerHTML={{ __html: bodyHtml }} /></Reveal>

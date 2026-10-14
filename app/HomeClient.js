@@ -4,6 +4,7 @@ import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import VideoEmbed from "@/components/VideoEmbed";
 import ReviewCard from "@/components/ReviewCard";
+import { cdnImage } from "@/lib/img";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
@@ -47,12 +48,16 @@ const HERO_FADE =
   "radial-gradient(115% 130% at 78% 42%, #000 30%, rgba(0,0,0,.62) 58%, rgba(0,0,0,.22) 76%, transparent 92%)";
 
 // Телефон: снимок делит верх экрана с заголовком — справа кадр, слева
-// текст, как в макете. Сделано обтеканием (float), а не абсолютным
-// позиционированием: только обтекание заставляет строки заголовка
-// самим укорачиваться рядом с картинкой. Абсолютный снимок строки не
-// двигает — текст либо лезет под него, либо его приходится душить вуалью.
+// текст, как в макете.
+//
+// Работают два элемента. Распорка плавает (float) и заставляет строки
+// заголовка укорачиваться рядом с картинкой — абсолютный снимок строки
+// не двигает, текст лез бы прямо на него. Сам снимок при этом лежит
+// абсолютом и крупнее распорки: он выходит за её границы влево и вниз,
+// заезжая под текст. Так не видно ни одного края кадра — к ним он
+// полностью растворяется в фоне, а не обрывается прямой линией.
 const HERO_FADE_MOBILE =
-  "radial-gradient(135% 125% at 88% 22%, #000 34%, rgba(0,0,0,.6) 62%, rgba(0,0,0,.2) 80%, transparent 94%)";
+  "radial-gradient(118% 108% at 94% 16%, #000 26%, rgba(0,0,0,.72) 48%, rgba(0,0,0,.3) 68%, rgba(0,0,0,.08) 84%, transparent 96%)";
 
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
@@ -86,6 +91,20 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-surface via-page to-surface2" aria-hidden="true" />
         )}
 
+        {/* Телефон: снимок крупнее распорки и выходит за её границы —
+            влево под заголовок и вниз под абзац. Лежит до блока с текстом,
+            поэтому текст рисуется поверх. */}
+        {homeImages.hero && (
+          <img
+            src={homeImages.hero}
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            className="pointer-events-none absolute right-0 top-0 h-72 w-[92%] object-cover md:hidden"
+            style={{ maskImage: HERO_FADE_MOBILE, WebkitMaskImage: HERO_FADE_MOBILE }}
+          />
+        )}
+
         {/* Переход к следующей секции. Первый экран белый, дальше идёт
             светло-синий фон страницы — на стыке получалась отчётливая
             горизонтальная линия. Здесь белый плавно уходит в цвет фона,
@@ -101,14 +120,10 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                 контекст форматирования), строки перестанут укорачиваться
                 рядом с картинкой. */}
             <Reveal>
+              {/* Распорка: невидима, нужна только чтобы строки заголовка
+                  обтекали картинку. Сам снимок — ниже, абсолютом. */}
               {homeImages.hero && (
-                <img
-                  src={homeImages.hero}
-                  alt=""
-                  aria-hidden="true"
-                  className="float-right -mr-4 mb-2 ml-3 h-44 w-[52%] object-cover md:hidden"
-                  style={{ maskImage: HERO_FADE_MOBILE, WebkitMaskImage: HERO_FADE_MOBILE }}
-                />
+                <span aria-hidden="true" className="float-right -mr-4 ml-3 block h-40 w-[50%] md:hidden" />
               )}
               <div className="eyebrow mb-3 md:mb-4">{t(lang, "hpEyebrow")}</div>
               {/* На телефоне заголовок мельче: рядом с картинкой под него
@@ -418,7 +433,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
               <Reveal key={n.slug} delay={i * 0.1} className="h-full">
                 <Link href={n.slug ? `/news/${n.slug}` : "/news"} className="card card-hover group flex h-full flex-col overflow-hidden">
                   <div className="h-48 overflow-hidden">
-                    <img src={n.img} alt={cms(n, "title", lang)} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <img src={cdnImage(n.img, 640)} alt={cms(n, "title", lang)} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                   </div>
                   <div className="flex flex-1 flex-col p-6">
                     <h3 className="mb-2 text-base font-bold leading-snug text-body">{cms(n, "title", lang)}</h3>

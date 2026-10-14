@@ -3,6 +3,7 @@ import Link from "@/components/LocaleLink";
 import { docName, pick, t, cms } from "@/data/i18n";
 import { cmsLabel } from "@/data/site";
 import { useLang } from "./LangProvider";
+import { cdnImage2x } from "@/lib/img";
 
 /**
  * Карточка врача.
@@ -32,7 +33,7 @@ export default function DoctorCard({ doc, caption }) {
     >
       <div className="flex h-20 w-20 flex-none items-center justify-center overflow-hidden rounded-full border border-line bg-surface2 sm:mb-5 sm:h-32 sm:w-32">
         {doc.photo ? (
-          <img src={doc.photo} alt={name} className="h-full w-full scale-110 object-cover" />
+          <img src={cdnImage2x(doc.photo, 128, 128)} alt={name} loading="lazy" decoding="async" className="h-full w-full scale-110 object-cover" />
         ) : (
           <span className="text-2xl font-bold text-brand-blue/30 sm:text-4xl">{initial}</span>
         )}

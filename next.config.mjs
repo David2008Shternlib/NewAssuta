@@ -60,7 +60,19 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // Картинки из public/ отдавались с max-age=0 — браузер перекачивал
+      // их при каждом открытии сайта. Это около 120 КБ на главной только
+      // на плитки и первый экран. Имена файлов мы меняем руками, поэтому
+      // не immutable: неделя в кэше плюс неделя на фоновое обновление.
+      {
+        source: "/images/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=604800, stale-while-revalidate=604800" },
+        ],
+      },
+    ];
   },
   async redirects() {
     return [
