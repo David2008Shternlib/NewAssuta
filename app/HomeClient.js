@@ -56,8 +56,14 @@ const HERO_FADE =
 // абсолютом и крупнее распорки: он выходит за её границы влево и вниз,
 // заезжая под текст. Так не видно ни одного края кадра — к ним он
 // полностью растворяется в фоне, а не обрывается прямой линией.
+//
+// Размер градиента намеренно меньше самой картинки (92% × 86%): прозрачность
+// должна дойти до нуля ВНУТРИ кадра, не доходя до его краёв. Раньше градиент
+// был крупнее картинки — у нижней и левой границ оставалось процентов пять
+// непрозрачности, и они проступали на белом ровной линией. Теперь в любой
+// точке края маска уже на нуле.
 const HERO_FADE_MOBILE =
-  "radial-gradient(118% 108% at 94% 16%, #000 26%, rgba(0,0,0,.72) 48%, rgba(0,0,0,.3) 68%, rgba(0,0,0,.08) 84%, transparent 96%)";
+  "radial-gradient(92% 86% at 90% 12%, #000 18%, rgba(0,0,0,.75) 38%, rgba(0,0,0,.35) 56%, rgba(0,0,0,.12) 70%, transparent 84%)";
 
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
@@ -100,7 +106,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             alt=""
             aria-hidden="true"
             fetchPriority="high"
-            className="pointer-events-none absolute right-0 top-0 h-72 w-[92%] object-cover md:hidden"
+            className="pointer-events-none absolute right-0 top-0 h-80 w-[96%] object-cover md:hidden"
             style={{ maskImage: HERO_FADE_MOBILE, WebkitMaskImage: HERO_FADE_MOBILE }}
           />
         )}
@@ -109,7 +115,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             светло-синий фон страницы — на стыке получалась отчётливая
             горизонтальная линия. Здесь белый плавно уходит в цвет фона,
             и границы не видно. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-page" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent via-page/60 to-page" aria-hidden="true" />
 
         <div className="wrap relative py-10 md:py-24">
           <div className="max-w-2xl md:max-w-[52%]">
