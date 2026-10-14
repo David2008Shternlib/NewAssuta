@@ -46,13 +46,13 @@ const TILE_FADE =
 const HERO_FADE =
   "radial-gradient(115% 130% at 78% 42%, #000 30%, rgba(0,0,0,.62) 58%, rgba(0,0,0,.22) 76%, transparent 92%)";
 
-// Телефон: снимок полосой над текстом. Раньше он лежал фоном под всей
-// колонкой, и чтобы серые строки читались, поверх приходилось класть
-// почти непрозрачную вуаль — фотографию переставало быть видно вовсе.
-// Полоса решает обе задачи сразу: кадр виден целиком, текст ни на чём
-// не лежит. Низ полосы растворяется в фоне, границы не видно.
+// Телефон: снимок делит верх экрана с заголовком — справа кадр, слева
+// текст, как в макете. Сделано обтеканием (float), а не абсолютным
+// позиционированием: только обтекание заставляет строки заголовка
+// самим укорачиваться рядом с картинкой. Абсолютный снимок строки не
+// двигает — текст либо лезет под него, либо его приходится душить вуалью.
 const HERO_FADE_MOBILE =
-  "linear-gradient(to bottom, #000 0%, #000 52%, rgba(0,0,0,.45) 78%, transparent 100%)";
+  "radial-gradient(135% 125% at 88% 22%, #000 34%, rgba(0,0,0,.6) 62%, rgba(0,0,0,.2) 80%, transparent 94%)";
 
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
@@ -69,14 +69,6 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             Слева поверх фото лежит заливка фона, чтобы текст читался. */}
         {homeImages.hero ? (
           <>
-            {/* Телефон: полоса сверху */}
-            <img
-              src={homeImages.hero}
-              alt=""
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-0 h-48 w-full object-cover md:hidden"
-              style={{ maskImage: HERO_FADE_MOBILE, WebkitMaskImage: HERO_FADE_MOBILE }}
-            />
             {/* Широкий экран: снимок справа */}
             <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[56%] md:block" aria-hidden="true">
               <img
@@ -100,15 +92,31 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             и границы не видно. */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-page" aria-hidden="true" />
 
-        <div className="wrap relative pb-14 pt-44 md:py-24">
+        <div className="wrap relative py-10 md:py-24">
           <div className="max-w-2xl md:max-w-[52%]">
+            {/* Снимок и заголовок лежат в одном блоке намеренно: обтекание
+                действует только на строки внутри того же контейнера, что и
+                плавающий элемент. Если развести их по разным обёрткам
+                Reveal (у неё will-change — она может создать собственный
+                контекст форматирования), строки перестанут укорачиваться
+                рядом с картинкой. */}
             <Reveal>
-              <div className="eyebrow mb-4">{t(lang, "hpEyebrow")}</div>
+              {homeImages.hero && (
+                <img
+                  src={homeImages.hero}
+                  alt=""
+                  aria-hidden="true"
+                  className="float-right -mr-4 mb-2 ml-3 h-44 w-[52%] object-cover md:hidden"
+                  style={{ maskImage: HERO_FADE_MOBILE, WebkitMaskImage: HERO_FADE_MOBILE }}
+                />
+              )}
+              <div className="eyebrow mb-3 md:mb-4">{t(lang, "hpEyebrow")}</div>
+              {/* На телефоне заголовок мельче: рядом с картинкой под него
+                  остаётся около 180px, и «медицинский» в 36px туда не
+                  помещается — слово переносится посреди. */}
+              <h1 className="section-title text-[26px] leading-[1.15] sm:text-4xl sm:leading-[1.1] md:text-5xl">{t(lang, "hpTitle")}</h1>
             </Reveal>
-            <Reveal delay={0.06}>
-              <h1 className="section-title text-4xl leading-[1.1] md:text-5xl">{t(lang, "hpTitle")}</h1>
-            </Reveal>
-            <Reveal delay={0.12}>
+            <Reveal delay={0.12} className="clear-right">
               <p className="mt-5 text-base leading-relaxed text-muted md:text-lg">{t(lang, "hpLead")}</p>
             </Reveal>
 
