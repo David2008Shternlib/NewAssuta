@@ -42,8 +42,17 @@ const STEP_ICONS = ["stepRequest", "stepDoctors", "stepPlan", "stepTrip"];
 const TILE_FADE =
   "linear-gradient(to right, transparent 0%, rgba(0,0,0,.25) 28%, rgba(0,0,0,.8) 62%, #000 100%)";
 
+// Широкий экран: снимок справа, текст слева, маска гасит кадр к краям.
 const HERO_FADE =
   "radial-gradient(115% 130% at 78% 42%, #000 30%, rgba(0,0,0,.62) 58%, rgba(0,0,0,.22) 76%, transparent 92%)";
+
+// Телефон: снимок полосой над текстом. Раньше он лежал фоном под всей
+// колонкой, и чтобы серые строки читались, поверх приходилось класть
+// почти непрозрачную вуаль — фотографию переставало быть видно вовсе.
+// Полоса решает обе задачи сразу: кадр виден целиком, текст ни на чём
+// не лежит. Низ полосы растворяется в фоне, границы не видно.
+const HERO_FADE_MOBILE =
+  "linear-gradient(to bottom, #000 0%, #000 52%, rgba(0,0,0,.45) 78%, transparent 100%)";
 
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
@@ -59,23 +68,28 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             пришлось бы красить «затухание» вторым цветом и оно бы отслаивалось.
             Слева поверх фото лежит заливка фона, чтобы текст читался. */}
         {homeImages.hero ? (
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-full md:w-[56%]" aria-hidden="true">
+          <>
+            {/* Телефон: полоса сверху */}
             <img
               src={homeImages.hero}
               alt=""
-              className="h-full w-full object-cover"
-              style={{ maskImage: HERO_FADE, WebkitMaskImage: HERO_FADE }}
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-0 top-0 h-48 w-full object-cover md:hidden"
+              style={{ maskImage: HERO_FADE_MOBILE, WebkitMaskImage: HERO_FADE_MOBILE }}
             />
-            {/* Заливка поверх фото, чтобы текст читался.
-                На широком экране текст занимает левую половину, поэтому
-                заливка идёт слева направо и справа открывает снимок.
-                На телефоне текст идёт во всю ширину — там боковой градиент
-                оставлял строки лежать прямо на светлых местах кадра, и они
-                терялись. Поэтому на узких экранах фото уходит под плотную
-                вуаль и работает только как фактура. */}
-            <div className="absolute inset-0 bg-surface/90 md:hidden" />
-            <div className="absolute inset-0 hidden bg-gradient-to-r from-surface via-surface/70 to-transparent md:block" />
-          </div>
+            {/* Широкий экран: снимок справа */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[56%] md:block" aria-hidden="true">
+              <img
+                src={homeImages.hero}
+                alt=""
+                className="h-full w-full object-cover"
+                style={{ maskImage: HERO_FADE, WebkitMaskImage: HERO_FADE }}
+              />
+              {/* Заливка слева направо: текст занимает левую половину,
+                  справа кадр остаётся открытым. */}
+              <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/70 to-transparent" />
+            </div>
+          </>
         ) : (
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-surface via-page to-surface2" aria-hidden="true" />
         )}
@@ -86,7 +100,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             и границы не видно. */}
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-page" aria-hidden="true" />
 
-        <div className="wrap relative py-14 md:py-24">
+        <div className="wrap relative pb-14 pt-44 md:py-24">
           <div className="max-w-2xl md:max-w-[52%]">
             <Reveal>
               <div className="eyebrow mb-4">{t(lang, "hpEyebrow")}</div>
@@ -111,12 +125,14 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                     <span className="block text-sm font-bold leading-snug">{t(lang, "hpCta1")}</span>
                     <span className="block text-xs text-white/70">{t(lang, "hpCta1Sub")}</span>
                   </span>
-                  <Arrow dir="chevron" className="flex-none text-white/70" />
+                  <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-white/15 text-white">
+                    <Arrow dir="chevron" />
+                  </span>
                 </a>
 
                 {whatsapp && (
                   <a href={whatsapp.href} target="_blank" rel="noreferrer"
-                     className="group flex items-center gap-4 rounded-card border border-line bg-surface px-5 py-4 shadow-card transition-colors hover:border-brand-green/60">
+                     className="group flex items-center gap-4 rounded-card border-2 border-brand-green/35 bg-surface px-5 py-4 shadow-btn transition-colors hover:border-brand-green">
                     <span className="flex h-10 w-10 flex-none items-center justify-center rounded-btn bg-brand-green/10 text-brand-green">
                       <PromiseIcon d="M12 3a9 9 0 0 0-7.7 13.7L3 21l4.4-1.2A9 9 0 1 0 12 3zm-3 6c0-.6.4-1 1-1 .4 0 .7.3.9.7l.6 1.4c.1.4 0 .8-.3 1l-.5.4c.5 1 1.3 1.8 2.3 2.3l.4-.5c.2-.3.6-.4 1-.3l1.4.6c.4.2.7.5.7.9 0 .6-.4 1-1 1A7 7 0 0 1 9 9z" />
                     </span>
@@ -124,7 +140,9 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                       <span className="block text-sm font-bold leading-snug text-body">{t(lang, "hpCta2")}</span>
                       <span className="block text-xs text-muted">{t(lang, "hpCta2Sub")}</span>
                     </span>
-                    <Arrow dir="chevron" className="flex-none text-muted/60" />
+                    <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-green/10 text-brand-green">
+                      <Arrow dir="chevron" />
+                    </span>
                   </a>
                 )}
               </div>
@@ -137,32 +155,47 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
       <section className="py-14 md:py-20">
         <div className="wrap">
           <SectionTitle title={t(lang, "hpHelpTitle")} subtitle={t(lang, "hpHelpSub")} />
-          {/* По две плитки в ряд уже на телефоне, как в макете. Стрелку-шеврон
-              убрал: на узкой плитке она съедала место у текста, а вся карточка
-              и так ссылка. */}
-          <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4">
+          {/* Две плитки в ряд — с 640px, как в макете (он нарисован под
+              широкий экран). На телефоне половина ширины оставляет под
+              заголовок меньше 60px: туда не влезает «Нейрохирургия» ни при
+              каком размере шрифта — слово рвётся посередине. Поэтому до
+              640px плитки идут по одной, с иконкой и фотографией на месте. */}
+          <div className="grid grid-cols-1 items-stretch gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
             {homeTiles.map((tile, i) => (
               <Reveal key={tile.href + i} delay={(i % 4) * 0.05} className="h-full">
-                <Link href={tile.href} className="card card-hover group relative flex h-full items-start gap-2.5 overflow-hidden p-3.5 sm:gap-3.5 sm:p-4">
+                {/* Фотография — обычный элемент потока, а не absolute: так
+                    флексбокс сам гарантирует, что текст под неё не заедет.
+                    Раньше снимок лежал поверх колонки с текстом, и длинные
+                    названия уходили под него. */}
+                <Link href={tile.href} className="card card-hover group relative flex h-full items-stretch overflow-hidden">
+                  <div className="flex min-w-0 flex-1 items-center gap-2.5 p-3.5 pr-1 sm:gap-3.5 sm:p-4 sm:pr-1">
+                    <DeptIcon slug={tile.icon} size="sm" />
+                    <div className="min-w-0 flex-1">
+                      <h3 className="mb-0.5 flex min-h-[2.4rem] items-start break-words text-sm font-bold leading-snug text-body sm:min-h-[1.5rem] sm:text-base">{pick(tile.title, lang)}</h3>
+                      <p className="min-h-[2.5rem] break-words text-xs leading-snug text-muted sm:text-sm">{pick(tile.desc, lang)}</p>
+                    </div>
+                  </div>
+
                   {tile.img && (
-                    <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-[46%]">
+                    <span aria-hidden="true" className="pointer-events-none relative w-[32%] flex-none sm:w-[34%]">
                       <img
                         src={tile.img}
                         alt=""
                         loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         style={{ maskImage: TILE_FADE, WebkitMaskImage: TILE_FADE }}
                       />
                     </span>
                   )}
-                  <DeptIcon slug={tile.icon} size="sm" className="relative" />
-                  <div className="relative min-w-0 flex-1">
-                    {/* Запас высоты под вторую строку заголовка: плитки стоят
-                        парами на любой ширине, их описания должны держать
-                        общую линию. */}
-                    <h3 className="mb-0.5 flex min-h-[2.4rem] items-start text-sm font-bold leading-snug text-body sm:min-h-[1.5rem] sm:text-base">{pick(tile.title, lang)}</h3>
-                    <p className="min-h-[2.5rem] text-xs leading-snug text-muted sm:text-sm">{pick(tile.desc, lang)}</p>
-                  </div>
+
+                  {/* Кружок со стрелкой: без него плитка не читается как
+                      кнопка — на телефоне наведения нет, и подсказать, что
+                      это ссылка, больше нечем. */}
+                  <span className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-surface/90 text-brand-blue shadow-sm ring-1 ring-line backdrop-blur transition-colors group-hover:bg-brand-blue group-hover:text-white dark:text-accent">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M9 6l6 6-6 6" />
+                    </svg>
+                  </span>
                 </Link>
               </Reveal>
             ))}
