@@ -3,7 +3,7 @@ import Link from "@/components/LocaleLink";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import VideoEmbed from "@/components/VideoEmbed";
-import ReviewText from "@/components/ReviewText";
+import ReviewCard from "@/components/ReviewCard";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
@@ -31,10 +31,19 @@ const PROMISES = [
 const STEPS = ["hpStep1", "hpStep2", "hpStep3", "hpStep4"];
 const STEP_ICONS = ["stepRequest", "stepDoctors", "stepPlan", "stepTrip"];
 
-// Растушёвка краёв фотографии в первом экране: к краям кадра прозрачность
-// нарастает, поэтому снимок переходит в фон без видимой границы.
+// Растушёвка краёв фотографии в первом экране.
+//
+// Снимок лежит справа и занимает примерно половину ширины, как в макете.
+// Маска гасит его к краям неравномерно: плотное ядро смещено вправо, слева
+// прозрачность нарастает раньше — поэтому кадр не обрывается вертикальной
+// линией по центру экрана, а растворяется в фоне под текстом.
+// Снимок в плитке направления уходит под текст мягким краем — как в макете,
+// где фотография занимает правую часть карточки и растворяется к середине.
+const TILE_FADE =
+  "linear-gradient(to right, transparent 0%, rgba(0,0,0,.25) 28%, rgba(0,0,0,.8) 62%, #000 100%)";
+
 const HERO_FADE =
-  "radial-gradient(125% 105% at 72% 42%, #000 32%, rgba(0,0,0,.55) 62%, transparent 82%)";
+  "radial-gradient(115% 130% at 78% 42%, #000 30%, rgba(0,0,0,.62) 58%, rgba(0,0,0,.22) 76%, transparent 92%)";
 
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
@@ -50,7 +59,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             пришлось бы красить «затухание» вторым цветом и оно бы отслаивалось.
             Слева поверх фото лежит заливка фона, чтобы текст читался. */}
         {homeImages.hero ? (
-          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-full md:w-[56%]" aria-hidden="true">
             <img
               src={homeImages.hero}
               alt=""
@@ -65,15 +74,20 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                 терялись. Поэтому на узких экранах фото уходит под плотную
                 вуаль и работает только как фактура. */}
             <div className="absolute inset-0 bg-surface/90 md:hidden" />
-            <div className="absolute inset-0 hidden bg-gradient-to-r from-surface via-surface/85 to-surface/15 md:block" />
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-surface to-transparent" />
+            <div className="absolute inset-0 hidden bg-gradient-to-r from-surface via-surface/70 to-transparent md:block" />
           </div>
         ) : (
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-surface via-page to-surface2" aria-hidden="true" />
         )}
 
-        <div className="wrap relative py-14 md:py-20">
-          <div className="max-w-2xl">
+        {/* Переход к следующей секции. Первый экран белый, дальше идёт
+            светло-синий фон страницы — на стыке получалась отчётливая
+            горизонтальная линия. Здесь белый плавно уходит в цвет фона,
+            и границы не видно. */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-b from-transparent to-page" aria-hidden="true" />
+
+        <div className="wrap relative py-14 md:py-24">
+          <div className="max-w-2xl md:max-w-[52%]">
             <Reveal>
               <div className="eyebrow mb-4">{t(lang, "hpEyebrow")}</div>
             </Reveal>
@@ -123,24 +137,32 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
       <section className="py-14 md:py-20">
         <div className="wrap">
           <SectionTitle title={t(lang, "hpHelpTitle")} subtitle={t(lang, "hpHelpSub")} />
-          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {/* По две плитки в ряд уже на телефоне, как в макете. Стрелку-шеврон
+              убрал: на узкой плитке она съедала место у текста, а вся карточка
+              и так ссылка. */}
+          <div className="grid grid-cols-2 items-stretch gap-3 sm:gap-4 lg:grid-cols-4">
             {homeTiles.map((tile, i) => (
               <Reveal key={tile.href + i} delay={(i % 4) * 0.05} className="h-full">
-                <Link href={tile.href} className="card card-hover group flex h-full items-start gap-4 overflow-hidden p-4">
-                  {tile.img ? (
-                    <img src={tile.img} alt="" className="h-14 w-14 flex-none rounded-btn object-cover" />
-                  ) : (
-                    <DeptIcon slug={tile.icon} size="sm" />
+                <Link href={tile.href} className="card card-hover group relative flex h-full items-start gap-2.5 overflow-hidden p-3.5 sm:gap-3.5 sm:p-4">
+                  {tile.img && (
+                    <span aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 w-[46%]">
+                      <img
+                        src={tile.img}
+                        alt=""
+                        loading="lazy"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        style={{ maskImage: TILE_FADE, WebkitMaskImage: TILE_FADE }}
+                      />
+                    </span>
                   )}
-                  <div className="min-w-0 flex-1">
-                    {/* Запас высоты под вторую строку нужен только там, где
-                        плитки стоят рядом и их подписи должны держать одну
-                        линию. На телефоне колонка одна — запас превращался
-                        в пустоту под каждой карточкой, поэтому он с sm:. */}
-                    <h3 className="mb-0.5 flex items-start text-base font-bold leading-snug text-body sm:min-h-[1.5rem]">{pick(tile.title, lang)}</h3>
-                    <p className="text-sm leading-snug text-muted sm:min-h-[2.5rem]">{pick(tile.desc, lang)}</p>
+                  <DeptIcon slug={tile.icon} size="sm" className="relative" />
+                  <div className="relative min-w-0 flex-1">
+                    {/* Запас высоты под вторую строку заголовка: плитки стоят
+                        парами на любой ширине, их описания должны держать
+                        общую линию. */}
+                    <h3 className="mb-0.5 flex min-h-[2.4rem] items-start text-sm font-bold leading-snug text-body sm:min-h-[1.5rem] sm:text-base">{pick(tile.title, lang)}</h3>
+                    <p className="min-h-[2.5rem] text-xs leading-snug text-muted sm:text-sm">{pick(tile.desc, lang)}</p>
                   </div>
-                  <Arrow dir="chevron" className="mt-3.5 flex-none text-muted/60" />
                 </Link>
               </Reveal>
             ))}
@@ -149,8 +171,12 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
       </section>
 
       {/* ЧЕТЫРЕ ОБЕЩАНИЯ */}
-      <section className="border-y border-line bg-surface py-10">
-        <div className="wrap grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="bg-surface py-10">
+        {/* По две карточки в ряд уже на телефоне: это справочные блоки без
+            кнопок, по одной в ряд они растягивали страницу на несколько
+            экранов. Запас высоты под вторую строку поэтому снова нужен
+            на всех ширинах — соседи в ряду есть везде. */}
+        <div className="wrap grid grid-cols-2 gap-x-5 gap-y-8 lg:grid-cols-4">
           {PROMISES.map((p, i) => (
             <Reveal key={p.key} delay={(i % 4) * 0.05}>
               <div className="flex gap-3.5">
@@ -161,7 +187,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                   {/* Две строки под заголовок: иначе у соседей в ряду подписи
                       стоят на разной высоте. На телефоне соседей нет — запас
                       не нужен, поэтому с sm:. */}
-                  <div className="flex items-start text-sm font-bold leading-snug text-body sm:min-h-[2.25rem]">{t(lang, p.key)}</div>
+                  <div className="flex min-h-[2.25rem] items-start text-sm font-bold leading-snug text-body">{t(lang, p.key)}</div>
                   <div className="mt-0.5 text-xs text-muted">{t(lang, `${p.key}Sub`)}</div>
                 </div>
               </div>
@@ -173,7 +199,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
       {/* ЦИФРЫ */}
       <section className="py-12 md:py-16">
         <div className="wrap">
-          <div className="grid gap-y-8 rounded-xl2 bg-surface p-8 shadow-soft sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-8 rounded-xl2 bg-surface p-6 shadow-soft sm:p-8 lg:grid-cols-4">
             {homeStats.map((s, i) => (
               <Reveal key={s.key} delay={(i % 4) * 0.06} className="h-full">
                 <div className="flex h-full flex-col items-center justify-start border-line px-4 text-center lg:border-l lg:first:border-l-0">
@@ -186,11 +212,11 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                       пробелам внутри числа. */}
                   {s.value ? (
                     <>
-                      <div className="flex items-center whitespace-nowrap text-3xl font-extrabold leading-none text-title sm:min-h-[2.75rem] sm:text-4xl">{s.value}</div>
+                      <div className="flex min-h-[2.75rem] items-center whitespace-nowrap text-2xl font-extrabold leading-none text-title sm:text-4xl">{s.value}</div>
                       <div className="mt-2 text-sm font-medium leading-snug text-muted">{t(lang, s.key)}</div>
                     </>
                   ) : (
-                    <div className="flex items-center text-base font-bold leading-snug text-title sm:min-h-[2.75rem] sm:text-lg">{t(lang, s.key)}</div>
+                    <div className="flex min-h-[2.75rem] items-center text-sm font-bold leading-snug text-title sm:text-lg">{t(lang, s.key)}</div>
                   )}
                 </div>
               </Reveal>
@@ -228,7 +254,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
               {t(lang, "allDoctors")}<Arrow />
             </Link>
           </div>
-          <div className="grid grid-cols-2 items-stretch gap-4 lg:grid-cols-4">
+          <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {doctors.slice(0, 4).map((doc, i) => (
               <Reveal key={doc.slug} delay={(i % 4) * 0.06} className="h-full">
                 <DoctorCard doc={doc} />
@@ -251,11 +277,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             <div className="flex flex-col gap-4">
               {reviews.slice(0, 2).map((r, i) => (
                 <Reveal key={i} delay={i * 0.06}>
-                  <div className="card p-6">
-                    <ReviewText text={pick(r.text, lang)} lines={8} className="whitespace-pre-line italic leading-relaxed text-body/85" />
-                    <div className="mt-4 text-sm font-bold text-body">{r.author}</div>
-                    <div className="text-xs text-muted">{pick(r.country, lang)}</div>
-                  </div>
+                  <ReviewCard review={r} lines={8} />
                 </Reveal>
               ))}
             </div>
@@ -283,7 +305,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
       </section>
 
       {/* КАК НАЧАТЬ ЛЕЧЕНИЕ */}
-      <section className="border-t border-line bg-surface py-14 md:py-20">
+      <section className="bg-surface py-14 md:py-20">
         <div className="wrap">
           <SectionTitle title={t(lang, "hpStepsTitle")} />
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -297,6 +319,15 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                     </span>
                   </div>
                   <p className="text-sm font-semibold leading-snug text-body">{t(lang, key)}</p>
+                  {/* Кнопка стоит у первого шага: именно он и есть действие,
+                      остальные три происходят уже на нашей стороне.
+                      min-h у текста выше — чтобы кнопка не поднимала
+                      первую колонку относительно соседних. */}
+                  {i === 0 && (
+                    <a href="#request" className="btn-blue mt-1 w-full justify-center !py-2.5 !text-xs sm:w-auto sm:!px-5">
+                      {t(lang, "leaveRequest")}
+                    </a>
+                  )}
                 </div>
               </Reveal>
             ))}

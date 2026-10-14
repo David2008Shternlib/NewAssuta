@@ -9,7 +9,7 @@ export default function PageHero({ title, subtitle, crumb }) {
   return (
     // pt больше pb: липкая шапка не должна наезжать на хлебные крошки
     // в первые же пиксели прокрутки
-    <section className="border-b border-line bg-surface pb-12 pt-8 md:pt-12">
+    <section className="bg-surface pb-12 pt-8 md:pt-12">
       <div className="wrap">
         <Reveal>
           <nav className="mb-4 text-sm text-muted/70">

@@ -6,7 +6,7 @@ import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import CTASection from "@/components/CTASection";
 import { t, cms } from "@/data/i18n";
-import { cmsLabel } from "@/data/site";
+import { cmsLabel, sortCategories } from "@/data/site";
 import { useLang } from "@/components/LangProvider";
 
 // Сколько пунктов видно в свёрнутом виде. Пять — чтобы карточки в ряду были
@@ -64,7 +64,7 @@ export default function DiseasesClient({ diseases = [] }) {
       <PageHero title={t(lang, "disTitle")} crumb={t(lang, "disTitle")} subtitle={t(lang, "pgDiseasesSub")} />
       <section className="py-16">
         <div className="wrap grid items-start gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {groups.map((cat, i) => (
+          {sortCategories(groups).map((cat, i) => (
             <Reveal key={cat.category} delay={(i % 3) * 0.05} className="h-full">
               <CategoryCard category={cat.category} items={cat.items} lang={lang} />
             </Reveal>

@@ -403,28 +403,28 @@ export const departments = [
    показывает иконку на цветной подложке и выглядит законченной.
    `icon` указывает, какую иконку взять из components/DeptIcon.js. */
 export const homeTiles = [
-  { icon: "oncology", href: "/departments/oncology", img: "",
+  { icon: "oncology", href: "/departments/oncology", img: "/images/tile-oncology.webp",
     title: { ru: "Онкология", en: "Oncology" },
     desc: { ru: "Диагностика и лечение рака", en: "Cancer diagnosis and treatment" } },
-  { icon: "neurosurgery", href: "/departments/neurosurgery", img: "",
+  { icon: "neurosurgery", href: "/departments/neurosurgery", img: "/images/tile-neurosurgery.webp",
     title: { ru: "Нейрохирургия", en: "Neurosurgery" },
     desc: { ru: "Заболевания головного мозга", en: "Conditions of the brain" } },
-  { icon: "cardiology", href: "/departments/cardiology", img: "",
+  { icon: "cardiology", href: "/departments/cardiology", img: "/images/tile-cardiology.webp",
     title: { ru: "Кардиология", en: "Cardiology" },
     desc: { ru: "Сердце и сосуды", en: "Heart and blood vessels" } },
-  { icon: "orthopedic", href: "/departments/orthopedic", img: "",
+  { icon: "orthopedic", href: "/departments/orthopedic", img: "/images/tile-orthopedic.webp",
     title: { ru: "Ортопедия", en: "Orthopedics" },
     desc: { ru: "Суставы, позвоночник", en: "Joints and spine" } },
-  { icon: "urology", href: "/departments/urology", img: "",
+  { icon: "urology", href: "/departments/urology", img: "/images/tile-urology.webp",
     title: { ru: "Урология", en: "Urology" },
     desc: { ru: "Мочеполовая система", en: "The urogenital system" } },
-  { icon: "gynecologists", href: "/departments/gynecologists", img: "",
+  { icon: "gynecologists", href: "/departments/gynecologists", img: "/images/tile-gynecology.webp",
     title: { ru: "Гинекология", en: "Gynecology" },
     desc: { ru: "Женское здоровье", en: "Women's health" } },
-  { icon: "diagnostics", href: "/diagnostics", img: "",
+  { icon: "diagnostics", href: "/diagnostics", img: "/images/tile-diagnostics.webp",
     title: { ru: "Диагностика", en: "Diagnostics" },
     desc: { ru: "ПЭТ-КТ, МРТ, комплексные чек-апы", en: "PET-CT, MRI, full check-ups" } },
-  { icon: "other", href: "/departments", img: "",
+  { icon: "other", href: "/departments", img: "/images/tile-other.webp",
     title: { ru: "Другие направления", en: "Other areas" },
     desc: { ru: "Все медицинские услуги", en: "All medical services" } },
 ];
@@ -454,9 +454,37 @@ export const homePrices = [
 // поэтому с правами вопросов нет. Пути пустые, если файла нет: первый экран
 // тогда показывает мягкую заливку и остаётся целым, а не ломается.
 export const homeImages = {
-  hero: "/images/hero.webp",                  // первый экран
+  hero: "/images/hero-building.webp",           // первый экран — корпус в Тель-Авиве
   secondOpinion: "/images/second-opinion.webp", // баннер «Второе мнение»
 };
+
+// Снимки, взятые по свободной лицензии, обязывают назвать автора.
+// Строка выводится в подвале. Пустой массив — подпись не показывается.
+export const photoCredits = [
+  {
+    what: { ru: "Фото здания клиники", en: "Photo of the clinic building" },
+    author: "Dr. Avishai Teicher",
+    source: "PikiWiki Israel",
+    license: "CC BY 2.5",
+    href: "https://commons.wikimedia.org/wiki/File:PikiWiki_Israel_53354_assuta_hospital_in_tel_aviv.jpg",
+  },
+];
+
+// Порядок категорий заболеваний: по алфавиту, «Другое» всегда последним.
+// Раньше категории шли в том порядке, в каком встретились в выгрузке, и
+// «Другое» оказывалось первым — просто потому, что у первой же статьи
+// категория не заполнена.
+export const OTHER_CATEGORY = "Другое";
+export function sortCategories(groups, key = "category") {
+  return [...groups].sort((a, b) => {
+    const x = a[key] || OTHER_CATEGORY;
+    const y = b[key] || OTHER_CATEGORY;
+    if (x === y) return 0;
+    if (x === OTHER_CATEGORY) return 1;
+    if (y === OTHER_CATEGORY) return -1;
+    return x.localeCompare(y, "ru");
+  });
+}
 
 export const deptNames = Object.fromEntries(departments.map((d) => [d.slug, d.title]));
 

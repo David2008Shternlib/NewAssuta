@@ -1,6 +1,6 @@
 "use client";
 import Link from "@/components/LocaleLink";
-import { site, nav, departments, operator } from "@/data/site";
+import { site, nav, departments, operator, photoCredits } from "@/data/site";
 import { pick, t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
 
@@ -89,6 +89,20 @@ export default function Footer() {
             </Link>
             {operator.email && <a href={`mailto:${operator.email}`} className="underline hover:text-brand-blue">{operator.email}</a>}
           </p>
+
+          {photoCredits.length > 0 && (
+            <p className="text-xs text-muted">
+              {photoCredits.map((c, i) => (
+                <span key={i}>
+                  {i > 0 && " · "}
+                  {pick(c.what, lang)}: {c.author} / {c.source},{" "}
+                  <a href={c.href} target="_blank" rel="noreferrer noopener" className="underline hover:text-brand-blue">
+                    {c.license}
+                  </a>
+                </span>
+              ))}
+            </p>
+          )}
 
           <p>© {operator.legalName}, {new Date().getFullYear()}. {lang === "en" ? "All rights reserved." : "Все права защищены."}</p>
         </div>

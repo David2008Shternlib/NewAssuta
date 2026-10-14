@@ -33,7 +33,7 @@ export default function DiseaseDetail({ doc, doctors = [] }) {
               <Reveal>
                 <div className="mt-10">
                   <h2 className="mb-5 text-xl font-bold text-title">{t(lang, "deptDoctors")}</h2>
-                  <div className="grid grid-cols-2 items-stretch gap-4 sm:grid-cols-3">
+                  <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-3">
                     {doctors.slice(0, 3).map((d) => (<DoctorCard key={d.slug} doc={d} />))}
                   </div>
                 </div>

@@ -43,7 +43,7 @@ export default function DepartmentDetail({ dept, doctors = [], diseases = [] }) 
                     {lang === "en" ? "Doctors of this area" : "Врачи направления"}
                     <span className="ml-2 text-base font-normal text-muted">{doctors.length}</span>
                   </h2>
-                  <div className="grid grid-cols-2 items-stretch gap-4 sm:grid-cols-3">
+                  <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-3">
                     {/* Подпись — название раздела, а не категория врача из базы:
                         врач может вести приём и в смежном направлении. */}
                     {doctors.map((d) => (<DoctorCard key={d.slug} doc={d} caption={pick(dept.title, lang)} />))}

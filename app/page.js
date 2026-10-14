@@ -1,7 +1,7 @@
 import HomeClient from "./HomeClient";
 import { getAllDoctors, getAllDiseases, getReviews, getAllNews } from "@/lib/sanity";
 import { faqPage } from "@/lib/schema";
-import { operator } from "@/data/site";
+import { operator, sortCategories } from "@/data/site";
 
 // Блок «вопрос — самодостаточный ответ»: именно такие куски ИИ-ассистенты
 // забирают в свои сводки. Аудит отдельно отмечает, что их на сайте не было.
@@ -40,6 +40,8 @@ export default async function Page() {
     if (!map.has(c)) { const arr = []; map.set(c, arr); diseasesByCategory.push({ category: c, items: arr }); }
     map.get(c).push({ slug: d.slug, title: d.title, titleEn: d.titleEn });
   }
+  const orderedCategories = sortCategories(diseasesByCategory);
+
   const news = newsRaw.map((n) => ({ slug: n.slug, title: n.title, titleEn: n.titleEn, excerpt: n.excerpt, excerptEn: n.excerptEn, img: n.image }));
 
   return (
@@ -47,7 +49,7 @@ export default async function Page() {
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(__faq) }} />
     <HomeClient
       doctors={doctors.slice(0, 8)}
-      diseasesByCategory={diseasesByCategory.slice(0, 6)}
+      diseasesByCategory={orderedCategories.slice(0, 6)}
       reviews={reviews.slice(0, 4)}
       news={news.slice(0, 3)}
     />

@@ -48,12 +48,24 @@ export const review = {
   name: "review", title: "Отзыв", type: "document",
   fields: [
     { name: "author", title: "Автор", type: "string" },
+    // Возраст, диагноз и фото — то, что просит макет: «Мария, 42 года,
+    // рак молочной железы» с портретом. Поля необязательные: пока они
+    // пустые, карточка показывает отзыв без портрета и возраста,
+    // как показывала раньше. Фото пациента публикуется только с его
+    // письменного согласия — это персональные данные о здоровье.
+    { name: "age", title: "Возраст", type: "number",
+      description: "Только число. Пусто — возраст не показывается." },
+    { name: "diagnosis", title: "Диагноз", type: "string",
+      description: "Короткой строкой: «Рак молочной железы». Показывается под именем." },
+    { name: "diagnosisEn", title: "Диагноз (EN)", type: "string" },
+    { name: "photo", title: "Фото пациента", type: "image", options: { hotspot: true },
+      description: "Публикуется только при письменном согласии пациента." },
     { name: "country", title: "Страна", type: "string" },
     { name: "rating", title: "Оценка", type: "number" },
     { name: "text", title: "Текст", type: "text", rows: 5 },
     { name: "date", title: "Дата", type: "datetime" },
   ],
-  preview: { select: { title: "author", subtitle: "country" } },
+  preview: { select: { title: "author", subtitle: "diagnosis", media: "photo" } },
 };
 
 export const news = {
