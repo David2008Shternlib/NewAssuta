@@ -41,12 +41,15 @@ const STEP_ICONS = ["stepRequest", "stepDoctors", "stepPlan", "stepTrip"];
 // Снимок в плитке направления уходит под текст мягким краем — как в макете,
 // где фотография занимает правую часть карточки и растворяется к середине.
 //
-// Градиент добирает полную непрозрачность уже к 72% ширины, а не к самому
-// краю: полоса узкая, и при прежней раскладке больше половины снимка
-// оставалось полупрозрачным — от органа на плитке был виден только край,
-// и понять, что нарисовано, было нельзя.
+// Много промежуточных точек вместо трёх: переход идёт длинно и ровно,
+// без заметной ступеньки. Это важнее всего в тёмной теме — снимки сняты
+// на белом фоне, и при коротком градиенте на тёмной карточке возникала
+// резкая светлая граница. Полная непрозрачность набирается к 86%, чтобы
+// объект в правой части оставался читаемым.
 const TILE_FADE =
-  "linear-gradient(to right, transparent 0%, rgba(0,0,0,.3) 16%, rgba(0,0,0,.85) 44%, #000 72%)";
+  "linear-gradient(to right, transparent 0%, rgba(0,0,0,.05) 12%, rgba(0,0,0,.16) 24%, " +
+  "rgba(0,0,0,.34) 36%, rgba(0,0,0,.55) 48%, rgba(0,0,0,.74) 60%, rgba(0,0,0,.88) 72%, " +
+  "rgba(0,0,0,.97) 82%, #000 90%)";
 
 // Широкий экран: снимок справа, текст слева, маска гасит кадр к краям.
 const HERO_FADE =
@@ -216,7 +219,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                         src={tile.img}
                         alt=""
                         loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 dark:opacity-25"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                         style={{ maskImage: TILE_FADE, WebkitMaskImage: TILE_FADE }}
                       />
                     </span>
