@@ -205,18 +205,18 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                   <div className="flex min-w-0 flex-1 items-center gap-2.5 p-3.5 pr-1 sm:gap-3.5 sm:p-4 sm:pr-1">
                     <DeptIcon slug={tile.icon} size="sm" />
                     <div className="min-w-0 flex-1">
-                      <h3 className="mb-0.5 flex min-h-[2.4rem] items-start break-words text-sm font-bold leading-snug text-body sm:min-h-[1.5rem] sm:text-base">{pick(tile.title, lang)}</h3>
-                      <p className="min-h-[2.5rem] break-words text-xs leading-snug text-muted sm:text-sm">{pick(tile.desc, lang)}</p>
+                      <h3 className="mb-0.5 flex min-h-[2.4rem] hyphens-auto items-start text-sm font-bold leading-snug text-body sm:min-h-[1.5rem] sm:text-base">{pick(tile.title, lang)}</h3>
+                      <p className="min-h-[2.5rem] hyphens-auto text-xs leading-snug text-muted sm:text-sm">{pick(tile.desc, lang)}</p>
                     </div>
                   </div>
 
                   {tile.img && (
-                    <span aria-hidden="true" className="pointer-events-none relative w-[38%] flex-none sm:w-[40%]">
+                    <span aria-hidden="true" className="pointer-events-none relative w-[38%] flex-none sm:w-[40%] lg:w-[30%]">
                       <img
                         src={tile.img}
                         alt=""
                         loading="lazy"
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 dark:opacity-25"
                         style={{ maskImage: TILE_FADE, WebkitMaskImage: TILE_FADE }}
                       />
                     </span>
