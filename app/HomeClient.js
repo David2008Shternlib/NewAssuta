@@ -40,8 +40,13 @@ const STEP_ICONS = ["stepRequest", "stepDoctors", "stepPlan", "stepTrip"];
 // линией по центру экрана, а растворяется в фоне под текстом.
 // Снимок в плитке направления уходит под текст мягким краем — как в макете,
 // где фотография занимает правую часть карточки и растворяется к середине.
+//
+// Градиент добирает полную непрозрачность уже к 72% ширины, а не к самому
+// краю: полоса узкая, и при прежней раскладке больше половины снимка
+// оставалось полупрозрачным — от органа на плитке был виден только край,
+// и понять, что нарисовано, было нельзя.
 const TILE_FADE =
-  "linear-gradient(to right, transparent 0%, rgba(0,0,0,.25) 28%, rgba(0,0,0,.8) 62%, #000 100%)";
+  "linear-gradient(to right, transparent 0%, rgba(0,0,0,.3) 16%, rgba(0,0,0,.85) 44%, #000 72%)";
 
 // Широкий экран: снимок справа, текст слева, маска гасит кадр к краям.
 const HERO_FADE =
@@ -90,7 +95,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
               />
               {/* Заливка слева направо: текст занимает левую половину,
                   справа кадр остаётся открытым. */}
-              <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/70 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-surface via-surface/45 to-transparent" />
             </div>
           </>
         ) : (
@@ -206,7 +211,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                   </div>
 
                   {tile.img && (
-                    <span aria-hidden="true" className="pointer-events-none relative w-[32%] flex-none sm:w-[34%]">
+                    <span aria-hidden="true" className="pointer-events-none relative w-[38%] flex-none sm:w-[40%]">
                       <img
                         src={tile.img}
                         alt=""
