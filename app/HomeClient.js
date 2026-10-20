@@ -65,13 +65,16 @@ const HERO_FADE =
 // заезжая под текст. Так не видно ни одного края кадра — к ним он
 // полностью растворяется в фоне, а не обрывается прямой линией.
 //
-// Размер градиента намеренно меньше самой картинки (92% × 86%): прозрачность
-// должна дойти до нуля ВНУТРИ кадра, не доходя до его краёв. Раньше градиент
-// был крупнее картинки — у нижней и левой границ оставалось процентов пять
-// непрозрачности, и они проступали на белом ровной линией. Теперь в любой
-// точке края маска уже на нуле.
+// Размер градиента намеренно меньше самой картинки (92% × 92%): прозрачность
+// должна дойти до нуля ВНУТРИ кадра, не доходя до его краёв. Иначе у нижней
+// и левой границ остаётся несколько процентов непрозрачности, и они
+// проступают на белом ровной линией.
+//
+// Центр опущен к 34% по высоте: вывеска на фасаде находится примерно на
+// 63% высоты кадра, и при прежнем центре на 12% она попадала в почти
+// прозрачную зону — название здания было не разобрать.
 const HERO_FADE_MOBILE =
-  "radial-gradient(92% 86% at 90% 12%, #000 18%, rgba(0,0,0,.75) 38%, rgba(0,0,0,.35) 56%, rgba(0,0,0,.12) 70%, transparent 84%)";
+  "radial-gradient(92% 92% at 84% 34%, #000 20%, rgba(0,0,0,.8) 40%, rgba(0,0,0,.42) 56%, rgba(0,0,0,.12) 68%, transparent 80%)";
 
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
@@ -114,7 +117,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
             alt=""
             aria-hidden="true"
             fetchPriority="high"
-            className="pointer-events-none absolute right-0 top-0 h-80 w-[96%] object-cover md:hidden"
+            className="pointer-events-none absolute right-0 top-0 h-80 w-[96%] object-cover object-left md:hidden"
             style={{ maskImage: HERO_FADE_MOBILE, WebkitMaskImage: HERO_FADE_MOBILE }}
           />
         )}
