@@ -1,10 +1,12 @@
 "use client";
+import { useEffect, useState } from "react";
 import Link from "@/components/LocaleLink";
 import Reveal from "@/components/Reveal";
 import Arrow from "@/components/Arrow";
 import VideoEmbed from "@/components/VideoEmbed";
 import ReviewCard from "@/components/ReviewCard";
 import { cdnImage } from "@/lib/img";
+import { withWhatsAppSource } from "@/lib/utm";
 import SectionTitle from "@/components/SectionTitle";
 import DoctorCard from "@/components/DoctorCard";
 import CTASection from "@/components/CTASection";
@@ -79,6 +81,16 @@ const HERO_FADE_MOBILE =
 export default function HomeClient({ doctors = [], diseasesByCategory = [], reviews = [], news = [] }) {
   const { lang } = useLang();
   const whatsapp = site.messengers.find((m) => m.label === "WhatsApp");
+
+  // Код источника дописываем в заготовку сообщения WhatsApp.
+  // Часть людей идёт в мессенджер вместо формы, и без этого обращения от
+  // блогеров остались бы неучтёнными. Считаем в эффекте, а не при отрисовке:
+  // источник лежит в localStorage, на сервере его нет, и прямое чтение
+  // разошлось бы с серверной разметкой.
+  const [whatsappHref, setWhatsappHref] = useState(whatsapp?.href || "");
+  useEffect(() => {
+    if (whatsapp?.href) setWhatsappHref(withWhatsAppSource(whatsapp.href));
+  }, [whatsapp?.href]);
 
   return (
     <>
@@ -171,7 +183,7 @@ export default function HomeClient({ doctors = [], diseasesByCategory = [], revi
                 </a>
 
                 {whatsapp && (
-                  <a href={whatsapp.href} target="_blank" rel="noreferrer"
+                  <a href={whatsappHref} target="_blank" rel="noreferrer"
                      className="group flex items-center gap-4 rounded-card border-2 border-brand-green/35 bg-surface px-5 py-4 shadow-btn transition-colors hover:border-brand-green">
                     <span className="flex h-10 w-10 flex-none items-center justify-center rounded-btn bg-brand-green/10 text-brand-green">
                       <PromiseIcon d="M12 3a9 9 0 0 0-7.7 13.7L3 21l4.4-1.2A9 9 0 1 0 12 3zm-3 6c0-.6.4-1 1-1 .4 0 .7.3.9.7l.6 1.4c.1.4 0 .8-.3 1l-.5.4c.5 1 1.3 1.8 2.3 2.3l.4-.5c.2-.3.6-.4 1-.3l1.4.6c.4.2.7.5.7.9 0 .6-.4 1-1 1A7 7 0 0 1 9 9z" />

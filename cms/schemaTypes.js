@@ -110,13 +110,39 @@ export const lead = {
     { name: "country", title: "Страна", type: "string", readOnly: true },
     { name: "comment", title: "Комментарий", type: "text", rows: 3, readOnly: true },
     { name: "source", title: "Страница, с которой отправлена", type: "string", readOnly: true },
+
+    // ───────── Откуда пришёл человек ─────────
+    // Заполняется автоматически из меток в ссылке. Клиника платит блогерам
+    // за приведённых пациентов, поэтому источник должен быть виден прямо
+    // в карточке заявки, а не вычисляться задним числом по аналитике.
+    { name: "utmSource", title: "Источник (кто привёл)", type: "string", readOnly: true,
+      description: "Имя блогера или площадки из метки utm_source" },
+    { name: "utmMedium", title: "Канал", type: "string", readOnly: true,
+      description: "blogger, stories, reels и т.п." },
+    { name: "utmCampaign", title: "Кампания", type: "string", readOnly: true },
+    { name: "utmContent", title: "Объявление / пост", type: "string", readOnly: true },
+    { name: "utmTerm", title: "Ключевое слово", type: "string", readOnly: true },
+    { name: "referrer", title: "Переход с сайта", type: "string", readOnly: true },
+    { name: "landing", title: "Первая открытая страница", type: "string", readOnly: true },
+    { name: "firstSeenAt", title: "Первый заход на сайт", type: "datetime", readOnly: true },
+    { name: "lastSource", title: "Последний источник", type: "string", readOnly: true,
+      description: "Заполняется, только если человек вернулся из другого источника" },
+    { name: "heardFrom", title: "Откуда узнали (со слов пациента)", type: "string", readOnly: true,
+      description: "Ответ в форме. Страховка на случай, когда метка потерялась" },
+
     { name: "consentAt", title: "Согласие на обработку данных", type: "datetime", readOnly: true },
     { name: "createdAt", title: "Получена", type: "datetime", readOnly: true },
     {
+      // Цепочка статусов нужна, чтобы считать оплату блогерам за результат,
+      // а не за заявку: видно, сколько обращений от каждого источника
+      // дошло до консультации и до приезда.
       name: "status", title: "Статус", type: "string",
       options: { list: [
         { title: "Новая", value: "new" },
-        { title: "В работе", value: "in_progress" },
+        { title: "Связались", value: "contacted" },
+        { title: "Консультация назначена", value: "consultation" },
+        { title: "Приехал на лечение", value: "arrived" },
+        { title: "Отказ", value: "rejected" },
         { title: "Обработана", value: "done" },
       ] },
       initialValue: "new",
@@ -127,13 +153,48 @@ export const lead = {
     { name: "newest", title: "Сначала новые", by: [{ field: "createdAt", direction: "desc" }] },
   ],
   preview: {
-    select: { title: "name", phone: "phone", createdAt: "createdAt", status: "status" },
-    prepare({ title, phone, createdAt, status }) {
-      const mark = status === "done" ? "✓" : status === "in_progress" ? "•" : "!";
+    select: { title: "name", phone: "phone", createdAt: "createdAt", status: "status", utmSource: "utmSource" },
+    prepare({ title, phone, createdAt, status, utmSource }) {
+      const marks = { arrived: "★", done: "✓", rejected: "×", consultation: "•", contacted: "•" };
+      const mark = marks[status] || "!";
       const when = createdAt ? new Date(createdAt).toLocaleString("ru-RU") : "";
-      return { title: `${mark} ${title || "Без имени"}`, subtitle: [phone, when].filter(Boolean).join(" · ") };
+      return {
+        title: `${mark} ${title || "Без имени"}`,
+        subtitle: [phone, utmSource && `от ${utmSource}`, when].filter(Boolean).join(" · "),
+      };
     },
   },
 };
 
-export const schemaTypes = [doctor, disease, review, news, page, lead];
+export const partner = {
+  name: "partner", title: "Партнёр / блогер", type: "document",
+  description: "Короткие ссылки вида assuta.org/go/<адрес> с метками источника",
+  fields: [
+    { name: "title", title: "Имя", type: "string",
+      description: "Как зовут блогера или называется площадка. Видно только здесь." },
+    { name: "slug", title: "Адрес ссылки", type: "slug", options: { source: "title" },
+      description: "Латиницей, без пробелов. Ссылка получится assuta.org/go/<адрес>" },
+    { name: "utmSource", title: "Код источника", type: "string",
+      description: "Попадёт в заявку. Если пусто — берётся адрес ссылки" },
+    { name: "utmMedium", title: "Канал", type: "string",
+      description: "blogger, stories, reels. Если пусто — blogger" },
+    { name: "utmCampaign", title: "Кампания", type: "string",
+      description: "Например october_oncology. Можно менять — ссылка у блогера не меняется" },
+    { name: "utmContent", title: "Конкретный пост", type: "string" },
+    { name: "target", title: "Куда вести", type: "string",
+      description: "Путь на сайте, например /departments/oncology. Пусто — на главную" },
+    { name: "active", title: "Ссылка работает", type: "boolean", initialValue: true,
+      description: "Выключенная ссылка просто уводит на главную без метки" },
+  ],
+  preview: {
+    select: { title: "title", slug: "slug.current", campaign: "utmCampaign", active: "active" },
+    prepare({ title, slug, campaign, active }) {
+      return {
+        title: `${active === false ? "× " : ""}${title || slug || "Без имени"}`,
+        subtitle: [slug && `/go/${slug}`, campaign].filter(Boolean).join(" · "),
+      };
+    },
+  },
+};
+
+export const schemaTypes = [doctor, disease, review, news, page, lead, partner];

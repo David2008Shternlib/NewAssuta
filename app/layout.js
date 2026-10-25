@@ -1,6 +1,7 @@
 import "./globals.css";
 import { headers } from "next/headers";
 import { LangProvider } from "@/components/LangProvider";
+import UtmCapture from "@/components/UtmCapture";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
@@ -101,6 +102,8 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <LangProvider initialLang={locale}>
+          {/* Запоминает, по чьей ссылке пришёл человек. Ничего не рисует. */}
+          <UtmCapture />
           <Header />
           <main>{children}</main>
           <Footer />

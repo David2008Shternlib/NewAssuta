@@ -36,22 +36,6 @@ export default function DepartmentDetail({ dept, doctors = [], diseases = [] }) 
               </div>
             </Reveal>
 
-            {doctors.length > 0 && (
-              <Reveal>
-                <div className="mb-12">
-                  <h2 className="mb-5 text-xl font-bold text-title">
-                    {lang === "en" ? "Doctors of this area" : "Врачи направления"}
-                    <span className="ml-2 text-base font-normal text-muted">{doctors.length}</span>
-                  </h2>
-                  <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-3">
-                    {/* Подпись — название раздела, а не категория врача из базы:
-                        врач может вести приём и в смежном направлении. */}
-                    {doctors.map((d) => (<DoctorCard key={d.slug} doc={d} caption={pick(dept.title, lang)} />))}
-                  </div>
-                </div>
-              </Reveal>
-            )}
-
             {diseases.length > 0 && (
               <Reveal>
                 <div className="mb-12">
@@ -77,6 +61,22 @@ export default function DepartmentDetail({ dept, doctors = [], diseases = [] }) 
                       <Arrow dir="chevron" className={`transition-transform ${openDis ? "-rotate-90" : "rotate-90"}`} />
                     </button>
                   )}
+                </div>
+              </Reveal>
+            )}
+
+            {doctors.length > 0 && (
+              <Reveal>
+                <div className="mb-12">
+                  <h2 className="mb-5 text-xl font-bold text-title">
+                    {lang === "en" ? "Doctors of this area" : "Врачи направления"}
+                    <span className="ml-2 text-base font-normal text-muted">{doctors.length}</span>
+                  </h2>
+                  <div className="grid grid-cols-1 items-stretch gap-4 sm:grid-cols-3">
+                    {/* Подпись — название раздела, а не категория врача из базы:
+                        врач может вести приём и в смежном направлении. */}
+                    {doctors.map((d) => (<DoctorCard key={d.slug} doc={d} caption={pick(dept.title, lang)} />))}
+                  </div>
                 </div>
               </Reveal>
             )}

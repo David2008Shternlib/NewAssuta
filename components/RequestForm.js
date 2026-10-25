@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "@/components/LocaleLink";
 import { t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
+import { readAttribution } from "@/lib/utm";
 
 const NAME_MAX = 100;
 const COMMENT_MAX = 500;
@@ -25,6 +26,7 @@ export default function RequestForm({ compact = false }) {
   const [country, setCountry] = useState(COUNTRIES[0]);
   const [phone, setPhone] = useState("");
   const [comment, setComment] = useState("");
+  const [heardFrom, setHeardFrom] = useState("");
   const [errors, setErrors] = useState({});
   const [company, setCompany] = useState(""); // honeypot против ботов
   const [consent, setConsent] = useState(false); // согласие на обработку данных
@@ -62,6 +64,10 @@ export default function RequestForm({ compact = false }) {
           company,
           consent: true,
           source: typeof window !== "undefined" ? window.location.pathname : "",
+          heardFrom: heardFrom.trim(),
+          // По чьей ссылке человек пришёл. Запомнено при первом заходе,
+          // см. lib/utm.js — в адресе этих меток к моменту заявки уже нет.
+          attribution: readAttribution(),
         }),
       });
       if (!res.ok) {
@@ -142,6 +148,24 @@ export default function RequestForm({ compact = false }) {
             className="h-28 w-full rounded-lg border-0 bg-page px-4 py-3 text-body shadow-sm outline-none ring-1 ring-line focus:ring-2 focus:ring-brand-green"
           />
           <div className={counterCls}>{comment.length}/{COMMENT_MAX}</div>
+        </div>
+      )}
+
+      {/* Откуда узнали — необязательное поле.
+          Метка из ссылки теряется, если человек открыл сайт в другом
+          браузере, перешёл с чужого устройства или пришёл через месяц из
+          поиска. Для таких случаев спрашиваем прямо: часть людей напишет
+          имя блогера сама, и заявка не останется без источника. */}
+      {!compact && (
+        <div>
+          <input
+            type="text"
+            placeholder={t(lang, "formHeardFrom")}
+            value={heardFrom}
+            maxLength={80}
+            onChange={(e) => setHeardFrom(e.target.value.slice(0, 80))}
+            className="w-full rounded-lg border-0 bg-page px-4 py-3 text-body shadow-sm outline-none ring-1 ring-line focus:ring-2 focus:ring-brand-green"
+          />
         </div>
       )}
 
