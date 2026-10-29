@@ -41,7 +41,12 @@ export default function CookieNotice() {
     <div
       role="dialog"
       aria-label={t(lang, "cookieTitle")}
-      className="fixed inset-x-0 bottom-0 z-[60] p-3 sm:p-5"
+      // Слой выше виджета Jivo. Он живёт в том же нижнем углу и ставит себе
+      // z-index около 2147483000; при обычных значениях открытое окно чата
+      // накрывало кнопки согласия, и нажать их было нельзя. Сообщение о куки
+      // показывается несколько секунд и уходит — пусть на это время оно
+      // будет сверху.
+      className="fixed inset-x-0 bottom-0 z-[2147483600] p-3 sm:p-5"
     >
       <div className="wrap">
         <div className="flex flex-col gap-4 rounded-xl2 border border-line bg-surface p-5 shadow-soft sm:flex-row sm:items-center sm:gap-6 sm:p-6">
