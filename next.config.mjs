@@ -30,12 +30,12 @@ const categoriesWithoutDepartment = ["diagnostic", "revmatologi", "vascular-surg
 // 'unsafe-inline' для скриптов нужен из-за JSON-LD и инлайнового скрипта темы.
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://*.jivosite.com https://code.jivosite.com",
+  "script-src 'self' 'unsafe-inline' https://mc.yandex.ru https://*.jivosite.com https://code.jivosite.com https://*.jivo.ru",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com https://img.youtube.com https://mc.yandex.ru https://*.jivosite.com",
-  "font-src 'self' data:",
-  "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io https://mc.yandex.ru https://*.jivosite.com wss://*.jivosite.com",
-  "frame-src 'self' https://www.google.com https://maps.google.com https://www.youtube-nocookie.com https://www.youtube.com https://*.jivosite.com",
+  "img-src 'self' data: blob: https://cdn.sanity.io https://i.ytimg.com https://img.youtube.com https://mc.yandex.ru https://*.jivosite.com https://*.jivo.ru",
+  "font-src 'self' data: https://*.jivosite.com https://*.jivo.ru",
+  "connect-src 'self' https://*.api.sanity.io https://*.apicdn.sanity.io https://mc.yandex.ru https://*.jivosite.com wss://*.jivosite.com https://*.jivo.ru wss://*.jivo.ru",
+  "frame-src 'self' https://www.google.com https://maps.google.com https://www.youtube-nocookie.com https://www.youtube.com https://*.jivosite.com https://*.jivo.ru",
   "media-src 'self' https://cdn.sanity.io",
   "object-src 'none'",
   "base-uri 'self'",
