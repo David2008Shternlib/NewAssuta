@@ -36,6 +36,14 @@ export const ui = {
   // Длинные списки заболеваний свёрнуты: в онкологии их 47, карточка иначе
   // растягивала всю строку сетки. Число подставляется в подпись кнопки.
   menu: { ru: "Меню", en: "Menu" },
+  cookieTitle: { ru: "О файлах cookie", en: "About cookies" },
+  cookieText: {
+    ru: "Мы используем файлы cookie, чтобы сайт работал, и — с вашего согласия — чтобы считать посещаемость. Без согласия статистика не собирается совсем.",
+    en: "We use cookies to keep the site working and — with your consent — to measure traffic. Without consent no statistics are collected at all.",
+  },
+  cookieLink: { ru: "Подробнее в политике конфиденциальности", en: "More in our privacy policy" },
+  cookieAccept: { ru: "Принять все", en: "Accept all" },
+  cookieNecessary: { ru: "Только необходимые", en: "Necessary only" },
   formHeardFrom: { ru: "Откуда вы о нас узнали? (необязательно)", en: "How did you hear about us? (optional)" },
   showMore: { ru: "Показать ещё", en: "Show more" },
   showLess: { ru: "Свернуть", en: "Show less" },

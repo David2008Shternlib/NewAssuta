@@ -2,6 +2,7 @@ import "./globals.css";
 import { headers } from "next/headers";
 import { LangProvider } from "@/components/LangProvider";
 import UtmCapture from "@/components/UtmCapture";
+import CookieNotice from "@/components/CookieNotice";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
@@ -110,6 +111,7 @@ export default function RootLayout({ children }) {
           <ChatWidget />
           <JivoChat />
           <Analytics />
+          <CookieNotice />
         </LangProvider>
       </body>
     </html>

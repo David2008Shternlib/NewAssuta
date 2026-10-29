@@ -4,6 +4,7 @@ import Link from "@/components/LocaleLink";
 import { t } from "@/data/i18n";
 import { useLang } from "./LangProvider";
 import { readAttribution } from "@/lib/utm";
+import { reachGoal, GOAL_LEAD } from "@/lib/analytics";
 
 const NAME_MAX = 100;
 const COMMENT_MAX = 500;
@@ -83,6 +84,10 @@ export default function RequestForm({ compact = false }) {
     }
     setBusy(false);
     setSent(true);
+    // Цель отправляем только здесь — после того, как сервер подтвердил приём.
+    // Если считать заявкой само нажатие кнопки, в отчёт попадут и те, у кого
+    // отправка сорвалась, и конверсия окажется завышенной.
+    reachGoal(GOAL_LEAD);
   }
 
   const inputCls =
