@@ -115,13 +115,20 @@ export const lead = {
     // Заполняется автоматически из меток в ссылке. Клиника платит блогерам
     // за приведённых пациентов, поэтому источник должен быть виден прямо
     // в карточке заявки, а не вычисляться задним числом по аналитике.
-    { name: "utmSource", title: "Источник (кто привёл)", type: "string", readOnly: true,
-      description: "Имя блогера или площадки из метки utm_source" },
-    { name: "utmMedium", title: "Канал", type: "string", readOnly: true,
-      description: "blogger, stories, reels и т.п." },
-    { name: "utmCampaign", title: "Кампания", type: "string", readOnly: true },
-    { name: "utmContent", title: "Объявление / пост", type: "string", readOnly: true },
-    { name: "utmTerm", title: "Ключевое слово", type: "string", readOnly: true },
+    //
+    // Подписи даны по схеме меток, принятой у клиента: имя блогера лежит
+    // в utm_content, а не в utm_source, как принято по умолчанию. Рядом
+    // с подписью оставлено техническое имя метки — схема принадлежит
+    // клиенту и может поменяться, а так всегда видно, что за чем стоит.
+    { name: "utmContent", title: "Кто привёл · utm_content", type: "string", readOnly: true,
+      description: "Имя блогера или конкретного размещения" },
+    { name: "utmSource", title: "Площадка · utm_source", type: "string", readOnly: true,
+      description: "Где размещались: ig — Instagram, tg — Telegram и т.п." },
+    { name: "utmMedium", title: "Размещение · utm_medium", type: "string", readOnly: true,
+      description: "Форма работы с блогером. fx — фиксированная оплата" },
+    { name: "utmCampaign", title: "Кампания · utm_campaign", type: "string", readOnly: true },
+    { name: "utmTerm", title: "Полная метка · utm_term", type: "string", readOnly: true,
+      description: "Составной идентификатор размещения целиком" },
     { name: "referrer", title: "Переход с сайта", type: "string", readOnly: true },
     { name: "landing", title: "Первая открытая страница", type: "string", readOnly: true },
     { name: "firstSeenAt", title: "Первый заход на сайт", type: "datetime", readOnly: true },
@@ -153,14 +160,20 @@ export const lead = {
     { name: "newest", title: "Сначала новые", by: [{ field: "createdAt", direction: "desc" }] },
   ],
   preview: {
-    select: { title: "name", phone: "phone", createdAt: "createdAt", status: "status", utmSource: "utmSource" },
-    prepare({ title, phone, createdAt, status, utmSource }) {
+    select: {
+      title: "name", phone: "phone", createdAt: "createdAt", status: "status",
+      utmContent: "utmContent", utmSource: "utmSource",
+    },
+    prepare({ title, phone, createdAt, status, utmContent, utmSource }) {
       const marks = { arrived: "★", done: "✓", rejected: "×", consultation: "•", contacted: "•" };
       const mark = marks[status] || "!";
       const when = createdAt ? new Date(createdAt).toLocaleString("ru-RU") : "";
+      // В списке заявок важнее всего, кто привёл человека. У клиента это
+      // utm_content; utm_source (площадка) берём запасным вариантом.
+      const from = utmContent || utmSource;
       return {
         title: `${mark} ${title || "Без имени"}`,
-        subtitle: [phone, utmSource && `от ${utmSource}`, when].filter(Boolean).join(" · "),
+        subtitle: [phone, from && `от ${from}`, when].filter(Boolean).join(" · "),
       };
     },
   },

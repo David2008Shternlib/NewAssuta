@@ -174,11 +174,33 @@ export async function POST(req) {
       lastSource: clean(a.lastSource, 64),
     };
 
-    // Строка для менеджера: «masha / blogger / october». Пустые части
-    // пропускаем, иначе в сообщении будут висеть одинокие разделители.
-    const sourceLine = [attribution.utmSource, attribution.utmMedium, attribution.utmCampaign]
-      .filter(Boolean)
-      .join(" / ");
+    // Расшифровка источника для координатора.
+    //
+    // У клиента своя схема меток, и имя блогера лежит НЕ в utm_source, как
+    // принято по умолчанию, а в utm_content. В utm_source — площадка (ig,
+    // tg), в utm_medium — форма оплаты блогеру (fx значит фиксированная
+    // ставка). Поэтому выводим каждую часть отдельной строкой с подписью,
+    // а не склеиваем три поля через косую черту: при склейке имя блогера
+    // в сообщение просто не попадало, и координатор видел «ig / fx» без
+    // главного — кто именно привёл человека.
+    //
+    // Рядом с подписью оставлено техническое имя метки: схема именования
+    // принадлежит клиенту и может поменяться, а так всегда видно, какое
+    // поле за что отвечает, и не нужно лезть в код.
+    const sourceRows = [
+      ["Кто привёл (utm_content)", attribution.utmContent],
+      ["Площадка (utm_source)", attribution.utmSource],
+      ["Размещение (utm_medium)", attribution.utmMedium],
+      ["Кампания (utm_campaign)", attribution.utmCampaign],
+      ["Метка (utm_term)", attribution.utmTerm],
+      ["Вернулся из", attribution.lastSource],
+      ["Переход с", attribution.referrer],
+      ["Первая страница", attribution.landing],
+    ].filter(([, v]) => v);
+
+    const sourceBlock = sourceRows.length
+      ? sourceRows.map(([label, v]) => `${label}: ${v}`).join("\n")
+      : "Источник: не определён";
 
     const digits = (phoneRaw.match(/\d/g) || []).length;
     if (!name || digits < 7) {
@@ -195,9 +217,8 @@ export async function POST(req) {
       `Телефон: ${phoneRaw}\n` +
       `Страна: ${country || "-"}\n` +
       `Комментарий: ${comment || "-"}\n` +
-      `Страница: ${source || "-"}\n` +
-      `Источник: ${sourceLine || "не определён"}\n` +
-      (attribution.referrer ? `Переход с: ${attribution.referrer}\n` : "") +
+      `Страница: ${source || "-"}\n\n` +
+      `${sourceBlock}\n` +
       (heardFrom ? `Со слов пациента: ${heardFrom}\n` : "") +
       `Согласие на обработку данных: да, ${new Date().toISOString()}`;
 
