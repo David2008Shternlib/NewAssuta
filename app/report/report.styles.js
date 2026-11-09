@@ -11,7 +11,7 @@
  */
 const styles = `
 .rp-hero{background:linear-gradient(135deg,#13306b 0%,#1c4499 60%,#2a5fc9 100%);
-  color:#fff;padding:42px 0 38px;border-radius:0 0 22px 22px}
+  color:#fff;padding:42px 0 102px;border-radius:0 0 22px 22px}
 .rp-wrap{max-width:940px;margin:0 auto;padding:0 28px}
 .rp-body{padding-bottom:72px;color:#1b2330;
   font:16px/1.6 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
@@ -19,8 +19,10 @@ const styles = `
 .rp-hero h1{font-size:36px;line-height:1.12;margin:12px 0 10px;letter-spacing:-.025em;font-weight:800;color:#fff}
 .rp-hero p{margin:0;font-size:16px;color:#cfe0ff;max-width:640px}
 .rp-when{margin-top:20px;font-size:13px;color:#9fbdf5}
+/* Запас снизу у шапки рассчитан под заход карточек: 102px отступа
+   против 56px подъёма даёт 46px чистого поля под строкой с датой. */
 
-.rp-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-58px 0 34px}
+.rp-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:-56px 0 34px}
 .rp-card{background:#fff;border-radius:14px;padding:20px 16px;text-align:center;
   box-shadow:0 6px 22px rgba(19,48,107,.10)}
 .rp-card .v{font-size:34px;font-weight:800;color:#13306b;line-height:1}
