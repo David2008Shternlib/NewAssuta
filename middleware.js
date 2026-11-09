@@ -1,9 +1,29 @@
 import { NextResponse } from "next/server";
 
+/**
+ * Заголовки для закрытых страниц.
+ *
+ * Сам доступ к отчёту проверяется в самой странице по секретному хвосту
+ * в адресе (app/report/access.js). Здесь остаётся то, что относится
+ * ко всем адресам раздела: не пускать в поиск и не давать оседать
+ * в промежуточных кэшах — внутренние цифры клиники там не нужны.
+ */
+const PROTECTED = ["/report"];
+
 export function middleware(req) {
   const { pathname } = req.nextUrl;
+
+  // ───────── Закрытый раздел с отчётом ─────────
+  if (PROTECTED.some((p) => pathname === p || pathname.startsWith(`${p}/`))) {
+    const res = NextResponse.next();
+    res.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
+    res.headers.set("Cache-Control", "private, no-store");
+    return res;
+  }
+
+  // ───────── Английская версия ─────────
   if (pathname === "/en" || pathname.startsWith("/en/")) {
-    const rest = pathname.replace(/^\/en/, "") || "/";
+    const rest = pathname.replace(/^\/en(?=\/|$)/, "") || "/";
     const url = req.nextUrl.clone();
     url.pathname = rest;
 
@@ -19,7 +39,8 @@ export function middleware(req) {
 
     return res;
   }
+
   return NextResponse.next();
 }
 
-export const config = { matcher: ["/en", "/en/:path*"] };
+export const config = { matcher: ["/en", "/en/:path*", "/report", "/report/:path*"] };
